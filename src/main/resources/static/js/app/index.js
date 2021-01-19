@@ -7,6 +7,10 @@ var main = {
             _this.signUp();
         });
 
+        $('#btn-signIn').on('click', function () {
+            _this.signIn();
+        })
+
     },
     // save버튼 누르면 db에 저장하기
     signUp: function () {
@@ -20,12 +24,39 @@ var main = {
 
         $.ajax({
             type: 'POST',
-            url: '/member/signUp',
+            url: '/api/member/signUp',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        ,   success: function () {
+                alert('회원가입이 완료되었습니다.');
+                window.location.href = '/';
+            },
+            error: function (json) {
+                alert('저장중 오류가 발생했습니다.');
+            }
+        // }).done(function () {
+        //     alert('회원가입이 완료되었습니다.');
+        //     window.location.href = '/';
+        // }).fail(function () {
+        //     alert(JSON.stringify(error));
+        });
+    }, signIn: function () {
+        var data = {
+            userid: $('#userid').val(),
+            password: $('password').val()
+        };
+
+        var id = $('#id').val() + '';
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/member/signIn/' + id,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function () {
-            alert('회원가입이 완료되었습니다.');
+            alert('로그인이 완료되었습니다.');
             window.location.href = '/';
         }).fail(function () {
             alert(JSON.stringify(error));

@@ -1,4 +1,4 @@
-﻿package com.review.yj.community.controller;
+package com.review.yj.community.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
