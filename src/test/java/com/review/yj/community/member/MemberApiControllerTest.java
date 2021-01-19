@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class MemberControllerTest {
+public class MemberApiControllerTest {
 
     @LocalServerPort
     private int port;
@@ -33,7 +33,7 @@ public class MemberControllerTest {
     }
 
     @Test
-    public void Member_등록() {
+    public void 회원가입() {
         String userid = "userid";
         String password = "password";
         // given
@@ -60,7 +60,7 @@ public class MemberControllerTest {
     }
 
     @Test
-    public void SignIn() {
+    public void 로그인() {
         // given
 
 

@@ -4,7 +4,7 @@
     <meta http-equiv="Context-Type" content="text/html; charset=UTF-8">
     <title>Review</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
 
     <link rel="stylesheet" href="/css/skel.css" />
     <link rel="stylesheet" href="/css/style.css" />
@@ -22,7 +22,12 @@
             <li><a href="left-sidebar.html">Left Sidebar</a></li>
             <li><a href="right-sidebar.html">Community</a></li>
             <li><a href="#">게시글상세페이지</a></li>
-            <li><a href="/signIn" class="button special">Sign In</a></li>
+            {{^userid}}
+                <li><a href="/member/signIn" class="button special">Sign In</a></li>
+            {{/userid}}
+            {{#userid}}
+                <li><a href="/member/signOut" class="button special">Sign Out</a></li>
+            {{/userid}}
         </ul>
     </nav>
 </header>
