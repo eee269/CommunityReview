@@ -1,8 +1,9 @@
-﻿{{>layout/header}}
-<form action="/member/signUp" method="post" name="signUp">
+{{>layout/header}}
+
+<!--<form action="/api/member/signUp" method="post" name="signUp">-->
     <div>
-        <label for="id">ID</label>
-        <input type="text" id="id" name="id" placeholder="아이디를 입력하세요">
+        <label for="userid">ID</label>
+        <input type="text" id="userid" name="userid" placeholder="아이디를 입력하세요">
         <label for="password">PASSWORD</label>
         <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요">
         <label for="passwordCheck">PASSWORD CHECK</label>
@@ -19,7 +20,7 @@
         <input type="button" value="로그인" onclick="location.href='/member/signIn'" class="button big alt">
         <input type="button" value="HOME" onclick="location.href='/'" class="button big alt">
     </div>
-</form>
+<!--</form>-->
 
 
 {{>layout/footer}}
