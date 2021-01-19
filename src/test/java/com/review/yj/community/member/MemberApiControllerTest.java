@@ -2,7 +2,7 @@ package com.review.yj.community.member;
 
 import com.review.yj.community.domain.member.Member;
 import com.review.yj.community.domain.member.MemberRepository;
-import com.review.yj.community.dto.MemberSignUpRequestDto;
+import com.review.yj.community.dto.member.MemberSignUpRequestDto;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;

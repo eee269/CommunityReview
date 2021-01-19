@@ -1,7 +1,7 @@
 package com.review.yj.community.service.member;
 
 import com.review.yj.community.domain.member.MemberRepository;
-import com.review.yj.community.dto.MemberSignUpRequestDto;
+import com.review.yj.community.dto.member.MemberSignUpRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
