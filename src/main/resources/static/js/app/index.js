@@ -18,7 +18,7 @@ var main = {
             userid: $('#userid').val(),
             password: $('#password').val(),
             username: $('#username').val(),
-            nickname: $('#username').val(),
+            nickname: $('#nickname').val(),
             phone: $('#phone').val()
         };
 
@@ -28,37 +28,30 @@ var main = {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
-        ,   success: function () {
-                alert('회원가입이 완료되었습니다.');
-                window.location.href = '/';
-            },
-            error: function (json) {
-                alert('저장중 오류가 발생했습니다.');
-            }
-        // }).done(function () {
-        //     alert('회원가입이 완료되었습니다.');
-        //     window.location.href = '/';
-        // }).fail(function () {
-        //     alert(JSON.stringify(error));
+        }).done(function () {
+            alert('회원가입이 완료되었습니다.');
+            window.location.href = '/';
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
         });
     }, signIn: function () {
         var data = {
             userid: $('#userid').val(),
-            password: $('password').val()
+            password: $('#password').val()
         };
 
-        var id = $('#id').val() + '';
+        var userid = $('#userid').val();
 
         $.ajax({
             type: 'POST',
-            url: '/api/member/signIn/' + id,
-            dataType: 'json',
+            url: '/api/member/signIn/' + userid,
+            dataType: 'text',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function () {
             alert('로그인이 완료되었습니다.');
             window.location.href = '/';
-        }).fail(function () {
+        }).fail(function (error) {
             alert(JSON.stringify(error));
         });
     }

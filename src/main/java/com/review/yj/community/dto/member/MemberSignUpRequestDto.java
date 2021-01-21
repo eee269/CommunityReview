@@ -1,4 +1,4 @@
-package com.review.yj.community.dto;
+package com.review.yj.community.dto.member;
 
 import com.review.yj.community.domain.member.Member;
 import lombok.Builder;
