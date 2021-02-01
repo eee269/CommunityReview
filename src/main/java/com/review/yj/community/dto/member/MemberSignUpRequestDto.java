@@ -8,29 +8,29 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MemberSignUpRequestDto {
-    private String userid;
-    private String password;
-    private String username;
-    private String nickname;
-    private String phone;
+    private String mem_userid;
+    private String mem_password;
+    private String mem_username;
+    private String mem_nickname;
+    private String mem_phone;
 
-    @Builder
-    public MemberSignUpRequestDto(String userid, String password, String username, String nickname, String phone) {
-        this.userid = userid;
-        this.password = password;
-        this.username = username;
-        this.nickname = nickname;
-        this.phone = phone;
+    public MemberSignUpRequestDto(String mem_userid, String mem_password, String mem_username, String mem_nickname, String mem_phone) {
+        this.mem_userid = mem_userid;
+        this.mem_password = mem_password;
+        this.mem_username = mem_username;
+        this.mem_nickname = mem_nickname;
+        this.mem_phone = mem_phone;
     }
 
+    @Builder
     // Member Data 전송하기
     public Member toEntity() {
         return Member.builder()
-                .userid(userid)
-                .password(password)
-                .username(username)
-                .nickname(nickname)
-                .phone(phone)
+                .mem_userid(mem_userid)
+                .mem_password(mem_password)
+                .mem_nickname(mem_nickname)
+                .mem_username(mem_username)
+                .mem_phone(mem_phone)
                 .build();
     }
 }

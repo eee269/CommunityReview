@@ -16,4 +16,14 @@ public class BoardApiController {
     public Long save(@PathVariable Long mem_id, @RequestBody BoardSaveRequestDto requestDto) {
         return boardService.save(mem_id, requestDto);
     }
+
+//    @PostMapping("/list")
+//    public Long list(@RequestBody BoardListRequestDto requestDto) {
+//        return boardService.list(requestDto);
+//    }
+
+//    @PostMapping("/detail/{brd_id}")
+//    public Long detail() {
+//        return boardService.detail();
+//    }
 }

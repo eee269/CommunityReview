@@ -1,0 +1,31 @@
+{{>layout/header}}
+
+<section id="one" class="wrapper style1">
+    <header class="major">
+        <h2>Board List</h2>
+        <p>
+            {{^id}}로그인 후 {{/id}}자유롭게 글을 작성하세요! <br>
+            {{#id}}<a href="/board/save" class="button big special"> Create Board </a>{{/id}}
+        </p>
+    </header>
+    <div class="container">
+        <div class="row">
+
+            <div class="4u">
+                {{#board}}
+                <section class="special box">
+                    <a href="/board/detail/{{brd_id}}">
+                        <img src="{{images/board/name.jpg}}" class="icon fa-area-chart major" />
+                        <h3>{{brd_title}}</h3>
+                        <p>{{brd_modifiedDate}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>{{brd_viewCnt}}</strong></p>
+                        <p><strong>{{mem_nickname}}</strong></p>
+                    </a>
+                </section>
+                {{/board}}
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{{>layout/footer}}

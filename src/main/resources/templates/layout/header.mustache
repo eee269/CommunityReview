@@ -20,14 +20,15 @@
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="left-sidebar.html">Left Sidebar</a></li>
-            <li><a href="right-sidebar.html">Community</a></li>
-            <li><a href="#">게시글상세페이지</a></li>
-            {{^userid}}
+            <li><a href="/board/">Community</a></li>
+            <li><a href="/board/save">Board Test</a></li>
+            {{^id}}
                 <li><a href="/member/signIn" class="button special">Sign In</a></li>
-            {{/userid}}
-            {{#userid}}
+            {{/id}}
+            {{#id}}
+                <li><a href="/member/mypage" class="button alt">My Page</a></li>
                 <li><a href="/member/signOut" class="button special">Sign Out</a></li>
-            {{/userid}}
+            {{/id}}
         </ul>
     </nav>
 </header>

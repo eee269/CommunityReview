@@ -3,32 +3,19 @@
 <!-- Main -->
 <section id="main" class="wrapper style1">
     <header class="major">
-        <h2>title</h2>
+        <h2>{{brd_title}}</h2>
         <p>
-            createdate &nbsp;&nbsp;->&nbsp;&nbsp; modified<br>
-            <strong>nickname</strong> &nbsp;&nbsp; &nbsp;&nbsp; cnt
+            {{brd_createdDate}} &nbsp;&nbsp;->&nbsp;&nbsp; {{brd_modifiedDate}}<br>
+            <strong>{{mem_nickname}}</strong> &nbsp;&nbsp; &nbsp;&nbsp; {{brd_viewCnt}}
         </p>
     </header>
     <div class="container">
         <section>
-            <label for="brd_title">TITLE</label>
-            <input type="text" name="brd_title" id="brd_title">
-            <label for="mem_nickname">NICKNAME</label>
-            <input type="text" name="mem_nickname" id="mem_nickname" value="{{mem_nickname}}" readonly>
-            <br>
-            <label for="brd_file">FILE</label>
-            <input type="file" name="brd_file" id="brd_file" multiple>
-            <label for="brd_image">IMAGE</label>
-            <input type="image" name="brd_image" id="brd_image" multiple>
-            <br>
-            <label for="brd_content">CONTENT</label>
-            <input type="text" name="brd_content" id="brd_content">
+            <a href="/file/{{brd_file}}"></a>
+            <img src="/images/{{brd_image}}" alt="" />
+            <p>{{brd_content}}</p>
         </section>
         <hr class="major" />
-
-        <a href="/board/" role="button" class="button big alt"> 취소 </a>
-        <button type="button" class="button big special" id="btn-save"> 등록 </button>
-
         <div class="row">
             <div class="6u">
                 <section class="special">
@@ -42,7 +29,7 @@
             </div>
             <div class="6u">
                 <section class="special">
-                    <a href="#" class="image fit"><img src="" alt="" /></a>
+                    <a href="#" class="image fit"><img src="{{images/pic02.jpg}}" alt="" /></a>
                     <h3>Neque ornare adipiscing</h3>
                     <p>Eget mi ac magna cep lobortis faucibus accumsan enim lacinia adipiscing metus urna adipiscing cep commodo id. Ac quis arcu amet. Arcu nascetur lorem adipiscing non faucibus odio nullam arcu lobortis. Aliquet ante feugiat. Turpis aliquet ac posuere volutpat lorem arcu aliquam lorem.</p>
                     <ul class="actions">
