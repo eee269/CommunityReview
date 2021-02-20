@@ -1,0 +1,30 @@
+{{>layout/header}}
+{{>layout/summernote}}
+
+<!-- Main -->
+<section id="main" class="wrapper style1">
+    <header class="major">
+
+        <label for="brd_id">글 번호</label>
+        <input type="text" class="form-control" id="brd_id" value="{{board.brd_id}}" readonly>
+
+        <label for="brd_title">글 제목</label>
+        <input type="text" name="brd_title" id="brd_title" value="{{board.brd_title}}">
+        <p>
+            <strong>{{board.mem_nickname}}</strong>
+        </p>
+    </header>
+    <div class="container">
+        <section>
+            <p><textarea name="editordata" id="summernote">{{board.brd_content}}</textarea></p>
+        </section>
+
+        <a href="/api/board/detail/{{board.brd_id}}" role="button" class="button big alt"> 돌아가기 </a> &nbsp;&nbsp;&nbsp;
+        <button id="btn-update" class="button big special"> 수정 완료 </button> &nbsp;&nbsp;&nbsp;
+        <button id="btn-delete" class="button big alt"> 삭제 </button>
+
+    </div>
+</section>
+
+
+{{>layout/footer}}

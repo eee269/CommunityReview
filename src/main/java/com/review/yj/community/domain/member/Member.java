@@ -28,8 +28,7 @@ public class Member {
     private String mem_phone;
 
     @Builder
-    public Member(Long mem_id, String mem_userid, String mem_password, String mem_username, String mem_nickname, String mem_phone) {
-        this.mem_id = mem_id;
+    public Member(String mem_userid, String mem_password, String mem_username, String mem_nickname, String mem_phone) {
         this.mem_userid = mem_userid;
         this.mem_password = mem_password;
         this.mem_username = mem_username;

@@ -1,4 +1,5 @@
 {{>layout/header}}
+{{>layout/summernote}}
 
 <!-- Main -->
 <section id="main" class="wrapper style1">
@@ -6,11 +7,13 @@
         <h2>title</h2>
         <p>
             createdate &nbsp;&nbsp;->&nbsp;&nbsp; modified<br>
-            <strong>nickname</strong> &nbsp;&nbsp; &nbsp;&nbsp; cnt
+            <strong>nickname</strong> &nbsp;&nbsp; &nbsp;&nbsp; cnt<br>
+            <input type="hidden" value="1" name="brd_category">
         </p>
     </header>
     <div class="container">
-        <section>
+        <input type="hidden" value="{{ses_id}}" id="session" >
+        <form>
             <label for="brd_title">TITLE</label>
             <input type="text" name="brd_title" id="brd_title">
             <label for="mem_nickname">NICKNAME</label>
@@ -21,13 +24,14 @@
             <label for="brd_image">IMAGE</label>
             <input type="image" name="brd_image" id="brd_image" multiple>
             <br>
-            <label for="brd_content">CONTENT</label>
-            <input type="text" name="brd_content" id="brd_content">
-        </section>
+<!--            <label for="brd_content">CONTENT</label>-->
+<!--            <input type="text" name="brd_content" id="brd_content">-->
+            <textarea id="summernote" name="editordata"></textarea>
+        </form>
         <hr class="major" />
 
         <a href="/board/" role="button" class="button big alt"> 취소 </a>
-        <button type="button" class="button big special" id="btn-save"> 등록 </button>
+        <button type="button" class="button big special" id="btn-save">등록</button>
 
         <div class="row">
             <div class="6u">
@@ -54,5 +58,8 @@
     </div>
 </section>
 
+<!--<script>-->
+<!--    $('#summernote').summernote('insertText', )-->
+<!--</script>-->
 
 {{>layout/footer}}

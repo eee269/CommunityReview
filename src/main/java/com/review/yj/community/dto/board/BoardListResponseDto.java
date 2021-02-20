@@ -13,9 +13,10 @@ public class BoardListResponseDto {
     private String mem_nickname;
     private Long mem_id;
     private int brd_category;
+    private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
-    private String brd_image;
-    private int brd_viewCnt;
+    private int brd_view_cnt;
+//    private String brd_image;
 
     public BoardListResponseDto(Board entity) {
         this.brd_id = entity.getBrd_id();
@@ -24,8 +25,9 @@ public class BoardListResponseDto {
         this.mem_nickname = entity.getMem_nickname();
         this.mem_id = entity.getMem_id();
         this.brd_category = entity.getBrd_category();
+        this.createdDate = entity.getCreateDate();
         this.modifiedDate = entity.getModifiedDate();
-        this.brd_image = entity.getBrd_image();
-        this.brd_viewCnt = entity.getBrd_viewCnt();
+//        this.brd_view_cnt = entity.getBrd_view_cnt();
+//        this.brd_image = entity.getBrd_image();
     }
 }

@@ -3,21 +3,24 @@
 <!-- Main -->
 <section id="main" class="wrapper style1">
     <header class="major">
-        <h2>{{brd_title}}</h2>
+        <input>
+        <h2>{{board.brd_title}}</h2>
         <p>
-            {{brd_createdDate}} &nbsp;&nbsp;->&nbsp;&nbsp; {{brd_modifiedDate}}<br>
-            <strong>{{mem_nickname}}</strong> &nbsp;&nbsp; &nbsp;&nbsp; {{brd_viewCnt}}
+            {{board.createdDate}} {{#board.modifiedDate}} &nbsp;&nbsp;->&nbsp;&nbsp; {{board.modifieddate}} {{/board.modifiedDate}}<br>
+            <strong>{{board.mem_nickname}}</strong> &nbsp;&nbsp; &nbsp;&nbsp; 조회수
         </p>
     </header>
     <div class="container">
         <section>
-            <a href="/file/{{brd_file}}"></a>
-            <img src="/images/{{brd_image}}" alt="" />
-            <p>{{brd_content}}</p>
+            <p>{{board.brd_content}}</p>
         </section>
+
+        <a href="/board/" role="button" class="button big alt"> 글 목록 </a> &nbsp;&nbsp;&nbsp;
+        <a href="/board/update/{{board.brd_id}}" class="button big special"> 수정 </a>
         <hr class="major" />
         <div class="row">
             <div class="6u">
+                <h1>여기 댓글자리,,</h1>
                 <section class="special">
                     <a href="#" class="image fit"></a>
                     <h3>Mollis adipiscing nisl</h3>
@@ -29,7 +32,7 @@
             </div>
             <div class="6u">
                 <section class="special">
-                    <a href="#" class="image fit"><img src="{{images/pic02.jpg}}" alt="" /></a>
+                    <a href="#" class="image fit"><img src="images/pic02.jpg" alt="" /></a>
                     <h3>Neque ornare adipiscing</h3>
                     <p>Eget mi ac magna cep lobortis faucibus accumsan enim lacinia adipiscing metus urna adipiscing cep commodo id. Ac quis arcu amet. Arcu nascetur lorem adipiscing non faucibus odio nullam arcu lobortis. Aliquet ante feugiat. Turpis aliquet ac posuere volutpat lorem arcu aliquam lorem.</p>
                     <ul class="actions">

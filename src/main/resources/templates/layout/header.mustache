@@ -4,7 +4,9 @@
     <meta http-equiv="Context-Type" content="text/html; charset=UTF-8">
     <title>Review</title>
 
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstr/ap/4.3.1/css/bootstrap.min.css">-->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="/css/skel.css" />
     <link rel="stylesheet" href="/css/style.css" />
@@ -22,16 +24,16 @@
             <li><a href="left-sidebar.html">Left Sidebar</a></li>
             <li><a href="/board/">Community</a></li>
             <li><a href="/board/save">Board Test</a></li>
-            {{^id}}
+            {{^ses_id}}
                 <li><a href="/member/signIn" class="button special">Sign In</a></li>
-            {{/id}}
-            {{#id}}
-                <li><a href="/member/mypage" class="button alt">My Page</a></li>
+            {{/ses_id}}
+            {{#ses_id}}
+                <li><a href="/member/mypage/{{ses_id}}" class="button alt">My Page</a></li>
                 <li><a href="/member/signOut" class="button special">Sign Out</a></li>
-            {{/id}}
+            {{/ses_id}}
         </ul>
     </nav>
 </header>
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->

@@ -25,25 +25,25 @@ public class MemberApiController {
     @PostMapping("/signIn/{mem_userid}")
     public String signIn(@PathVariable String mem_userid, HttpSession session) {
         // 로그인 세션 설정
-        Long id = memberService.findByUserid(mem_userid);
-        session.setAttribute("id", id);
+        Long mem_id = memberService.findByUserid(mem_userid);
+        session.setAttribute("ses_id", mem_id);  // 세션 id 이름: ses_id
 
         return "redirect:/";
     }
 
 
-    @GetMapping("/mypage/{id}")
-    public ModelAndView mypage(@PathVariable Long id ) throws Exception{
-//                         Model model, @RequestBody MemberResponseDto responseDto) {
-        // member 정보 넘기는것 보충하기
-//        responseDto = memberService.findById(id);
-//        model.addAttribute(responseDto);
-
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("member/my_page");
-//        mav.addObject("responseDto", responseDto);
-        return mav;
-    }
+//    @GetMapping("/mypage/{id}")
+//    public ModelAndView mypage(@PathVariable Long id ) throws Exception{
+////                         Model model, @RequestBody MemberResponseDto responseDto) {
+//        // member 정보 넘기는것 보충하기
+////        responseDto = memberService.findById(id);
+////        model.addAttribute(responseDto);
+//
+//        ModelAndView mav = new ModelAndView();
+//        mav.setViewName("member/my_page");
+////        mav.addObject("responseDto", responseDto);
+//        return mav;
+//    }
 
 
 }

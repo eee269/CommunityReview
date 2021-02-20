@@ -2,7 +2,9 @@ package com.review.yj.community.dto.member;
 
 import com.review.yj.community.domain.member.Member;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class MemberResponseDto {
     private Long mem_id;
     private String mem_userid;

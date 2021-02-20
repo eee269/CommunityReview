@@ -32,6 +32,7 @@ public class BoardRepositoryTest {
         boardRepository.save(Board.builder()
                 .brd_title(title)
                 .brd_content(content)
+                .mem_id(27L)
                 .mem_nickname("test")
                 .build());
 

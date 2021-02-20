@@ -19,23 +19,26 @@ public class MemberService {
         return memberRepository.save(requestDto.toEntity()).getMem_id();
     }
 
-    public Long findByUserid(String userid) {
-        Long id = memberRepository.findByUserid(userid);
+    public Long findByUserid(String mem_userid) {
+        Long mem_id = memberRepository.findByUserid(mem_userid);
 
-        return id;
+        return mem_id;
     }
 
-
-    public MemberResponseDto findById(Long id) {
-        Member entity = memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(id + "에 해당하는 회원이 없습니다."));
+    @Transactional(readOnly = true)
+    public MemberResponseDto findById(Long ses_id) {
+        Member entity = memberRepository.findById(ses_id)
+                .orElseThrow(() -> new IllegalArgumentException(ses_id + "에 해당하는 회원이 없습니다."))
+                ;
 
         return new MemberResponseDto(entity);
 
     }
 
-    public String findByIdForNickname(Long id) {
-        String nickname = memberRepository.findByIdForNickname(id);
+    @Transactional(readOnly = true)
+    public String findByIdForNickname(Long ses_id) {
+        String nickname = memberRepository.findByIdForNickname(ses_id);
         return nickname;
     }
+
 }

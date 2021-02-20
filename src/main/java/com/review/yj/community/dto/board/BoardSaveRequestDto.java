@@ -16,8 +16,8 @@ public class BoardSaveRequestDto {
     private String brd_content;
     private Long mem_id;
     private String mem_nickname;
-    private String brd_file;
-    private String brd_image;
+    private String brd_file;        // 없어도 될듯
+    private String brd_image;       // 없어도 될듯
 
     @Builder
     public BoardSaveRequestDto(int brd_category, String brd_title, String brd_content, Long mem_id, String mem_nickname, String brd_file, String brd_image) {
@@ -30,13 +30,13 @@ public class BoardSaveRequestDto {
         this.brd_image = brd_image;
     }
 
-    public Board toEntity(String nickname) {
+    public Board toEntity() {
         return Board.builder()
                 .mem_id(mem_id)
                 .brd_category(brd_category)
                 .brd_title(brd_title)
                 .brd_content(brd_content)
-                .mem_nickname(nickname)
+                .mem_nickname(mem_nickname)
                 .brd_file(brd_file)
                 .brd_image(brd_image)
                 .build();
