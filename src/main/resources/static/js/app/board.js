@@ -17,7 +17,7 @@ var main = {
 
         var data = {
             brd_title: $('#brd_title').val(),
-            brd_content: $('#summernote').val(),
+            brd_content: $('#summernote').summernote('code'),
             mem_id: ses_id,
             mem_nickname: $('#mem_nickname').val()
 
@@ -44,7 +44,7 @@ var main = {
         var data = {
             // brd_category: $('#brd_category').val(),
             brd_title: $('#brd_title').val(),
-            brd_content: $('#summernote').val()
+            brd_content: $('#summernote').summernote('code')
         };
         $.ajax({
            type: 'PUT',

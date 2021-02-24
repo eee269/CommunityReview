@@ -8,6 +8,15 @@
         <label for="brd_id">글 번호</label>
         <input type="text" class="form-control" id="brd_id" value="{{board.brd_id}}" readonly>
 
+
+        <label for="brd_category">CATEGORY</label>
+        <select name="brd_category" id="brd_category">
+            <option value="">카테고리를 선택하세요</option>
+            <option value="1">Daily</option>
+            <option value="2">IT</option>
+            <option value="3">Study</option>
+        </select>
+
         <label for="brd_title">글 제목</label>
         <input type="text" name="brd_title" id="brd_title" value="{{board.brd_title}}">
         <p>
@@ -16,7 +25,7 @@
     </header>
     <div class="container">
         <section>
-            <p><textarea name="editordata" id="summernote">{{board.brd_content}}</textarea></p>
+            <p><div name="editordata" id="summernote"></div></p>
         </section>
 
         <a href="/api/board/detail/{{board.brd_id}}" role="button" class="button big alt"> 돌아가기 </a> &nbsp;&nbsp;&nbsp;
@@ -26,5 +35,9 @@
     </div>
 </section>
 
+<script>
+    var content = {{board.brd_content}};
+    $('#summernote').summernote('code', content);
+</script>
 
 {{>layout/footer}}
