@@ -30,11 +30,11 @@ public class MemberRepositoryTest {
     public void member_저장() {
         // given
         memberRepository.save(Member.builder()
-            .userid("userid")
-            .password("password")
-            .username("username")
-            .nickname("nickname")
-            .phone("phone")
+            .mem_userid("userid")
+            .mem_password("password")
+            .mem_username("username")
+            .mem_nickname("nickname")
+            .mem_phone("phone")
             .build());
 
         // when
@@ -43,7 +43,7 @@ public class MemberRepositoryTest {
         Member member = memberList.get(0);
 
         // then
-        assertThat(member.getUserid()).isEqualTo("userid");
-        assertThat(member.getPassword()).isEqualTo("password");
+        assertThat(member.getMem_userid()).isEqualTo("userid");
+        assertThat(member.getMem_password()).isEqualTo("password");
     }
 }

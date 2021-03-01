@@ -15,25 +15,24 @@ public class Member {
     // member 테이블에 id 자동 입력
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long mem_id;
 
     @Column(length = 45, nullable = false)
-    private String userid;
+    private String mem_userid;
 
     @Column(length = 45, nullable = false)
-    private String password;
+    private String mem_password;
 
-    private String username;
-    private String nickname;
-    private String phone;
+    private String mem_username;
+    private String mem_nickname;
+    private String mem_phone;
 
     @Builder
-    public Member(String userid, String password, String username, String nickname, String phone) {
-        this.userid = userid;
-        this.password = password;
-        this.username = username;
-        this.nickname = nickname;
-        this.phone = phone;
+    public Member(String mem_userid, String mem_password, String mem_username, String mem_nickname, String mem_phone) {
+        this.mem_userid = mem_userid;
+        this.mem_password = mem_password;
+        this.mem_username = mem_username;
+        this.mem_nickname = mem_nickname;
+        this.mem_phone = mem_phone;
     }
-
 }
