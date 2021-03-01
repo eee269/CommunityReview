@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     $('#summernote').summernote({
         height: 500,                 // 에디터 높이
         minHeight: null,             // 최소 높이

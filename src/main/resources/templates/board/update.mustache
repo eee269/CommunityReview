@@ -36,8 +36,11 @@
 </section>
 
 <script>
-    var content = {{board.brd_content}};
-    $('#summernote').summernote('code', content);
+    var content = '{{board.brd_content}}';
+    $(function() {
+        $('#summernote').summernote('code', content);
+        // $('#summernote').summernote('insert.insertText', content);
+    })
 </script>
 
 {{>layout/footer}}
