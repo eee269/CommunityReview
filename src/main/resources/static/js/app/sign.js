@@ -15,11 +15,11 @@ var main = {
     // save버튼 누르면 db에 저장하기
     signUp: function () {
         var data = {
-            userid: $('#userid').val(),
-            password: $('#password').val(),
-            username: $('#username').val(),
-            nickname: $('#nickname').val(),
-            phone: $('#phone').val()
+            mem_userid: $('#userid').val(),
+            mem_password: $('#password').val(),
+            mem_username: $('#username').val(),
+            mem_nickname: $('#nickname').val(),
+            mem_phone: $('#phone').val()
         };
 
         $.ajax({
@@ -36,8 +36,8 @@ var main = {
         });
     }, signIn: function () {
         var data = {
-            userid: $('#userid').val(),
-            password: $('#password').val()
+            mem_userid: $('#userid').val(),
+            mem_password: $('#password').val()
         };
 
         var userid = $('#userid').val();
