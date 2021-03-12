@@ -21,7 +21,7 @@ http://52.78.112.93:8080/
 - AWS EC2, AWS RDS
 
 ---
-# Member Sign up / Sign in / Sign out
+# Member
 
 image
 
