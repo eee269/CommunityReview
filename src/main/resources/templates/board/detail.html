@@ -1,0 +1,106 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net/nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+
+    <div layout:fragment="content">
+        <!-- Main -->
+        <section id="main" class="wrapper style1" th:each="board: ${board}">
+            <header class="major">
+                <input type="hidden" id="rep_brd_id" th:value="${board.getBrd_id()}">
+                <h2 th:text="${board.getBrd_title()}"></h2>
+                <p>
+                    <div th:text="${board.getCreatedDate()}"></div><div th:if="${board.getModifiedDate() != null}" th:text="${board.getModifiedDate()}"></div><br>
+                    <strong th:text="${board.getMem_nickname()}"></strong> &nbsp;&nbsp; &nbsp;&nbsp; <div th:text="${board.getBrd_view_cnt()}"></div>
+                </p>
+            </header>
+            <div class="container">
+<!--                <section>-->
+                    <input type="hidden" id="tag_content" th:value="${board.getBrd_content()}" >
+                    <div id="content" style="min-width: 800px"></div>
+<!--                </section>-->
+
+                <a href="/board/" role="button" class="button big alt"> 글 목록 </a> &nbsp;&nbsp;&nbsp;
+                <a th:href="@{/board/update(brd_id=${board.getBrd_id()})}" class="button big special"> 수정 </a>
+                <hr class="major" />
+                <!--        <div class="row">-->
+                <h1>Reply</h1>
+                <div>
+                    <section class="special">
+                        <div th:if="${replyList.isEmpty()}">
+                            <h1>작성된 댓글이 없습니다.</h1>
+
+                            <hr class="major" />
+                        </div>
+                        <div th:unless="${replyList.isEmpty()}" th:each="reply: ${replyList}">
+<!--                            <div>-->
+                            <h4 th:text="${reply.getMem_nickname()}"></h4>
+                            <p th:text="${reply.getRep_content()}"></p>
+                            <ul class="actions">
+                                <div th:if="${session['ses_id'] == reply.getMem_id()}">
+                                    <li><a href="javascript:rep_update()" class="button alt">세션과 작성자 같을때 수정</a></li>
+                                    <li><a href="javascript:rep_del()" class="button alt">세션과 작성자 같을때 삭제</a></li>
+                                </div>
+                                <li><a href="javascript:rep_open()" class="button alt">답글</a></li>
+                            </ul>
+
+                            <hr class="major" />
+<!--                            </div>-->
+
+                            <div class="special" id="rep_second_save" style="display: none;">
+                                <input type="hidden" name="ses_id" id="ses_id" th:value="${session['ses_id']}">
+
+                                <label for="mem_nickname"></label>
+                                <input type="text" name="mem_nickname" id="mem_re_nickname" th:value="${reply.getMem_nickname()}" readonly>
+
+                                <label for="rep_content">댓글 내용</label>
+                                <textarea class="form-control" id="rep_re_content" placeholder="댓글 내용을 작성해 주세요"></textarea>
+
+                                <!-- 댓글 비밀번호 인증 넣기 -->
+                                <label for="rep_pass">Password</label>
+                                <input type="text" name="rep_pass" placeholder="비밀번호를 작성하세요">
+
+
+                                <a href="javascript:write_cancel()" role="button" class="button big alt"> 작성 취소 </a> &nbsp;&nbsp;&nbsp;
+                                <a href="javascript:rep_save($('#ses_id').val())" class="button big special"> 댓글 작성 </a>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <br><br><br>
+                <div>
+                    <!-- 세션 없을 때-->
+                    <section class="special" th:if="${session['ses_id'] == null}">
+                        <textarea class="form-control" onclick="location.href='/member/signIn'" readonly>
+                            로그인 후 사용 가능 합니다.
+                        </textarea>
+                    </section>
+                    <!-- 세션 있을 때-->
+                    <section class="special"  id="rep_first_save" th:unless="${session['ses_id'] == null}">
+                        <label for="mem_nickname"></label>
+                        <input type="text" name="mem_nickname" id="mem_nickname" th:value="${mem_nickname}" readonly>
+
+                        <!-- 댓글 비밀번호 인증 넣기 -->
+                        <label for="rep_pass">Password</label>
+                        <input type="text" name="rep_pass" id="rep_pass" placeholder="비밀번호를 작성하세요">
+
+
+                        <label for="rep_content">댓글 내용</label>
+                        <textarea class="form-control" id="rep_content" placeholder="댓글 내용을 작성해 주세요"></textarea>
+
+                        <a href="javascript:write_cancel()" role="button" class="button big alt"> 작성 취소 </a> &nbsp;&nbsp;&nbsp;
+                        <a id="rep_save" class="button big special"> 댓글 작성 </a>
+                    </section>
+                </div>
+                <!--        </div>-->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        var content = $('#tag_content').val();
+        $(function () {
+            $('#content').html(content);
+        })
+    </script>
+</html>

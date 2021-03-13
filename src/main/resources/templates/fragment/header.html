@@ -1,0 +1,19 @@
+﻿<html xmlns:th="http://www.thymeleaf.org">
+    <header class="header" th:fragment="commonHeader">
+        <h1><a href="/">Review</a></h1>
+        <nav id="nav">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="left-sidebar.html">Left Sidebar</a></li>
+                <li><a href="/board/">Community</a></li>
+                <span th:if="${session['ses_id'] == null}">
+                    <li><a href="/member/signIn" class="button special">Sign In</a></li>
+                </span>
+                <span th:unless="${session['ses_id'] == null}">
+                    <li><a th:href="@{/member/mypage/${session['ses_id']}}" class="button alt">My Page</a></li>
+                    <li><a href="/member/signOut" class="button special">Sign Out</a></li>
+                </span>
+            </ul>
+        </nav>
+    </header>
+</html>

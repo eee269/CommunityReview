@@ -7,10 +7,7 @@ import com.review.yj.community.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RequiredArgsConstructor
@@ -30,13 +27,13 @@ public class BoardController {
 
     @GetMapping("/")
     public String board_list(Model model) {
-        model.addAttribute("board", boardService.findAllDesc());
+        model.addAttribute("boardList", boardService.findAllDesc());
 
         return "board/list";
     }
 
-    @GetMapping("/update/{brd_id}")
-    public ModelAndView update(@PathVariable Long brd_id) {
+    @GetMapping("/update")
+    public ModelAndView update(@RequestParam("brd_id") Long brd_id) {
         ModelAndView mav = new ModelAndView();
 
         mav.addObject("board", boardService.findById(brd_id));

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net/nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+
+<div layout:fragment="content">
+    <section id="one" class="wrapper style1">
+        <header class="major">
+            <h2>Board List</h2>
+            <p th:if="${session['ses_id']} == null">
+                로그인 후 자유롭게 글을 작성하세요! <br><br><br>
+                <a href="/member/signIn" class="button big special"> Sign In </a>
+            </p>
+            <p th:unless="${session['ses_id']} == null">
+                자유롭게 글을 작성하세요! <br><br><br>
+                <a href="/board/save" class="button big special"> Create Board </a>
+            </p>
+        </header>
+        <div class="container">
+            <div class="row">
+                <div class="-1u"  th:if="${boardList.isEmpty()}">
+                    <section class="special box">
+                        <h3>아직 작성된 게시글이 없습니다.</h3>
+                    </section>
+                </div>
+
+                <div class="4u" th:unless="${boardList.isEmpty()}">
+                    <section class="special box" th:each="board: ${boardList}">
+                        <a th:href="@{/api/board/detail(brd_id=${board.getBrd_id})}">
+<!--                            <img src="images/board/name.jpg" class="icon fa-area-chart major" />-->
+                            <h3 th:text="${board.getBrd_title()}"></h3>
+                            <p> <span th:if="${board.getModifiedDate() == null}" th:text="${board.getCreatedDate()}"></span>
+                                <span th:unless="${board.getModifiedDate() == null}" th:text="${board.getModifiedDate()}"></span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<strong th:text="${board.getBrd_view_cnt()}"></strong></p>
+                            <p><strong th:text="${board.getMem_nickname()}"></strong></p>
+                        </a>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</html>
