@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -37,6 +39,13 @@ public class MemberApiControllerTest {
         String userid = "mem_userid";
         String password = "mem_password";
         // given
+        memberRepository.save(Member.builder()
+                .mem_userid(userid)
+                .mem_password(password)
+                .mem_username("mem_username")
+                .mem_nickname("mem_nickname")
+                .mem_phone("mem_phone")
+                .build());
 //        MemberSignUpRequestDto requestDto = MemberSignUpRequestDto.builder()
 //                .mem_userid(userid)
 //                .mem_password(password)
@@ -48,6 +57,7 @@ public class MemberApiControllerTest {
 
         // when
 //        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
+        List<Member> memberList = memberRepository.findAll();
 
         // then
 //        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);

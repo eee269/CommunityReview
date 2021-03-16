@@ -30,7 +30,7 @@ public class MemberController {
             PrintWriter out = response.getWriter();
             out.println("<script>alert('잘못된 접근입니다.'); location.href='/';</script>");
             out.flush();
-        } else url = "member/sign_up";
+        } else url = "member/signup";
 
         return url;
     }
@@ -46,7 +46,7 @@ public class MemberController {
             PrintWriter out = response.getWriter();
             out.println("<script>alert('잘못된 접근입니다.'); location.href='/';</script>");
             out.flush();
-        } else url = "member/sign_in";
+        } else url = "member/signin";
 
         return url;
     }
@@ -68,7 +68,7 @@ public class MemberController {
         } else {
             MemberResponseDto dto = memberService.findById(ses_id);
             mav.addObject("member", dto);
-            mav.setViewName("member/my_page");
+            mav.setViewName("member/mypage");
         }
 
         return mav;
