@@ -18,11 +18,13 @@ public class Member {
     private long mem_id;
 
     private String mem_userid;
+    private String mem_password;
     private String mem_nickname;
 
     @Builder
-    public Member(String mem_userid, String mem_nickname) {
+    public Member(String mem_userid, String mem_password, String mem_nickname) {
         this.mem_userid = mem_userid;
+        this.mem_password = mem_password;
         this.mem_nickname = mem_nickname;
     }
 }

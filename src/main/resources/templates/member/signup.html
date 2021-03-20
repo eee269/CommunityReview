@@ -3,26 +3,58 @@
       xmlns:layout="http://www.ultraq.net/nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
 
+
+<div layout:fragment="script">
+    <script type="text/javascript" src="../../js/app/member.js" th:src="@{/js/app/member.js}"></script>
+
+    <script>
+        var passForm = /^[a-zA-Z0-9!@#$%]{6,12}$/;
+
+        $('#password').blur(function () {
+            if(passForm.test($('#password').val())){
+                console.log('true');
+                $('#pw_ch').text('');
+            } else {
+                console.log('false');
+                $('#pw_ch').text('숫자, 영문 대소문자, !@#$% 를 혼합하여 6~12 자리 입력하세요');
+                $('#pw_ch').css('color', 'red');
+            }
+        });
+
+        $('#passwordCheck').blur(function () {
+            if($('#password').val() == ($('#passwordCheck').val())) {
+                console.log('true');
+                $('#pw_ch2').text('비밀번호 일치 확인되었습니다.');
+                $('#pw_ch').css('color', 'black');
+            } else {
+                console.log('false');
+                $('#pw_ch2').text('비밀번호가 일치하지 않습니다.');
+                $('#pw_ch2').css('color', 'red');
+            }
+        });
+    </script>
+</div>
+
+
+
 <div layout:fragment="content">
     <section id="main" class="wrapper style1">
         <div class="container">
             <section>
                 <label for="userid">ID</label>
-                <input type="text" id="userid" name="userid" placeholder="아이디를 입력하세요">
+                <input type="email" id="userid" name="userid" placeholder="이메일을 입력하세요">
                 <label for="password">PASSWORD</label>
                 <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요">
+                <div id="pw_ch"></div>
                 <label for="passwordCheck">PASSWORD CHECK</label>
                 <input type="password" id="passwordCheck" name="passwordCheck" placeholder="비밀번호를 한번 더 입력하세요">
-                <label for="username">NAME</label>
-                <input type="text" id="username" name="username" placeholder="이름을 입력하세요">
+                <div id="pw_ch2"></div>
                 <label for="nickname">NICKNAME</label>
                 <input type="text" id="nickname" name="nickname" placeholder="별명을 입력하세요">
-                <label for="phone">PHONE</label>
-                <input type="text" id="phone" name="phone" placeholder="전화번호를 입력하세요">
             </section>
             <section>
-                <input type="button" value="회원가입" id="btn-signUp" class="button big special">
-                <input type="button" value="로그인" onclick="location.href='/member/signIn'" class="button big alt">
+                <input type="button" value="회원가입" id="btn-signup" class="button big special">
+                <input type="button" value="로그인" onclick="location.href='/member/sign_in'" class="button big alt">
                 <input type="button" value="HOME" onclick="location.href='/'" class="button big alt">
             </section>
         </div>

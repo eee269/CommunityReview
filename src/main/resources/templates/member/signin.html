@@ -1,23 +1,22 @@
-<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net/nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
 
 <div layout:fragment="script">
-    <script src="/js/app/sign.js"></script>
+    <script type="text/javascript" src="../../js/app/member.js" th:src="@{/js/app/member.js}"></script>
 </div>
 
 <div layout:fragment="content">
     <section id="main" class="wrapper style1">
         <div class="container">
             <label for="userid">ID</label>
-            <input type="text" name="userid" id="userid" placeholder="아이디를 입력하세요">
+            <input type="email" name="userid" id="userid" placeholder="이메일을 입력하세요">
             <label for="password">PASSWORD</label>
             <input type="password" name="password" id="password" placeholder="비밀번호를 입력하세요">
 <!--        </div>-->
 <!--        <div>-->
-            <input type="button" value="로그인" id="btn-signIn" class="button big special">
-            <input type="button" value="회원가입" onclick="location.href='/member/signUp'" class="button big alt">
+            <input type="button" value="로그인" id="btn-signin" class="button big special">
+            <input type="button" value="회원가입" onclick="location.href='/member/sign_up'" class="button big alt">
             <input type="button" value="HOME" onclick="location.href='/'" class="button big alt">
         </div>
     </section>

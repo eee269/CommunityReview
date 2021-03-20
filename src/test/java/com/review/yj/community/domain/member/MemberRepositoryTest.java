@@ -1,4 +1,4 @@
-﻿package com.review.yj.community.domain.member;
+package com.review.yj.community.domain.member;
 
 import org.junit.After;
 import org.junit.Test;

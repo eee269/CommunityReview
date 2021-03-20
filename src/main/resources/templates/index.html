@@ -1,4 +1,3 @@
-<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net/nz/thymeleaf/layout"
 	  layout:decorate="~{layout/default_layout}">
@@ -10,8 +9,8 @@
 			<h2>This is Ion</h2>
 			<p>A free responsive template by <a href="http://templated.co">TEMPLATED</a></p>
 			<ul class="actions" th:if="${session['ses_id'] == null}">
-				<li><a href="/member/signUp" class="button big special">Sign Up</a></li>
-				<li><a href="/member/signIn" class="button big alt">Sign In</a></li>
+				<li><a href="/member/sign_up" class="button big special">Sign Up</a></li>
+				<li><a href="/member/sign_in" class="button big alt">Sign In</a></li>
 			</ul>
 			<ul class="actions" th:unless="${session['ses_id'] == null}">
 				<li><a href="/board/" class="button big special">Go To Community</a></li>
