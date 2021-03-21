@@ -39,9 +39,9 @@
         $.ajax({
             url: '/api/member/sign_in',
             dataType: 'json',
-            type: 'POST',
+            type: 'GET',
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(data)
+            data: data
         }).done(function () {
             alert("로그인 되었습니다.");
             window.location.href='/';
