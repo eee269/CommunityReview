@@ -1,69 +1,93 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net/nz/thymeleaf/layout"
-      layout:decorate="~{layout/default_layout}">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Review</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <div th:replace="fragment/common :: css"></div>
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
+<div class="site-wrap">
 
-<div layout:fragment="script">
-    <script type="text/javascript" src="../../js/app/member.js" th:src="@{/js/app/member.js}"></script>
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
 
-    <script>
-        var passForm = /^[a-zA-Z0-9!@#$%]{6,12}$/;
+    <div th:replace="fragment/common :: header"></div>
 
-        $('#password').blur(function () {
-            if(passForm.test($('#password').val())){
-                console.log('true');
-                $('#pw_ch').text('');
-            } else {
-                console.log('false');
-                $('#pw_ch').text('숫자, 영문 대소문자, !@#$% 를 혼합하여 6~12 자리 입력하세요');
-                $('#pw_ch').css('color', 'red');
-            }
-        });
-
-        $('#passwordCheck').blur(function () {
-            if($('#password').val() == ($('#passwordCheck').val())) {
-                console.log('true');
-                $('#pw_ch2').text('비밀번호 일치 확인되었습니다.');
-                $('#pw_ch').css('color', 'black');
-            } else {
-                console.log('false');
-                $('#pw_ch2').text('비밀번호가 일치하지 않습니다.');
-                $('#pw_ch2').css('color', 'red');
-            }
-        });
-    </script>
-</div>
-
-
-
-<div layout:fragment="content">
-    <section id="main" class="wrapper style1">
+    <section class="site-section">
         <div class="container">
-            <section>
-                <label for="userid">ID</label>
-                <input type="email" id="userid" name="userid" placeholder="이메일을 입력하세요">
-                <label for="password">PASSWORD</label>
-                <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요">
-                <div id="pw_ch"></div>
-                <label for="passwordCheck">PASSWORD CHECK</label>
-                <input type="password" id="passwordCheck" name="passwordCheck" placeholder="비밀번호를 한번 더 입력하세요">
-                <div id="pw_ch2"></div>
-                <label for="nickname">NICKNAME</label>
-                <input type="text" id="nickname" name="nickname" placeholder="별명을 입력하세요">
-            </section>
-            <section>
-                <input type="button" value="회원가입" id="btn-signup" class="button big special">
-                <input type="button" value="로그인" onclick="location.href='/member/sign_in'" class="button big alt">
-                <input type="button" value="HOME" onclick="location.href='/'" class="button big alt">
-            </section>
+            <div class="comment-form-wrap pt-5">
+                <h3 class="mb-5">Sign In</h3>
+                <form class="p-5 bg-light">
+                    <div class="form-group">
+                        <label for="userid">E-Mail *</label>
+                        <input type="email" class="form-control" id="userid" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input type="password" class="form-control" id="password" required>
+                        <div id="pw_ch"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordCheck">Password Check *</label>
+                        <input type="password" class="form-control" id="passwordCheck" required>
+                        <div id="pw_ch2"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nickname">Nickname *</label>
+                        <input type="text" class="form-control" id="nickname" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="button" value="Sign Up" class="btn btn-primary" id="btn-signup">
+                        <input type="button" value="Sign In" class="btn" onclick="location.href='/member/sign_in'">
+                        <input type="button" value="Main" class="btn" onclick="location.href='/'">
+                    </div>
+
+                </form>
+            </div>
         </div>
     </section>
-</div>
 
+    <div th:replace="fragment/common :: footer"></div>
 
-<div layout:fragment="script">
-    <script src="js/app/sign.js"></script>
-</div>
+</div> <!-- .site-wrap -->
 
+<div th:replace="fragment/common :: script"></div>
+<script type="text/javascript" src="../js/app/member.js"></script>
+
+<script>
+    var passForm = /^[a-zA-Z0-9!@#$%]{6,12}$/;
+
+    $('#password').blur(function () {
+        if(passForm.test($('#password').val())){
+            console.log('true');
+            $('#pw_ch').text('');
+        } else {
+            console.log('false');
+            $('#pw_ch').text('숫자, 영문 대소문자, !@#$% 를 혼합하여 6~12 자리 입력하세요');
+            $('#pw_ch').css('color', 'red');
+        }
+    });
+
+    $('#passwordCheck').blur(function () {
+        if($('#password').val() == ($('#passwordCheck').val())) {
+            console.log('true');
+            $('#pw_ch2').text('비밀번호 일치 확인되었습니다.');
+            $('#pw_ch').css('color', 'black');
+        } else {
+            console.log('false');
+            $('#pw_ch2').text('비밀번호가 일치하지 않습니다.');
+            $('#pw_ch2').css('color', 'red');
+        }
+    });
+</script>
+
+</body>
 </html>

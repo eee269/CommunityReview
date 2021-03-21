@@ -1,69 +1,84 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net/nz/thymeleaf/layout"
-      layout:decorate="~{layout/default_layout}">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Review Board Save</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <div th:replace="fragment/common :: css"></div>
 
-<!--summernote API 적용-->
-<div layout:fragment="css">
+    <!-- summernote API -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-</div>
+</head>
+<!--<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">-->
+<body>
+<div class="site-wrap">
 
-<div layout:fragment="script">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
 
-    <script src="/js/app/summernote.js"></script>
+    <div th:replace="fragment/common :: header"></div>
 
-    <script src="/js/app/board.js"></script>
-    <script src="/js/app/reply.js"></script>
-</div>
-<!--summernote API 적용-->
-
-<div layout:fragment="content">
-
-    <!-- Main -->
-    <section id="main" class="wrapper style1">
-        <header class="major">
-
-            <label for="brd_id">글 번호</label>
-            <input type="text" class="form-control" id="brd_id" th:value="${board.getBrd_id()}" readonly>
-
-            <!-- 카체고리 보류,, -->
-<!--            <label for="brd_category">CATEGORY</label>-->
-<!--            <select name="brd_category" id="brd_category">-->
-<!--                <option value="">카테고리를 선택하세요</option>-->
-<!--                <option value="1">Daily</option>-->
-<!--                <option value="2">IT</option>-->
-<!--                <option value="3">Study</option>-->
-<!--            </select>-->
-
-            <label for="brd_title">글 제목</label>
-            <input type="text" name="brd_title" id="brd_title" th:value="${board.getBrd_title()}">
-            <p>
-                <strong th:text="${board.getMem_nickname()}"></strong>
-            </p>
-        </header>
+    <section class="site-section">
         <div class="container">
-            <input type="hidden" id="content" th:value="${board.getBrd_content()}">
-            <section>
-                <p><div name="editordata" id="summernote"></div></p>
-            </section>
+            <div class="comment-form-wrap pt-5">
+                <h3 class="mb-5">Board Write</h3>
+                <form class="p-5 bg-light">
+                    <div class="form-group">
+                        <label for="title">Title *</label>
+                        <input type="text" class="form-control" id="title" th:value="${board.getBrd_title}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nickname">Nickname</label>
+                        <input type="text" class="form-control" id="nickname" th:value="${mem_nickname}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" th:value="${board.getBrd_content}" id="content">
+                        <label for="summernote">Content *</label>
+                        <div id="summernote"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="button" value="Update" class="btn btn-primary" id="btn-update">
+                        <input type="button" value="Delete" class="btn" id="btn-delete">
+                        <input type="button" value="Cancel" class="btn" onclick="history.back()">
+                    </div>
 
-            <a th:href="@{/api/board/detail(brd_id=${board.getBrd_id})}" role="button" class="button big alt"> 돌아가기 </a> &nbsp;&nbsp;&nbsp;
-            <button id="btn-update" class="button big special"> 수정 완료 </button> &nbsp;&nbsp;&nbsp;
-            <button id="btn-delete" class="button big alt"> 삭제 </button>
-
+                </form>
+            </div>
         </div>
     </section>
 
-    <script>
+    <div th:replace="fragment/common :: footer"></div>
+
+</div> <!-- .site-wrap -->
+
+<div th:replace="fragment/common :: script"></div>
+
+<script type="text/javascript" src="../js/app/board.js"></script>
+
+<!-- summernote API -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+
+<script src="/js/app/summernote.js"></script>
+
+
+<script>
+    $(function() {
         var content = $('#content').val();
 
-        $(function() {
-            $('#summernote').summernote('code', content);
-            // $('#summernote').summernote('insert.insertText', content);
-        })
-    </script>
+        $('#summernote').summernote('code', content);
+    })
+</script>
 
-</div>
+</body>
 </html>

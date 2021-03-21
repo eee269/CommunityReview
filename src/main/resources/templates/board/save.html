@@ -1,86 +1,73 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net/nz/thymeleaf/layout"
-      layout:decorate="~{layout/default_layout}">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Review Board Save</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <div th:replace="fragment/common :: css"></div>
 
-<!--summernote API 적용-->
-<div layout:fragment="css">
+    <!-- summernote API -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-</div>
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-<div layout:fragment="script">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+<div class="site-wrap">
 
-    <script src="/js/app/summernote.js"></script>
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
 
-    <script src="/js/app/board.js"></script>
-</div>
-<!--summernote API 적용-->
+    <div th:replace="fragment/common :: header"></div>
 
-<div layout:fragment="content">
-
-    <!-- Main -->
-    <section id="main" class="wrapper style1">
-        <header class="major">
-            <label for="brd_title">TITLE</label>
-            <input type="text" name="brd_title" id="brd_title">
-
-            <p>
-                <strong th:text="${mem_nickname}"></strong><br>
-                <input type="hidden" value="1" name="brd_category">
-            </p>
-        </header>
+    <section class="site-section">
         <div class="container">
-            <input type="hidden" value="{{ses_id}}" id="session" >
+            <div class="comment-form-wrap pt-5">
+                <h3 class="mb-5">Board Write</h3>
+                <form class="p-5 bg-light">
+                    <div class="form-group">
+                        <label for="title">Title *</label>
+                        <input type="text" class="form-control" id="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nickname">Nickname</label>
+                        <input type="text" class="form-control" id="nickname" th:value="${mem_nickname}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="summernote">Content *</label>
+                        <div id="summernote"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="button" value="Save" class="btn btn-primary" id="btn-save">
+                        <input type="button" value="Board List" class="btn" onclick="location.href='/board/'">
+                    </div>
 
-            <!-- 카테고리 보류,, -->
-<!--            <label for="brd_category">CATEGORY</label>-->
-<!--            <select name="brd_category" id="brd_category">-->
-<!--                <option value="">카테고리를 선택하세요</option>-->
-<!--                <option value="1">Daily</option>-->
-<!--                <option value="2">IT</option>-->
-<!--                <option value="3">Study</option>-->
-<!--            </select>-->
-
-            <br>
-            <!--            <label for="brd_file">FILE</label>-->
-            <!--            <input type="file" name="brd_file" id="brd_file" multiple>-->
-            <!--            <label for="brd_image">IMAGE</label>-->
-            <!--            <input type="image" name="brd_image" id="brd_image" multiple>-->
-            <br>
-            <!--            <label for="brd_content">CONTENT</label>-->
-            <!--            <input type="text" name="brd_content" id="brd_content">-->
-            <div id="summernote"></div>
-
-            <hr class="major" />
-
-            <a href="/board/" role="button" class="button big alt"> 취소 </a>
-            <button type="button" class="button big special" id="btn-save">등록</button>
-
-            <div class="row">
-                <div class="6u">
-                    <section class="special">
-                        <a href="#" class="image fit"></a>
-                        <h3>Mollis adipiscing nisl</h3>
-                        <p>Eget mi ac magna cep lobortis faucibus accumsan enim lacinia adipiscing metus urna adipiscing cep commodo id. Ac quis arcu amet. Arcu nascetur lorem adipiscing non faucibus odio nullam arcu lobortis. Aliquet ante feugiat. Turpis aliquet ac posuere volutpat lorem arcu aliquam lorem.</p>
-                        <ul class="actions">
-                            <li><a href="#" class="button alt">Learn More</a></li>
-                        </ul>
-                    </section>
-                </div>
-                <div class="6u">
-                    <section class="special">
-                        <a href="#" class="image fit"><img src="" alt="" /></a>
-                        <h3>Neque ornare adipiscing</h3>
-                        <p>Eget mi ac magna cep lobortis faucibus accumsan enim lacinia adipiscing metus urna adipiscing cep commodo id. Ac quis arcu amet. Arcu nascetur lorem adipiscing non faucibus odio nullam arcu lobortis. Aliquet ante feugiat. Turpis aliquet ac posuere volutpat lorem arcu aliquam lorem.</p>
-                        <ul class="actions">
-                            <li><a href="#" class="button alt">Learn More</a></li>
-                        </ul>
-                    </section>
-                </div>
+                </form>
             </div>
         </div>
     </section>
-</div>
+
+    <div th:replace="fragment/common :: footer"></div>
+
+</div> <!-- .site-wrap -->
+
+<div th:replace="fragment/common :: script"></div>
+
+<script type="text/javascript" src="../js/app/board.js"></script>
+
+<!-- summernote API -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+
+<script src="/js/app/summernote.js"></script>
+
+</body>
 </html>
