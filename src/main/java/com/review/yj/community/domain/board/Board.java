@@ -19,13 +19,15 @@ public class Board {
 
     private String brd_title;
     private String brd_content;
+    private String brd_img;
     private long mem_id;
     private String mem_nickname;
 
     @Builder
-    public Board(String brd_title, String brd_content, long mem_id, String mem_nickname) {
+    public Board(String brd_title, String brd_content, String brd_img, long mem_id, String mem_nickname) {
         this.brd_title = brd_title;
         this.brd_content = brd_content;
+        this.brd_img = brd_img;
         this.mem_id = mem_id;
         this.mem_nickname = mem_nickname;
     }

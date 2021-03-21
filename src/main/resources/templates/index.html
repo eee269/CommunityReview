@@ -27,8 +27,8 @@
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-6 mt-lg-5 text-center">
-            <h1>Buy and sell real estate properties</h1>
-            <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam assumenda ea quo cupiditate facere deleniti fuga officia.</p>
+            <h1>WELCOME!</h1>
+            <p class="mb-5">제가 만든 홈페이지에 방문해주셔서 감사합니다  ༼๑⁰⊖⁰๑༽❤ </p>
             
           </div>
         </div>
@@ -42,31 +42,15 @@
       <div class="container">
         <div class="row mb-5 justify-content-center">
           <div class="col-md-7 text-center">
-            <h2 class="section-title mb-3">How It Works</h2>
+            <h2 class="section-title mb-3">Who makes this page?</h2>
           </div>
         </div>
         <div class="row">
           <div class="col-md-4 text-center">
             <div class="pr-5">
-              <span class="custom-icon flaticon-house text-primary"></span>
-              <h3 class="text-dark">Find Property.</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            </div>
-          </div>
-
-          <div class="col-md-4 text-center">
-            <div class="pr-5">
-              <span class="custom-icon flaticon-coin text-primary"></span>
-              <h3 class="text-dark">Buy Property.</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            </div>
-          </div>
-
-          <div class="col-md-4 text-center">
-            <div class="pr-5">
-              <span class="custom-icon flaticon-home text-primary"></span>
-              <h3 class="text-dark">Make Investment.</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <span class="custom-icon text-primary" onclick="location.href='https://github.com/eee269'"><img src="https://img.icons8.com/ios/50/000000/github.png"/></span>
+              <h3 class="text-dark">Kim Yejin</h3>
+              <p>Want To Be A Back-End Developer</p>
             </div>
           </div>
         </div>
@@ -77,65 +61,30 @@
       <div class="container">
         <div class="row mb-5 align-items-center">
           <div class="col-md-7 text-left">
-            <h2 class="section-title mb-3">Properties</h2>
+            <h2 class="section-title mb-3">Recent Boards - 4개 뽑기</h2>
           </div>
-          <div class="col-md-5 text-left text-md-right">
-            <div class="custom-nav1">
-              <a href="#" class="custom-prev1">Previous</a><span class="mx-3">/</span><a href="#" class="custom-next1">Next</a>
+<!--          <div class="col-md-5 text-left text-md-right">-->
+<!--            <div class="custom-nav1">-->
+<!--              <a href="#" class="custom-prev1">Previous</a><span class="mx-3">/</span><a href="#" class="custom-next1">Next</a>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+
+        <div class="owl-carousel nonloop-block-13 mb-5" th:if="${boardList.isEmpty()}">
+          <div class="row justify-content-center">
+            <div class="col-md-4">
+              <h2>등록된 게시글이 없습니다.</h2>
+              <p>게시글을 등록해주세요!</p>
+              <input type="button" value="Write" class="btn btn-primary" onclick="location.href='/board/save'">
             </div>
           </div>
         </div>
 
-        <div class="owl-carousel nonloop-block-13 mb-5">
+        <div class="owl-carousel nonloop-block-13 mb-5" th:unless="${boardList.isEmpty()}">
 
-          <div class="property">
-            <a href="property-single.html">
+          <div class="property" th:each="board: ${boardList}">
+            <a th:href="@{/api/board/detail(brd_id=${board.getBrd_id})}">
               <img src="images/property_1.jpg" alt="Image" class="img-fluid">
-            </a>
-            <div class="prop-details p-3">
-              <div><strong class="price">$3,400,000</strong></div>
-              <div class="mb-2 d-flex justify-content-between">
-                <span class="w border-r">6 beds</span> 
-                <span class="w border-r">4 baths</span>
-                <span class="w">4,250 sqft.</span>
-              </div>
-              <div>480 12th, Unit 14, San Francisco, CA</div>
-            </div>
-          </div>
-
-          <div class="property">
-            <a href="property-single.html">
-              <img src="images/property_2.jpg" alt="Image" class="img-fluid">
-            </a>
-            <div class="prop-details p-3">
-              <div><strong class="price">$3,400,000</strong></div>
-              <div class="mb-2 d-flex justify-content-between">
-                <span class="w border-r">6 beds</span> 
-                <span class="w border-r">4 baths</span>
-                <span class="w">4,250 sqft.</span>
-              </div>
-              <div>480 12th, Unit 14, San Francisco, CA</div>
-            </div>
-          </div>
-
-          <div class="property">
-            <a href="property-single.html">
-              <img src="images/property_3.jpg" alt="Image" class="img-fluid">
-            </a>
-            <div class="prop-details p-3">
-              <div><strong class="price">$3,400,000</strong></div>
-              <div class="mb-2 d-flex justify-content-between">
-                <span class="w border-r">6 beds</span> 
-                <span class="w border-r">4 baths</span>
-                <span class="w">4,250 sqft.</span>
-              </div>
-              <div>480 12th, Unit 14, San Francisco, CA</div>
-            </div>
-          </div>
-
-          <div class="property">
-            <a href="property-single.html">
-              <img src="images/property_4.jpg" alt="Image" class="img-fluid">
             </a>
             <div class="prop-details p-3">
               <div><strong class="price">$3,400,000</strong></div>
@@ -151,7 +100,7 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-md-4">
-            <a href="/board" class="btn btn-primary btn-block">View All Property Listings</a>
+            <a href="/board" class="btn btn-primary btn-block">View All Boards</a>
           </div>
         </div>
       </div>

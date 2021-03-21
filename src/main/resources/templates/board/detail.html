@@ -1,111 +1,252 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net/nz/thymeleaf/layout"
-      layout:decorate="~{layout/default_layout}">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${board.getBrd_title()}"></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<div layout:fragment="script">
-    <script src="/js/app/board.js"></script>
-    <script src="/js/app/reply.js"></script>
-</div>
+    <div th:replace="fragment/common :: css"></div>
 
-    <div layout:fragment="content">
-        <!-- Main -->
-        <section id="main" class="wrapper style1" th:each="board: ${board}">
-            <header class="major">
-                <input type="hidden" id="rep_brd_id" th:value="${board.getBrd_id()}">
-                <h2 th:text="${board.getBrd_title()}"></h2>
-                <p>
-                    <div th:text="${board.getCreatedDate()}"></div><div th:if="${board.getModifiedDate() != null}" th:text="${board.getModifiedDate()}"></div><br>
-                    <strong th:text="${board.getMem_nickname()}"></strong> &nbsp;&nbsp; &nbsp;&nbsp; <div th:text="${board.getBrd_view_cnt()}"></div>
-                </p>
-            </header>
-            <div class="container">
-<!--                <section>-->
-                    <input type="hidden" id="tag_content" th:value="${board.getBrd_content()}" >
-                    <div id="content" style="min-width: 800px"></div>
-<!--                </section>-->
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-                <a href="/board/" role="button" class="button big alt"> 글 목록 </a> &nbsp;&nbsp;&nbsp;
-                <a th:href="@{/board/update(brd_id=${board.getBrd_id()})}" class="button big special"> 수정 </a>
-                <hr class="major" />
-                <!--        <div class="row">-->
-                <h1>Reply</h1>
-                <div>
-                    <section class="special">
-                        <div th:if="${replyList.isEmpty()}">
-                            <h1>작성된 댓글이 없습니다.</h1>
+<div class="site-wrap">
 
-                            <hr class="major" />
-                        </div>
-                        <div th:unless="${replyList.isEmpty()}" th:each="reply: ${replyList}">
-<!--                            <div>-->
-                            <h4 th:text="${reply.getMem_nickname()}"></h4>
-                            <p th:text="${reply.getRep_content()}"></p>
-                            <ul class="actions">
-                                <div th:if="${session['ses_id'] == reply.getMem_id()}">
-                                    <li><a href="javascript:rep_update()" class="button alt">세션과 작성자 같을때 수정</a></li>
-                                    <li><a href="javascript:rep_del()" class="button alt">세션과 작성자 같을때 삭제</a></li>
-                                </div>
-                                <li><a href="javascript:rep_open()" class="button alt">답글</a></li>
-                            </ul>
-
-                            <hr class="major" />
-<!--                            </div>-->
-
-                            <div class="special" id="rep_second_save" style="display: none;">
-                                <input type="hidden" name="ses_id" id="ses_id" th:value="${session['ses_id']}">
-
-                                <label for="mem_nickname"></label>
-                                <input type="text" name="mem_nickname" id="mem_re_nickname" th:value="${reply.getMem_nickname()}" readonly>
-
-                                <label for="rep_content">댓글 내용</label>
-                                <textarea class="form-control" id="rep_re_content" placeholder="댓글 내용을 작성해 주세요"></textarea>
-
-                                <!-- 댓글 비밀번호 인증 넣기 -->
-                                <label for="rep_pass">Password</label>
-                                <input type="text" name="rep_pass" placeholder="비밀번호를 작성하세요">
-
-
-                                <a href="javascript:write_cancel()" role="button" class="button big alt"> 작성 취소 </a> &nbsp;&nbsp;&nbsp;
-                                <a href="javascript:rep_save($('#ses_id').val())" class="button big special"> 댓글 작성 </a>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <br><br><br>
-                <div>
-                    <!-- 세션 없을 때-->
-                    <section class="special" th:if="${session['ses_id'] == null}">
-                        <textarea class="form-control" onclick="location.href='/member/signIn'" readonly>
-                            로그인 후 사용 가능 합니다.
-                        </textarea>
-                    </section>
-                    <!-- 세션 있을 때-->
-                    <section class="special"  id="rep_first_save" th:unless="${session['ses_id'] == null}">
-                        <label for="mem_nickname"></label>
-                        <input type="text" name="mem_nickname" id="mem_nickname" th:value="${mem_nickname}" readonly>
-
-                        <!-- 댓글 비밀번호 인증 넣기 -->
-                        <label for="rep_pass">Password</label>
-                        <input type="text" name="rep_pass" id="rep_pass" placeholder="비밀번호를 작성하세요">
-
-
-                        <label for="rep_content">댓글 내용</label>
-                        <textarea class="form-control" id="rep_content" placeholder="댓글 내용을 작성해 주세요"></textarea>
-
-                        <a href="javascript:write_cancel()" role="button" class="button big alt"> 작성 취소 </a> &nbsp;&nbsp;&nbsp;
-                        <a id="rep_save" class="button big special"> 댓글 작성 </a>
-                    </section>
-                </div>
-                <!--        </div>-->
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
             </div>
-        </section>
+        </div>
+        <div class="site-mobile-menu-body"></div>
     </div>
 
-    <script>
-        var content = $('#tag_content').val();
-        $(function () {
-            $('#content').append(content);
-        })
-    </script>
+    <div th:replace="fragment/common :: header"></div>
+
+    <div class="site-blocks-cover overlay" style="background-image: url(images/hero_1.jpg);" data-aos="fade">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+
+
+                <div class="col-md-6 mt-lg-5 text-center">
+                    <h1 th:text="${board.getBrd_title()}"></h1>
+                    <p class="post-meta"><strong> 날짜 넣기 (format: March 21, 2019) </strong>
+                        &bull; Posted by <strong th:text="${board.getMem_nickname()}"></strong></p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <section class="site-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 blog-content">
+
+                    <input type="hidden" id="tag_content" th:value="${board.getBrd_content()}" >
+                    <div id="content" class="lead"></div>
+
+                    <div class="pt-5">
+                        <p>Categories:  <a href="#">카테고리</a>, <a href="#">꼭 넣어야할까..?</a></p>
+                    </div>
+
+
+                    <div class="pt-5">
+                        <h3 class="mb-5">Reply [ <strong th:text="${replyList.size()}"></strong> ]</h3>
+                        <ul class="comment-list" th:if="${replyList.isEmpty()}">
+                            <h2>댓글이 없습니다.</h2>
+                        </ul>
+                        <ul class="comment-list" th:unless="${replyList.isEmpty()}">
+                            <li class="comment" th:each="reply: ${replyList}">
+                                <div class="vcard bio">
+                                    <img src="images/person_1.jpg" alt="Image placeholder">
+                                </div>
+                                <div class="comment-body">
+                                    <h3 th:text="*{getRep_nickname()}"></h3>
+                                    <div class="meta" th:text="*{getCreateDate()}">(January 9, 2018 at 2:21pm)</div>
+                                    <p th:text="*{getRep_content()}"></p>
+<!--                                    <p><a href="#" class="reply">Reply</a></p>-->
+                                    <p th:if="${session['ses_id'].equals(reply.getRep_id())}">
+                                        <a href="javascript:rep_update()" class="reply">Reply Update</a>
+                                        <a href="javascript:rep_delete()" class="reply">Reply Delete</a>
+                                    </p>
+                                </div>
+                            </li>
+
+                            <hr>
+
+                            <li class="comment">
+                                <div class="vcard bio">
+                                    <img src="images/person_1.jpg" alt="Image placeholder">
+                                </div>
+                                <div class="comment-body">
+                                    <h3>Jean Doe</h3>
+                                    <div class="meta">January 9, 2018 at 2:21pm</div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                    <p><a href="#" class="reply">Reply</a></p>
+                                </div>
+
+                                <ul class="children">
+                                    <li class="comment">
+                                        <div class="vcard bio">
+                                            <img src="images/person_1.jpg" alt="Image placeholder">
+                                        </div>
+                                        <div class="comment-body">
+                                            <h3>Jean Doe</h3>
+                                            <div class="meta">January 9, 2018 at 2:21pm</div>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                            <p><a href="#" class="reply">Reply</a></p>
+                                        </div>
+
+
+                                        <ul class="children">
+                                            <li class="comment">
+                                                <div class="vcard bio">
+                                                    <img src="images/person_1.jpg" alt="Image placeholder">
+                                                </div>
+                                                <div class="comment-body">
+                                                    <h3>Jean Doe</h3>
+                                                    <div class="meta">January 9, 2018 at 2:21pm</div>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                                    <p><a href="#" class="reply">Reply</a></p>
+                                                </div>
+
+                                                <ul class="children">
+                                                    <li class="comment">
+                                                        <div class="vcard bio">
+                                                            <img src="images/person_1.jpg" alt="Image placeholder">
+                                                        </div>
+                                                        <div class="comment-body">
+                                                            <h3>Jean Doe</h3>
+                                                            <div class="meta">January 9, 2018 at 2:21pm</div>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                                            <p><a href="#" class="reply">Reply</a></p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="comment">
+                                <div class="vcard bio">
+                                    <img src="images/person_1.jpg" alt="Image placeholder">
+                                </div>
+                                <div class="comment-body">
+                                    <h3>Jean Doe</h3>
+                                    <div class="meta">January 9, 2018 at 2:21pm</div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                    <p><a href="#" class="reply">Reply</a></p>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- END comment-list -->
+
+                        <div class="comment-form-wrap pt-5">
+                            <h3 class="mb-5">Reply Write</h3>
+                            <form class="p-5 bg-light">
+                                <div class="form-group">
+                                    <label for="nickname">Nickname *</label>
+                                    <p id="nickname" th:text="${member.getMem_nickname()}"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" id="mem_pw" th:value="${member.getMem_password()}">
+                                    <label for="password">Password *</label>
+                                    <input type="password" class="form-control" id="password" required>
+                                    <div id="pw_ch"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="rep_content">Content *</label>
+                                    <textarea id="rep_content" cols="30" rows="10" class="form-control" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input type="button" value="save" class="btn btn-primary" id="btn_rep_save">
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4 sidebar">
+                    <div class="sidebar-box">
+                        <h3 th:text="${board.getBrd_title()}"></h3>
+                        <p>Posted By <strong th:text="${board.getMem_nickname()}"></strong></p>
+
+                        <p th:if="${session['ses_id'].equals(reply.getRep_id())}">
+                            <a th:href="@{/board/update(brd_id=${board.getBrd_id()})}" class="btn btn-primary btn-sm">Board Update</a><br>
+                            <a href="javascript:rep_delete()" class="btn btn-sm">Board Delete</a>
+                        </p>
+<!--                        <p><a href="#" class="">Read More</a></p>-->
+                    </div>
+<!--                    <div class="sidebar-box">-->
+<!--                        <form action="#" class="search-form">-->
+<!--                            <div class="form-group">-->
+<!--                                <span class="icon fa fa-search"></span>-->
+<!--                                <input type="text" class="form-control" placeholder="Type a keyword and hit enter">-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                    <div class="sidebar-box">-->
+<!--                        <div class="categories">-->
+<!--                            <h3>Categories</h3>-->
+<!--                            <li><a href="#">Creatives <span>(12)</span></a></li>-->
+<!--                            <li><a href="#">News <span>(22)</span></a></li>-->
+<!--                            <li><a href="#">Design <span>(37)</span></a></li>-->
+<!--                            <li><a href="#">HTML <span>(42)</span></a></li>-->
+<!--                            <li><a href="#">Web Development <span>(14)</span></a></li>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="sidebar-box">-->
+<!--                        <img src="images/person_1.jpg" alt="Image placeholder" class="img-fluid mb-4">-->
+<!--                        <h3>About The Author</h3>-->
+<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>-->
+<!--                        <p><a href="#" class="btn btn-primary btn-sm">Read More</a></p>-->
+<!--                    </div>-->
+
+<!--                    <div class="sidebar-box">-->
+<!--                        <h3>Paragraph</h3>-->
+<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="fragment/common :: footer"></div>
+
+</div> <!-- .site-wrap -->
+<div th:replace="fragment/common :: script"></div>
+
+<!--<script type="text/javascript" src="/js/app/board.js"></script>-->
+<script type="text/javascript" src="/js/app/reply.js"></script>
+
+
+<script>
+    var content = $('#tag_content').val();
+    $(function () {
+        $('#content').append(content);
+    })
+
+    var pwCh = $('#mem_pw').val();
+    $('#password').blur(function () {
+        if($('#password').val().eq(pwCh)) {
+            console.log('true');
+            $('#pw_ch').text('비밀번호 일치 확인되었습니다.');
+            $('#pw_ch').css('color', 'black');
+        } else {
+            console.log('false');
+            $('#pw_ch').text('비밀번호가 일치하지 않습니다.');
+            $('#pw_ch').css('color', 'red');
+        }
+    });
+</script>
+
+</body>
 </html>

@@ -35,13 +35,20 @@
                     </div>
                     <div class="form-group">
                         <label for="nickname">Nickname</label>
-                        <input type="text" class="form-control" id="nickname" th:value="${mem_nickname}" readonly>
+                        <p><strong id="nickname" th:text="${mem_nickname}"></strong></p>
                     </div>
                     <div class="form-group">
+                        <input type="hidden" id="mem_pw" th:value="${mem_password}">
                         <label for="password">Password *</label>
                         <input type="password" class="form-control" id="password" required>
+                        <div id="pw_ch"></div>
                     </div>
                     <div class="form-group">
+                        <label for="img">Main Image * - 구현해야함</label>
+                        <input type="file" class="form-control" id="img">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="content" style="display: none;"></textarea>
                         <label for="summernote">Content *</label>
                         <div id="summernote"></div>
                     </div>
@@ -69,5 +76,19 @@
 
 <script src="/js/app/summernote.js"></script>
 
+<script>
+    var pwCh = $('#mem_pw').val();
+    $('#password').blur(function () {
+        if($('#password').val().eq(pwCh)) {
+            console.log('true');
+            $('#pw_ch').text('비밀번호 일치 확인되었습니다.');
+            $('#pw_ch').css('color', 'black');
+        } else {
+            console.log('false');
+            $('#pw_ch').text('비밀번호가 일치하지 않습니다.');
+            $('#pw_ch').css('color', 'red');
+        }
+    });
+</script>
 </body>
 </html>
