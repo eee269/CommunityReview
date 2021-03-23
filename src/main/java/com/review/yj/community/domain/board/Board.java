@@ -19,12 +19,12 @@ public class Board extends BaseTimeEntity{
 
     private String brd_title;
     private String brd_content;
-    private long mem_id;
+    private Long mem_id;
     private String mem_nickname;
     private int brd_cnt;
 
     @Builder
-    public Board(String brd_title, String brd_content, long mem_id, String mem_nickname, int brd_cnt) {
+    public Board(String brd_title, String brd_content, Long mem_id, String mem_nickname, int brd_cnt) {
         this.brd_title = brd_title;
         this.brd_content = brd_content;
         this.mem_id = mem_id;

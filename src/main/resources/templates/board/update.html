@@ -29,7 +29,7 @@
             <div class="comment-form-wrap pt-5">
                 <h3 class="mb-5">Board Update</h3>
                 <input type="hidden" id="brd_id" th:value="${board.getBrd_id()}">
-                <form class="p-5 bg-light" id="update_form" action="ch()">
+                <form class="p-5 bg-light" id="update_form">
                     <div class="form-group">
                         <label for="title">Title *</label>
                         <input type="text" class="form-control" id="title" th:value="${board.getBrd_title()}" required>
@@ -43,14 +43,15 @@
                         <label for="password">Password *</label>
                         <input type="password" class="form-control" id="password" required>
                         <div id="pw_ch"></div>
+                        <input type="hidden" id="pw_bool">
                     </div>
                     <div class="form-group">
-                        <textarea name="content" style="display: none;" th:field="${board.getBrd_content()}"></textarea>
+                        <textarea name="content" style="display: none;" >[[${board.getBrd_content()}]]</textarea>
                         <label for="summernote">Content *</label>
                         <div id="summernote"></div>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Update" class="btn btn-primary" id="btn-update">
+                        <input type="button" value="Update" class="btn btn-primary" id="btn-update">
                         <input type="button" value="Delete" class="btn" id="btn-delete">
                         <input type="button" value="Cancel" class="btn" onclick="history.back()">
                     </div>
@@ -90,22 +91,13 @@
             $('#pw_ch').text('비밀번호 일치 확인되었습니다.');
             $('#pw_ch').css('color', 'black');
             check = true;
+            $('#pw_bool').attr('value', check);
         } else {
             console.log('false');
             $('#pw_ch').text('비밀번호가 일치하지 않습니다.');
             $('#pw_ch').css('color', 'red');
             check = false;
-        }
-    });
-
-    $(function ch() {
-        if(check) {
-            $('#update_form').action = "javascript:update()";
-            $('#update_form').submit();
-        }
-        else {
-            alert('비밀번호를 확인하세요!');
-            return;
+            $('#pw_bool').attr('value', check);
         }
     });
 </script>

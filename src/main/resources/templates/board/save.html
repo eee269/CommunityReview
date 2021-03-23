@@ -9,7 +9,6 @@
     <!-- summernote API -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
-    <script type="text/javascript" src="../js/app/board.js"></script>
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
@@ -30,7 +29,8 @@
         <div class="container">
             <div class="comment-form-wrap pt-5">
                 <h3 class="mb-5">Board Write</h3>
-                <form class="p-5 bg-light" >
+                <form class="p-5 bg-light" id="save_form">
+                    <input type="hidden" id="session" th:value="${session['ses_id']}">
                     <div class="form-group">
                         <label for="title">Title *</label>
                         <input type="text" class="form-control" id="title">
@@ -44,6 +44,7 @@
                         <label for="password">Password *</label>
                         <input type="password" class="form-control" id="password">
                         <div id="pw_ch"></div>
+                        <input type="hidden" id="pw_bool">
                     </div>
                     <div class="form-group">
                         <textarea name="content" style="display: none;"></textarea>
@@ -51,7 +52,7 @@
                         <div id="summernote"></div>
                     </div>
                     <div class="form-group">
-                        <input type="button" value="Save" class="btn btn-primary" onclick="javascript:ch()">
+                        <input type="button" value="Save" class="btn btn-primary" id="btn-save">
                         <input type="button" value="Board List" class="btn" onclick="location.href='/board/'">
                     </div>
 
@@ -66,6 +67,8 @@
 
 <div th:replace="fragment/common :: script"></div>
 
+
+<script type="text/javascript" src="/js/app/board.js"></script>
 
 <!-- summernote API -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
@@ -82,45 +85,16 @@
             $('#pw_ch').text('비밀번호 일치 확인되었습니다.');
             $('#pw_ch').css('color', 'black');
             check = true;
+            $('#pw_bool').attr('value', check);
         } else {
             console.log('false');
             $('#pw_ch').text('비밀번호가 일치하지 않습니다.');
             $('#pw_ch').css('color', 'red');
             check = false;
+            $('#pw_bool').attr('value', check);
         }
     });
 
-    function ch() {
-        if(check && $('#title').val() != null) {
-            // save();
-            var content = $('textarea[name="content"]').val($('#summernote').summernote('code'));
-            var data = {
-                brd_title: $('#title').val(),
-                brd_content: content,
-                mem_nickname: $('#nickname').val(),
-                mem_id: [[${session('ses_id')}]]
-            };
-
-            $.ajax({
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                data: JSON.stringify(data),
-                url: '/api/board/save'
-            }).done(function (brd_id) {
-                alert('게시글이 저장되었습니다.');
-                window.location.href = '/api/board/detail?brd_id=' + brd_id;
-            }).fail(function (error) {
-                alert(JSON.stringify(error));
-            })
-        } else if(!check) {
-            alert('비밀번호를 확인하세요!');
-            return;
-        } else {
-            alert('제목을 입력하세요!');
-            return;
-        }
-    }
 </script>
 </body>
 </html>

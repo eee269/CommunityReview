@@ -1,49 +1,66 @@
 var main = {
     init: function () {
         var _this = this;
-        $('#save_form').on('submit', function () {
-            _this.save();
-        });
-        // $('#btn-save').on('click', function () {
+        // $('#save_form').on('submit', function () {
         //     _this.save();
         // });
+        $('#btn-save').on('click', function () {
+            if($('#title').val() == "") {
+                alert('제목을 입력하세요!');
+                return ;
+            } else if(!$('#pw_bool').val()) {
+                alert('비밀번호를 확인하세요!');
+                return ;
+            } else {
+                $('textarea[name="content"]').html($('#summernote').summernote('code'));
+                _this.save();
+            }
+        });
 
         $('#btn-update').on('click', function () {
-            _this.update();
+            if($('#title').val() == "") {
+                alert('제목을 입력하세요!');
+                return ;
+            } else if(!$('#pw_bool').val()) {
+                alert('비밀번호를 확인하세요!');
+                return ;
+            } else {
+                $('textarea[name="content"]').html($('#summernote').summernote('code'));
+                _this.update();
+            }
         });
 
         $('#btn-delete').on('click', function () {
             _this.delete();
-        })
+        });
     },
     save: function () {
-        var content = $('textarea[name="content"]').val($('#summernote').summernote('code'));
         var data = {
             brd_title: $('#title').val(),
-            brd_content: content,
+            brd_content: $('textarea[name="content"]').val(),
             mem_nickname: $('#nickname').val(),
-            mem_password: $('#password').val()
+            mem_id: $('#session').val(),
+            brd_cnt: 0
         };
 
         $.ajax({
             type: 'POST',
-            contentType: 'application/json; charset=utf-8',
             dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
-            url: '/api/board/save'
+            url: '/api/board/save/'
         }).done(function (brd_id) {
             alert('게시글이 저장되었습니다.');
             window.location.href = '/api/board/detail?brd_id=' + brd_id;
         }).fail(function (error) {
             alert(JSON.stringify(error));
-        })
+        });
     },
     update: function () {
-        var content = $('textarea[name="content"]').val($('#summernote').summernote('code'));
         var data = {
             brd_id: $('#brd_id').val(),
             brd_title: $('#title').val(),
-            brd_content: content
+            brd_content: $('textarea[name="content"]').val(),
         };
 
         $.ajax({
@@ -75,4 +92,6 @@ var main = {
             })
         } else return false;
     }
-}
+};
+
+main.init();
