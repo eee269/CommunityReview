@@ -1,4 +1,4 @@
-﻿var main = {
+var main = {
     init: function() {
         var _this = this;
 
@@ -39,9 +39,9 @@
         $.ajax({
             url: '/api/member/sign_in',
             dataType: 'json',
-            type: 'GET',
+            type: 'POST',
             contentType: 'application/json; charset=utf-8',
-            data: data
+            data: JSON.stringify(data)
         }).done(function () {
             alert("로그인 되었습니다.");
             window.location.href='/';

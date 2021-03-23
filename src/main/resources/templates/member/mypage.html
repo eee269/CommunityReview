@@ -1,9 +1,25 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net/nz/thymeleaf/layout"
-      layout:decorate="~{layout/default_layout}">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Review Sign In</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <div th:replace="fragment/common :: css"></div>
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-<div layout:fragment="content">
+<div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <div th:replace="fragment/common :: header"></div>
 
     <section id="main" class="wrapper style1">
         <header class="major">
@@ -68,5 +84,13 @@
             </div>
         </div>
     </section>
-</div>
+
+    <div th:replace="fragment/common :: footer"></div>
+
+</div> <!-- .site-wrap -->
+
+<div th:replace="fragment/common :: script"></div>
+<script type="text/javascript" src="../js/app/member.js"></script>
+
+</body>
 </html>

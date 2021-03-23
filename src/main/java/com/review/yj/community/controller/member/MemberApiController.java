@@ -18,7 +18,7 @@ public class MemberApiController {
         return memberService.save(member);
     }
 
-    @GetMapping("/api/member/sign_in")
+    @PostMapping("/api/member/sign_in")
     public Member sign_in(HttpServletRequest request, @RequestBody Member member) {
         Member result = memberService.findForLogin(member);
         // session 설정

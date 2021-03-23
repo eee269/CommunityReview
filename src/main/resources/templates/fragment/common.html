@@ -2,23 +2,23 @@
 
 <div th:fragment="css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900|Playfair+Display:400,700,900 " rel="stylesheet">
-    <link rel="stylesheet" href="../fonts/icomoon/style.css">
+    <link rel="stylesheet" href="/fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/jquery-ui.css">
-    <link rel="stylesheet" href="../css/owl.carousel.min.css">
-    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
 
-    <link rel="stylesheet" href="../css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/jquery.fancybox.min.css">
 
-    <link rel="stylesheet" href="../css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
 
-    <link rel="stylesheet" href="../fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="/fonts/flaticon/font/flaticon.css">
 
-    <link rel="stylesheet" href="../css/aos.css">
+    <link rel="stylesheet" href="/css/aos.css">
 
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </div>
 
 <div th:fragment="header">
@@ -35,10 +35,8 @@
                     <nav class="site-navigation position-relative text-right" role="navigation">
 
                         <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                            <li><a href="#home-section" class="nav-link">Home</a></li>
-                            <li><a href="#properties-section" class="nav-link">Properties</a></li>
-                            <li><a href="#agents-section" class="nav-link">Agents</a></li>
-                            <li><a href="#contact-section" class="nav-link">Contact</a></li>
+                            <li><a href="/" class="nav-link">Home</a></li>
+                            <li><a href="/board/" class="nav-link">Board</a></li>
                             <li th:if="${session['ses_id'] == null}"><a href="/member/sign_in" class="nav-link">Sign In</a></li>
                             <li th:unless="${session['ses_id'] == null}">
                                 <a href="/member/mypage" class="nav-link">My Page</a>
@@ -64,51 +62,48 @@
                 <div class="col-md-8">
                     <div class="row">
                         <div class="col-md-5">
-                            <h2 class="footer-heading mb-4">About Stated</h2>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque facere laudantium magnam voluptatum autem. Amet aliquid nesciunt veritatis aliquam.</p>
+                            <h2 class="footer-heading mb-4">About Yejin</h2>
+                            <p>맛집 탐방을 좋아합니다  (๑˃؂˂๑)  <br> 여행가고 싶어요  ˃̣̣̣̣̣̣︿˂̣̣̣̣̣̣  </p>
                         </div>
                         <div class="col-md-3 ml-auto">
                             <h2 class="footer-heading mb-4">Quick Links</h2>
                             <ul class="list-unstyled">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Services</a></li>
-                                <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/board/">Board</a></li>
+                                <li><a href="/member/sign_in">Sign In</a></li>
+                                <li><a href="/member/sign_up">Sign Up</a></li>
                             </ul>
                         </div>
 
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="mb-4">
-                        <h2 class="footer-heading mb-4">Subscribe Newsletter</h2>
-                        <form action="#" method="post" class="footer-subscribe">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control border-secondary text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary text-black" type="button" id="button-addon2">Send</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="">
-                        <h2 class="footer-heading mb-4">Follow Us</h2>
-                        <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
-                        <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
-                        <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-                        <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
-                    </div>
-
-
+                <div class="col-md-3 ml-auto">
+                    <h2 class="footer-heading mb-4">Follow Me</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="https://github.com/eee269">GitHub</a></li>
+                        <li><a href="https://jinny-1st.tistory.com">Blog: Tech Collection</a></li>
+                        <li><a href="https://open.kakao.com/o/sFvlU1Rc">Open Kakao Talk</a></li>
+                        <li><a href="#">Email Address</a></li>
+                    </ul>
                 </div>
+<!--                <div class="col-md-4">-->
+<!--                    <div class="">-->
+<!--                        <h2 class="footer-heading mb-4">Follow Me</h2>-->
+<!--                        <a href="https://github.com/eee269" class="pl-0 pr-3"><img src="https://img.icons8.com/material-sharp/48/000000/github.png"/></a>-->
+<!--                        <a href="https://jinny-1st.tistory.com" class="pl-3 pr-3"><img src="images/tistory.png" alt="tistory"></a>-->
+<!--                        <a href="https://open.kakao.com/o/sFvlU1Rc" class="pl-3 pr-3"><img src="https://img.icons8.com/wired/64/000000/kakaotalk.png"/></a>-->
+<!--                        <a href="#" class="pl-3 pr-3"><img src="https://img.icons8.com/ios/48/000000/important-mail.png"/></a>-->
+<!--                    </div>-->
+
+
+<!--                </div>-->
             </div>
             <div class="row pt-5 mt-5 text-center">
                 <div class="col-md-12">
                     <div class="border-top pt-5">
                         <p>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+                            Copyright &copy;2021 All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>
                     </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${board.getBrd_title()}"></title>
+    <title>[[${board.getBrd_title()}]]</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -29,9 +29,9 @@
 
 
                 <div class="col-md-6 mt-lg-5 text-center">
-                    <h1 th:text="${board.getBrd_title()}"></h1>
-                    <p class="post-meta"><strong> 날짜 넣기 (format: March 21, 2019) </strong>
-                        &bull; Posted by <strong th:text="${board.getMem_nickname()}"></strong></p>
+                    <h1>[[${board.getBrd_title()}]]</h1>
+                    <p class="post-meta"><strong>[[${board.getCreatedDate()}]]</strong>
+                        &bull; Posted by <strong>[[${board.getMem_nickname()}]]</strong></p>
 
                 </div>
 
@@ -45,9 +45,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 blog-content">
-
                     <input type="hidden" id="tag_content" th:value="${board.getBrd_content()}" >
-                    <div id="content" class="lead"></div>
+                    <div id="content" class="lead" style="min-height: 500px"></div>
 
                     <div class="pt-5">
                         <p>Categories:  <a href="#">카테고리</a>, <a href="#">꼭 넣어야할까..?</a></p>
@@ -56,100 +55,105 @@
 
                     <div class="pt-5">
                         <h3 class="mb-5">Reply [ <strong th:text="${replyList.size()}"></strong> ]</h3>
-                        <ul class="comment-list" th:if="${replyList.isEmpty()}">
+                        <ul class="comment-list" th:if="${replyList.size() == 0}">
                             <h2>댓글이 없습니다.</h2>
                         </ul>
-                        <ul class="comment-list" th:unless="${replyList.isEmpty()}">
+                        <ul class="comment-list" th:unless="${replyList.size() == 0}">
                             <li class="comment" th:each="reply: ${replyList}">
                                 <div class="vcard bio">
                                     <img src="images/person_1.jpg" alt="Image placeholder">
                                 </div>
                                 <div class="comment-body">
-                                    <h3 th:text="*{getRep_nickname()}"></h3>
-                                    <div class="meta" th:text="*{getCreateDate()}">(January 9, 2018 at 2:21pm)</div>
-                                    <p th:text="*{getRep_content()}"></p>
+                                    <h3>[[${reply.getRep_nickname()}]]</h3>
+                                    <div class="meta">[[${reply.getCreatedDate()}]]</div>
+                                    <div class="meta" th:if="${reply.getModifiedDate() != null}"> -> [[${reply.getModifiedDate()}]]</div>
+                                    <p>[[${reply.getRep_content()}]]</p>
 <!--                                    <p><a href="#" class="reply">Reply</a></p>-->
-                                    <p th:if="${session['ses_id'].equals(reply.getRep_id())}">
-                                        <a href="javascript:rep_update()" class="reply">Reply Update</a>
+                                    <p th:if="${session['ses_id'] == reply.getRep_id()}">
+                                        <a href="javascript:rep_update()" class="reply">Reply Update</a> &nbsp;&nbsp;
                                         <a href="javascript:rep_delete()" class="reply">Reply Delete</a>
                                     </p>
                                 </div>
                             </li>
 
-                            <hr>
+<!--                            <li class="comment">-->
+<!--                                <div class="vcard bio">-->
+<!--                                    <img src="images/person_1.jpg" alt="Image placeholder">-->
+<!--                                </div>-->
+<!--                                <div class="comment-body">-->
+<!--                                    <h3>Jean Doe</h3>-->
+<!--                                    <div class="meta">January 9, 2018 at 2:21pm</div>-->
+<!--                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>-->
+<!--                                    <p><a href="#" class="reply">Reply</a></p>-->
+<!--                                </div>-->
 
-                            <li class="comment">
-                                <div class="vcard bio">
-                                    <img src="images/person_1.jpg" alt="Image placeholder">
-                                </div>
-                                <div class="comment-body">
-                                    <h3>Jean Doe</h3>
-                                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                    <p><a href="#" class="reply">Reply</a></p>
-                                </div>
-
-                                <ul class="children">
-                                    <li class="comment">
-                                        <div class="vcard bio">
-                                            <img src="images/person_1.jpg" alt="Image placeholder">
-                                        </div>
-                                        <div class="comment-body">
-                                            <h3>Jean Doe</h3>
-                                            <div class="meta">January 9, 2018 at 2:21pm</div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                            <p><a href="#" class="reply">Reply</a></p>
-                                        </div>
+<!--                                <ul class="children">-->
+<!--                                    <li class="comment">-->
+<!--                                        <div class="vcard bio">-->
+<!--                                            <img src="images/person_1.jpg" alt="Image placeholder">-->
+<!--                                        </div>-->
+<!--                                        <div class="comment-body">-->
+<!--                                            <h3>Jean Doe</h3>-->
+<!--                                            <div class="meta">January 9, 2018 at 2:21pm</div>-->
+<!--                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>-->
+<!--                                            <p><a href="#" class="reply">Reply</a></p>-->
+<!--                                        </div>-->
 
 
-                                        <ul class="children">
-                                            <li class="comment">
-                                                <div class="vcard bio">
-                                                    <img src="images/person_1.jpg" alt="Image placeholder">
-                                                </div>
-                                                <div class="comment-body">
-                                                    <h3>Jean Doe</h3>
-                                                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                                    <p><a href="#" class="reply">Reply</a></p>
-                                                </div>
+<!--                                        <ul class="children">-->
+<!--                                            <li class="comment">-->
+<!--                                                <div class="vcard bio">-->
+<!--                                                    <img src="images/person_1.jpg" alt="Image placeholder">-->
+<!--                                                </div>-->
+<!--                                                <div class="comment-body">-->
+<!--                                                    <h3>Jean Doe</h3>-->
+<!--                                                    <div class="meta">January 9, 2018 at 2:21pm</div>-->
+<!--                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>-->
+<!--                                                    <p><a href="#" class="reply">Reply</a></p>-->
+<!--                                                </div>-->
 
-                                                <ul class="children">
-                                                    <li class="comment">
-                                                        <div class="vcard bio">
-                                                            <img src="images/person_1.jpg" alt="Image placeholder">
-                                                        </div>
-                                                        <div class="comment-body">
-                                                            <h3>Jean Doe</h3>
-                                                            <div class="meta">January 9, 2018 at 2:21pm</div>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                                            <p><a href="#" class="reply">Reply</a></p>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+<!--                                                <ul class="children">-->
+<!--                                                    <li class="comment">-->
+<!--                                                        <div class="vcard bio">-->
+<!--                                                            <img src="images/person_1.jpg" alt="Image placeholder">-->
+<!--                                                        </div>-->
+<!--                                                        <div class="comment-body">-->
+<!--                                                            <h3>Jean Doe</h3>-->
+<!--                                                            <div class="meta">January 9, 2018 at 2:21pm</div>-->
+<!--                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>-->
+<!--                                                            <p><a href="#" class="reply">Reply</a></p>-->
+<!--                                                        </div>-->
+<!--                                                    </li>-->
+<!--                                                </ul>-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </li>-->
 
-                            <li class="comment">
-                                <div class="vcard bio">
-                                    <img src="images/person_1.jpg" alt="Image placeholder">
-                                </div>
-                                <div class="comment-body">
-                                    <h3>Jean Doe</h3>
-                                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                    <p><a href="#" class="reply">Reply</a></p>
-                                </div>
-                            </li>
+<!--                            <li class="comment">-->
+<!--                                <div class="vcard bio">-->
+<!--                                    <img src="images/person_1.jpg" alt="Image placeholder">-->
+<!--                                </div>-->
+<!--                                <div class="comment-body">-->
+<!--                                    <h3>Jean Doe</h3>-->
+<!--                                    <div class="meta">January 9, 2018 at 2:21pm</div>-->
+<!--                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>-->
+<!--                                    <p><a href="#" class="reply">Reply</a></p>-->
+<!--                                </div>-->
+<!--                            </li>-->
                         </ul>
                         <!-- END comment-list -->
 
                         <div class="comment-form-wrap pt-5">
                             <h3 class="mb-5">Reply Write</h3>
-                            <form class="p-5 bg-light">
+                            <form class="p-5 bg-light" th:if="${member == null}">
+                                <blockquote class="mb-5">
+                                    <p>로그인 후 댓글을 작성해주세요!</p>
+                                    <input type="button" value="Sign In" class="btn btn-primary" onclick="location.href='/member/sign_in'">
+                                </blockquote>
+                            </form>
+                            <form class="p-5 bg-light" th:unless="${member == null}">
                                 <div class="form-group">
                                     <label for="nickname">Nickname *</label>
                                     <p id="nickname" th:text="${member.getMem_nickname()}"></p>
@@ -176,44 +180,22 @@
                 </div>
                 <div class="col-md-4 sidebar">
                     <div class="sidebar-box">
-                        <h3 th:text="${board.getBrd_title()}"></h3>
-                        <p>Posted By <strong th:text="${board.getMem_nickname()}"></strong></p>
-
-                        <p th:if="${session['ses_id'].equals(reply.getRep_id())}">
-                            <a th:href="@{/board/update(brd_id=${board.getBrd_id()})}" class="btn btn-primary btn-sm">Board Update</a><br>
-                            <a href="javascript:rep_delete()" class="btn btn-sm">Board Delete</a>
-                        </p>
-<!--                        <p><a href="#" class="">Read More</a></p>-->
+                        <h3>[[${board.getBrd_title()}]]</h3>
                     </div>
-<!--                    <div class="sidebar-box">-->
-<!--                        <form action="#" class="search-form">-->
-<!--                            <div class="form-group">-->
-<!--                                <span class="icon fa fa-search"></span>-->
-<!--                                <input type="text" class="form-control" placeholder="Type a keyword and hit enter">-->
-<!--                            </div>-->
-<!--                        </form>-->
-<!--                    </div>-->
-<!--                    <div class="sidebar-box">-->
-<!--                        <div class="categories">-->
-<!--                            <h3>Categories</h3>-->
-<!--                            <li><a href="#">Creatives <span>(12)</span></a></li>-->
-<!--                            <li><a href="#">News <span>(22)</span></a></li>-->
-<!--                            <li><a href="#">Design <span>(37)</span></a></li>-->
-<!--                            <li><a href="#">HTML <span>(42)</span></a></li>-->
-<!--                            <li><a href="#">Web Development <span>(14)</span></a></li>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="sidebar-box">-->
-<!--                        <img src="images/person_1.jpg" alt="Image placeholder" class="img-fluid mb-4">-->
-<!--                        <h3>About The Author</h3>-->
-<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>-->
-<!--                        <p><a href="#" class="btn btn-primary btn-sm">Read More</a></p>-->
-<!--                    </div>-->
-
-<!--                    <div class="sidebar-box">-->
-<!--                        <h3>Paragraph</h3>-->
-<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>-->
-<!--                    </div>-->
+                    <div class="sidebar-box">
+                        <p>
+                            <strong>[[${board.getCreatedDate()}]]</strong>
+                            <strong th:if="${board.getModifiedDate() != null}"> -> [[${board.getModifiedDate()}]]</strong></p>
+                        <p>Posted By <strong>[[${board.getMem_nickname()}]]</strong></p>
+                        <p>View : [[${board.getBrd_cnt()}]]</p> <br><br>
+                        <input type="button" href="/board/" class="btn btn-sm" value="Board List" >
+                    </div>
+                    <div class="sidebar-box">
+                        <p th:if="${session['ses_id'] == board.getMem_id()}">
+                            <input type="button" th:href="@{/board/update(brd_id=${board.getBrd_id()})}" class="btn btn-primary btn-sm" value="Board Update"><br>
+                            <input type="button" id="btn-delete" class="btn btn-sm" value="Board Delete">
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -224,9 +206,8 @@
 </div> <!-- .site-wrap -->
 <div th:replace="fragment/common :: script"></div>
 
-<!--<script type="text/javascript" src="/js/app/board.js"></script>-->
+<script type="text/javascript" src="/js/app/board.js"></script>
 <script type="text/javascript" src="/js/app/reply.js"></script>
-
 
 <script>
     var content = $('#tag_content').val();
@@ -236,7 +217,7 @@
 
     var pwCh = $('#mem_pw').val();
     $('#password').blur(function () {
-        if($('#password').val().eq(pwCh)) {
+        if($('#password').val() == pwCh) {
             console.log('true');
             $('#pw_ch').text('비밀번호 일치 확인되었습니다.');
             $('#pw_ch').css('color', 'black');
@@ -246,6 +227,7 @@
             $('#pw_ch').css('color', 'red');
         }
     });
+
 </script>
 
 </body>

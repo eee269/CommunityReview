@@ -23,4 +23,9 @@ public class MemberService {
                 .orElseThrow(() -> new IllegalArgumentException(requestDto.getMem_userid() + "의 아이디를 가지는 회원이 없습니다."));
         return result;
     }
+
+    public Member findById(Long ses_id) {
+        return memberRepository.findById(ses_id)
+                .orElseThrow(() -> new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
+    }
 }

@@ -1,9 +1,12 @@
-﻿var main = {
+var main = {
     init: function () {
         var _this = this;
-        $('#btn-save').on('click', function () {
+        $('#save_form').on('submit', function () {
             _this.save();
         });
+        // $('#btn-save').on('click', function () {
+        //     _this.save();
+        // });
 
         $('#btn-update').on('click', function () {
             _this.update();

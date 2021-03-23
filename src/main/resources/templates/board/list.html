@@ -64,26 +64,32 @@
             </div>
           </div>
 
-          <div class="col-md-9 order-2 order-md-1" th:if="${boardList.isEmpty()}">
+          <div class="col-md-9 order-2 order-md-1" th:if="${boardList == null}">
             <div class="property horizontal d-flex">
               <div class="prop-details p-3">
                 <h2>아직 작성된 게시글이 없습니다.</h2>
               </div>
             </div>
           </div>
-          <div class="col-md-9 order-2 order-md-1" th:unless="${boardList.isEmpty()}">
+          <div class="col-md-9 order-2 order-md-1" th:unless="${boardList == null}">
             <div class="property horizontal d-flex" th:each="board: ${boardList}">
-              <div class="mr-3 img-entry">
-                <a th:href="@{/api/board/detail(brd_id=${board.getBrd_id})}"><img th:src="@{../images/property_1-sm.jpg}" alt="Image" class="img-fluid"></a>
-              </div>
+<!--              <div class="mr-3 img-entry">-->
+<!--                <a th:href="@{/api/board/detail(brd_id=${board.getBrd_id})}"><img th:src="@{../images/property_1-sm.jpg}" alt="Image" class="img-fluid"></a>-->
+<!--              </div>-->
               <div class="prop-details p-3">
-                <div><a th:href="@{/api/board/detail(brd_id=${board.getBrd_id})}"><strong class="price" th:text="${board.getBrd_title()}"></strong></a></div>
-                <div class="mb-2 d-flex justify-content-between">
-                  <span class="w border-r" th:if="${board.getModifiedDate() == null}" th:text="${board.getCreatedDate()}"></span>
-                  <span class="w border-r" th:if="${board.getModifiedDate() == null}" th:text="${board.getModifiedDate()}"></span>
-                  <span class="w" th:text="${board.getBrd_view_cnt()}">조회수: </span>
-                </div>
-                <div th:text="${board.getMem_nickname()}"></div>
+                <a th:href="@{/api/board/detail(brd_id=${board.getBrd_id})}">
+                  <div><strong class="price" th:text="${board.getBrd_title()}"></strong></div>
+                  <div class="mb-2 d-flex justify-content-between">
+                    <th:block th:if="${board.getModifiedDate()}">
+                      <span class="w">[[${board.getCreatedDate()}]]</span>
+                    </th:block>
+                    <th:block th:unless="${board.getModifiedDate()}">
+                      <span class="border-left w">[[${board.getCreatedDate()}]]</span>
+                    </th:block>
+                  </div>
+                  <div>[[${board.getMem_nickname()}]]</div>
+                  <span class="w"> view : [[${board.getBrd_cnt()}]]</span>
+                </a>
               </div>
             </div>
           </div>
