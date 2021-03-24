@@ -31,6 +31,17 @@
                 <input type="hidden" id="brd_id" th:value="${board.getBrd_id()}">
                 <form class="p-5 bg-light" id="update_form">
                     <div class="form-group">
+                        <label for="brd_ctg">Category</label>
+                        <div class="select-wrap">
+                            <span class="icon icon-keyboard_arrow_down"></span>
+                            <select class="form-control px-3" id="brd_ctg" th:value="${board.brd_category}">
+                                <option value="1">Develop</option>
+                                <option value="2">Everything</option>
+                                <option value="3">Anonymous Board</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="title">Title *</label>
                         <input type="text" class="form-control" id="title" th:value="${board.getBrd_title()}" required>
                     </div>
@@ -43,7 +54,7 @@
                         <label for="password">Password *</label>
                         <input type="password" class="form-control" id="password" required>
                         <div id="pw_ch"></div>
-                        <input type="hidden" id="pw_bool">
+                        <input type="hidden" id="pw_bool" value="false">
                     </div>
                     <div class="form-group">
                         <textarea name="content" style="display: none;" >[[${board.getBrd_content()}]]</textarea>
@@ -77,6 +88,8 @@
 
 
 <script>
+    $('#brd_ctg').attr('value', );
+
     $(function() {
         var content = $('textarea[name="content"]').val();
 
@@ -91,14 +104,13 @@
             $('#pw_ch').text('비밀번호 일치 확인되었습니다.');
             $('#pw_ch').css('color', 'black');
             check = true;
-            $('#pw_bool').attr('value', check);
         } else {
             console.log('false');
             $('#pw_ch').text('비밀번호가 일치하지 않습니다.');
             $('#pw_ch').css('color', 'red');
             check = false;
-            $('#pw_bool').attr('value', check);
         }
+        $('#pw_bool').attr('value', check);
     });
 </script>
 

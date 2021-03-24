@@ -22,18 +22,21 @@ public class Board extends BaseTimeEntity{
     private Long mem_id;
     private String mem_nickname;
     private int brd_cnt;
+    private int brd_category;
 
     @Builder
-    public Board(String brd_title, String brd_content, Long mem_id, String mem_nickname, int brd_cnt) {
+    public Board(String brd_title, String brd_content, Long mem_id, String mem_nickname, int brd_cnt, int brd_category) {
         this.brd_title = brd_title;
         this.brd_content = brd_content;
         this.mem_id = mem_id;
         this.mem_nickname = mem_nickname;
         this.brd_cnt = brd_cnt;
+        this.brd_category = brd_category;
     }
 
-    public void update(String brd_title, String brd_content) {
+    public void update(String brd_title, String brd_content, int brd_category) {
         this.brd_title = brd_title;
         this.brd_content = brd_content;
+        this.brd_category = brd_category;
     }
 }

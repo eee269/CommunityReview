@@ -53,15 +53,17 @@
               <input type="button" value="Write" class="btn btn-primary" onclick="location.href='/board/save'">
             </div>
 
-            <div class="mb-5 ml-auto">
-              <h2 class="text-black mb-4 h5 font-family-2">Category</h2>
-              <ul class="list-unstyled">
-                <li><a href="/board">Main</a></li>
-                <li><a href="/board">1</a></li>
-                <li><a href="/board">2</a></li>
-                <li><a href="/board">3</a></li>
-              </ul>
+            <div class="sidebar-box">
+              <div class="categories">
+                <h2 class="text-black mb-4 h5 font-family-2">Category</h2>
+                <li><a href="/board/">All</a></li>
+                <li><a href="/board/0">Notice</a></li>
+                <li><a href="/board/1">Develop</a></li>
+                <li><a href="/board/2">Everything</a></li>
+                <li><a href="/board/3">Anonymous Board</a></li>
+              </div>
             </div>
+
           </div>
 
           <div class="col-md-9 order-2 order-md-1" th:if="${boardList == null}">
@@ -73,9 +75,6 @@
           </div>
           <div class="col-md-9 order-2 order-md-1" th:unless="${boardList == null}">
             <div class="property horizontal d-flex" th:each="board: ${boardList}">
-<!--              <div class="mr-3 img-entry">-->
-<!--                <a th:href="@{/api/board/detail(brd_id=${board.getBrd_id})}"><img th:src="@{../images/property_1-sm.jpg}" alt="Image" class="img-fluid"></a>-->
-<!--              </div>-->
               <div class="prop-details p-3">
                 <a th:href="@{/api/board/detail(brd_id=${board.getBrd_id})}">
                   <div><strong class="price" th:text="${board.getBrd_title()}"></strong></div>

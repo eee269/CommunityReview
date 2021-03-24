@@ -18,6 +18,7 @@ public class BoardDto {
     private int brd_cnt;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
+    private int brd_category;
 
 //    public Board toEntity() {
 //        return Board.builder()
@@ -30,7 +31,7 @@ public class BoardDto {
 //    }
 
     @Builder
-    public BoardDto(Long brd_id, String brd_title, String brd_content, Long mem_id, String mem_nickname, int brd_cnt, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public BoardDto(Long brd_id, String brd_title, String brd_content, Long mem_id, String mem_nickname, int brd_cnt, LocalDateTime createdDate, LocalDateTime modifiedDate, int brd_category) {
         this.brd_id = brd_id;
         this.brd_title = brd_title;
         this.brd_content = brd_content;
@@ -39,5 +40,6 @@ public class BoardDto {
         this.brd_cnt = brd_cnt;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
+        this.brd_category = brd_category;
     }
 }

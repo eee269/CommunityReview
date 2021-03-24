@@ -38,7 +38,8 @@ var main = {
             brd_content: $('textarea[name="content"]').val(),
             mem_nickname: $('#nickname').val(),
             mem_id: $('#session').val(),
-            brd_cnt: 0
+            brd_cnt: 0,
+            brd_category: $('#brd_ctg').val(),
         };
 
         $.ajax({
@@ -60,6 +61,7 @@ var main = {
             brd_id: $('#brd_id').val(),
             brd_title: $('#title').val(),
             brd_content: $('textarea[name="content"]').val(),
+            brd_category: $('#brd_ctg').val()
         };
 
         $.ajax({

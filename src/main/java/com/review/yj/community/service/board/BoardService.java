@@ -36,7 +36,7 @@ public class BoardService {
     public Long update(Long brd_id, BoardDto dto) {
         Board board = boardRepository.findById(brd_id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-        board.update(dto.getBrd_title(), dto.getBrd_content());
+        board.update(dto.getBrd_title(), dto.getBrd_content(), dto.getBrd_category());
         return brd_id;
     }
 
@@ -53,5 +53,9 @@ public class BoardService {
     @Transactional(readOnly = true)
     public List<Board> findAllDesc() {
         return boardRepository.findAllDesc();
+    }
+
+    public List<Board> findByCtg(int brd_category) {
+        return boardRepository.findByCtg(brd_category);
     }
 }

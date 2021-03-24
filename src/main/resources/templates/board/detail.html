@@ -29,19 +29,32 @@
 
                 <input type="hidden" id="brd_id" th:value="${board.getBrd_id()}">
                 <div class="col-md-6 mt-lg-5 text-center">
-                    <h1>[[${board.getBrd_title()}]]</h1>
+                    <h3>
+                        <th:block th:switch="${board.brd_category}">
+                            <th:block th:case="0">Notice</th:block>
+                            <th:block th:case="1">Develop</th:block>
+                            <th:block th:case="2">Everything</th:block>
+                            <th:block th:case="3">Anonymous Board</th:block>
+                        </th:block>
+                    </h3>
+                    <br><br>
+                    <h1>[[${board.getBrd_title()}]]</h1><br>
                     <p class="post-meta"><strong>[[${#temporals.format(board.getCreatedDate(), 'MM dd, yyyy  h:mm a')}]]</strong>
-                        &bull; Posted by <strong>[[${board.getMem_nickname()}]]</strong></p>
+                        <strong th:if="${board.modifiedDate != board.createdDate}"><th:block th:if="${board.modifiedDate != null}">
+                            &nbsp;&nbsp;->&nbsp;&nbsp; [[${#temporals.format(board.getModifiedDate(), 'MM dd, yyyy  h:mm a')}]]</th:block></strong><br>
+                        Posted by <strong>[[${board.getMem_nickname()}]]</strong></p>
+                    <p>[[${board.brd_cnt}]] View</p>
 
                 </div>
 
             </div>
         </div>
+        <a href="#content-section" class="smoothscroll arrow-down"><span class="icon-arrow_downward"></span></a>
     </div>
 
 
 
-    <section class="site-section">
+    <section class="site-section" id="content-section">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 blog-content">
@@ -49,7 +62,11 @@
                     <div id="content" class="lead" style="min-height: 500px"></div>
 
                     <div class="pt-5">
-                        <p>Categories:  <a href="#">카테고리</a>, <a href="#">꼭 넣어야할까..?</a></p>
+                        <input type="button" onclick="location.href='/board/'" class="btn btn-sm" value="Board List" >&nbsp;&nbsp;
+                        <p th:if="${session['ses_id'] == board.getMem_id()}">
+                            <input type="button" id="btn-update-form" class="btn btn-primary btn-sm" value="Board Update">&nbsp;&nbsp;
+                            <input type="button" id="btn-delete" class="btn btn-sm" value="Board Delete">
+                        </p>
                     </div>
 
 
@@ -60,9 +77,9 @@
                         </ul>
                         <ul class="comment-list" th:unless="${replyList.size() == 0}">
                             <li class="comment" th:each="reply: ${replyList}">
-                                <div class="vcard bio">
-                                    <img src="images/person_1.jpg" alt="Image placeholder">
-                                </div>
+<!--                                <div class="vcard bio">-->
+<!--                                    <img src="images/person_1.jpg" alt="Image placeholder">-->
+<!--                                </div>-->
                                 <div class="comment-body">
                                     <h3>[[${reply.getRep_nickname()}]]</h3>
                                     <div class="meta">[[${#temporals.format(reply.getCreatedDate(), 'MM dd, yyyy  h:mm a')}]]</div><br>
@@ -164,6 +181,7 @@
                                     <label for="password">Password *</label>
                                     <input type="password" class="form-control" id="password" required>
                                     <div id="pw_ch"></div>
+                                    <input type="hidden" id="pw_bool" value="false">
                                 </div>
 
                                 <div class="form-group">
@@ -179,26 +197,7 @@
                     </div>
 
                 </div>
-                <div class="col-md-4 sidebar">
-                    <div class="sidebar-box">
-                        <h3>[[${board.getBrd_title()}]]</h3>
-                    </div>
-                    <div class="sidebar-box">
-                        <p>
-                            <strong>[[${#temporals.format(board.getCreatedDate(), 'MM dd, yyyy  h:mm a')}]]</strong><br>
-                            <strong th:if="${board.modifiedDate != board.createdDate}"><th:block th:if="${board.modifiedDate != null}">
-                                &nbsp;&nbsp;->&nbsp;&nbsp; [[${#temporals.format(board.getModifiedDate(), 'MM dd, yyyy  h:mm a')}]]</th:block></strong></p>
-                        <p>Posted By <strong>[[${board.getMem_nickname()}]]</strong></p>
-                        <p>View : [[${board.getBrd_cnt()}]]</p> <br><br>
-                        <input type="button" onclick="location.href='/board/'" class="btn btn-sm" value="Board List" >
-                    </div>
-                    <div class="sidebar-box">
-                        <p th:if="${session['ses_id'] == board.getMem_id()}">
-                            <input type="button" id="btn-update-form" class="btn btn-primary btn-sm" value="Board Update"><br>
-                            <input type="button" id="btn-delete" class="btn btn-sm" value="Board Delete">
-                        </p>
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
@@ -228,6 +227,7 @@
             $('#pw_ch').text('비밀번호가 일치하지 않습니다.');
             $('#pw_ch').css('color', 'red');
         }
+        $('#pw_bool').attr('value', check);
     });
 
     $('#btn-update-form').on('click', function () {

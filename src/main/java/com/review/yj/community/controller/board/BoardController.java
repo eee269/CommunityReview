@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,13 @@ public class BoardController {
     @RequestMapping("board")
     public String board(Model model) {
         model.addAttribute("boardList", boardService.findAllDesc());
+
+        return "board/list";
+    }
+
+    @RequestMapping("board/{brd_category}")
+    public String board(@PathVariable int brd_category, Model model) {
+        model.addAttribute("boardList", boardService.findByCtg(brd_category));
 
         return "board/list";
     }
