@@ -15,12 +15,10 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseTimeEntity {
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "MMMM DD, YYYY h:mm a", timezone = "Asia/Seoul")
     @CreatedDate
     @Column(name = "createdDate")
     private LocalDateTime createdDate;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "MMMM DD, YYYY h:mm a", timezone = "Asia/Seoul")
     @LastModifiedDate
     @Column(name = "modifiedDate")
     private LocalDateTime modifiedDate;

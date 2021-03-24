@@ -30,7 +30,7 @@
                 <input type="hidden" id="brd_id" th:value="${board.getBrd_id()}">
                 <div class="col-md-6 mt-lg-5 text-center">
                     <h1>[[${board.getBrd_title()}]]</h1>
-                    <p class="post-meta"><strong>[[${board.getCreatedDate()}]]</strong>
+                    <p class="post-meta"><strong>[[${#temporals.format(board.getCreatedDate(), 'MM dd, yyyy  h:mm a')}]]</strong>
                         &bull; Posted by <strong>[[${board.getMem_nickname()}]]</strong></p>
 
                 </div>
@@ -65,10 +65,11 @@
                                 </div>
                                 <div class="comment-body">
                                     <h3>[[${reply.getRep_nickname()}]]</h3>
-                                    <div class="meta">[[${reply.getCreatedDate()}]]</div>
-                                    <div class="meta" th:if="${reply.getModifiedDate() != null}"> -> [[${reply.getModifiedDate()}]]</div>
+                                    <div class="meta">[[${#temporals.format(reply.getCreatedDate(), 'MM dd, yyyy  h:mm a')}]]</div><br>
+                                    <div class="meta" th:if="${reply.modifiedDate != reply.createdDate}"><th:block th:if="${reply.modifiedDate != null}">
+                                        -> [[${#temporals.format(reply.getModifiedDate(), 'MM dd, yyyy  h:mm a')}]]</th:block></div>
                                     <p>[[${reply.getRep_content()}]]</p>
-<!--                                    <p><a href="#" class="reply">Reply</a></p>-->
+                                    <p><a href="#" class="reply">Reply</a></p>
                                     <p th:if="${session['ses_id'] == reply.getRep_id()}">
                                         <a href="javascript:rep_update()" class="reply">Reply Update</a> &nbsp;&nbsp;
                                         <a href="javascript:rep_delete()" class="reply">Reply Delete</a>
@@ -156,7 +157,7 @@
                             <form class="p-5 bg-light" th:unless="${member == null}">
                                 <div class="form-group">
                                     <label for="nickname">Nickname *</label>
-                                    <p id="nickname" th:text="${member.getMem_nickname()}"></p>
+                                    <input type="text" class="form-control" id="nickname" th:value="${member.getMem_nickname()}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <input type="hidden" id="mem_pw" th:value="${member.getMem_password()}">
@@ -184,8 +185,9 @@
                     </div>
                     <div class="sidebar-box">
                         <p>
-                            <strong>[[${board.getCreatedDate()}]]</strong>
-                            <strong th:if="${board.getModifiedDate() != null}"> -> [[${board.getModifiedDate()}]]</strong></p>
+                            <strong>[[${#temporals.format(board.getCreatedDate(), 'MM dd, yyyyy  h:mm a')}]]</strong><br>
+                            <strong th:if="${board.modifiedDate != board.createdDate}"><th:block th:if="${board.modifiedDate != null}">
+                                &nbsp;&nbsp;->&nbsp;&nbsp; [[${#temporals.format(board.getModifiedDate(), 'MM dd, yyyy  h:mm a')}]]</th:block></strong></p>
                         <p>Posted By <strong>[[${board.getMem_nickname()}]]</strong></p>
                         <p>View : [[${board.getBrd_cnt()}]]</p> <br><br>
                         <input type="button" onclick="location.href='/board/'" class="btn btn-sm" value="Board List" >

@@ -1,9 +1,7 @@
 var main = {
     init: function () {
         var _this = this;
-        // $('#save_form').on('submit', function () {
-        //     _this.save();
-        // });
+
         $('#btn-save').on('click', function () {
             if($('#title').val() == "") {
                 alert('제목을 입력하세요!');
@@ -57,6 +55,7 @@ var main = {
         });
     },
     update: function () {
+        var brd_id = $('#brd_id').val();
         var data = {
             brd_id: $('#brd_id').val(),
             brd_title: $('#title').val(),
@@ -68,7 +67,7 @@ var main = {
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(data),
-            url: '/api/board/update'
+            url: '/api/board/update/' + brd_id
         }).done(function (brd_id) {
             alert('수정완료 되었습니다.');
             window.location.href = '/api/board/detail?brd_id=' + brd_id;

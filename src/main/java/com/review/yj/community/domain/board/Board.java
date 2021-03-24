@@ -31,4 +31,9 @@ public class Board extends BaseTimeEntity{
         this.mem_nickname = mem_nickname;
         this.brd_cnt = brd_cnt;
     }
+
+    public void update(String brd_title, String brd_content) {
+        this.brd_title = brd_title;
+        this.brd_content = brd_content;
+    }
 }

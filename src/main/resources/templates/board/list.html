@@ -80,12 +80,10 @@
                 <a th:href="@{/api/board/detail(brd_id=${board.getBrd_id})}">
                   <div><strong class="price" th:text="${board.getBrd_title()}"></strong></div>
                   <div class="mb-2 d-flex justify-content-between">
-                    <th:block th:if="${board.getModifiedDate()}">
-                      <span class="w">[[${board.getCreatedDate()}]]</span>
-                    </th:block>
-                    <th:block th:unless="${board.getModifiedDate()}">
-                      <span class="border-left w">[[${board.getCreatedDate()}]]</span>
-                    </th:block>
+                      <span class="w">[[${#temporals.format(board.getCreatedDate(), 'MM dd, yyyy  h:mm a')}]]</span>
+                    <th:block th:if="${board.modifiedDate != board.createdDate}"><th:block th:if="${board.modifiedDate != null}">
+                      <span class="w">&nbsp;&nbsp;->&nbsp;&nbsp;[[${#temporals.format(board.getModifiedDate(), 'MM dd, yyyy  h:mm a')}]]</span>
+                    </th:block></th:block>
                   </div>
                   <div>[[${board.getMem_nickname()}]]</div>
                   <span class="w"> view : [[${board.getBrd_cnt()}]]</span>

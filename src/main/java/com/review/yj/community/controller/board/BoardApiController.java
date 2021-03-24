@@ -1,5 +1,6 @@
 package com.review.yj.community.controller.board;
 
+import com.review.yj.community.controller.dto.BoardDto;
 import com.review.yj.community.domain.board.Board;
 import com.review.yj.community.domain.board.Reply;
 import com.review.yj.community.service.board.BoardService;
@@ -62,9 +63,9 @@ public class BoardApiController {
         return mav;
     }
 
-    @PutMapping("api/board/update")
-    public Long update(@RequestBody Board board) {
-        return boardService.update(board)<=0? 0L : board.getBrd_id();
+    @PutMapping("api/board/update/{brd_id}")
+    public Long update(@PathVariable Long brd_id, @RequestBody BoardDto dto) {
+        return boardService.update(brd_id, dto);
     }
 
     @DeleteMapping("api/board/delete/{brd_id}")

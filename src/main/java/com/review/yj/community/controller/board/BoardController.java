@@ -26,7 +26,7 @@ public class BoardController {
 
     @RequestMapping("board")
     public String board(Model model) {
-        model.addAttribute("boardList", boardService.findAll());
+        model.addAttribute("boardList", boardService.findAllDesc());
 
         return "board/list";
     }

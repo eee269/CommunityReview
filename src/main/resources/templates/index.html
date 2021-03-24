@@ -61,15 +61,10 @@
               <div class="prop-details p-3">
                 <div><strong class="price">[[${board.getBrd_title()}]]</strong></div>
                 <br><br>
-                <div class="mb-2 d-flex justify-content-between">
-                  <th:block th:if="${board.getModifiedDate()}">
-                    <span class="w">[[${board.getCreatedDate()}]]</span>
-                  </th:block>
-                  <th:block th:unless="${board.getModifiedDate()}">
-                    <span class="border-left w">[[${board.getCreatedDate()}]]</span>
-                  </th:block>
-
-                </div>
+                <span class="w">[[${#temporals.format(board.getCreatedDate(), 'MM dd, yyyy  h:mm a')}]]</span><br>
+                <th:block th:if="${board.modifiedDate != board.createdDate}"><th:block th:if="${board.modifiedDate != null}">
+                  <span class="w">->[[${#temporals.format(board.getModifiedDate(), 'MM dd, yyyy  h:mm a')}]]</span>
+                </th:block></th:block>
                 <br><br>
                 <div>[[${board.getMem_nickname()}]]</div>
                 <span class="w"> view : [[${board.getBrd_cnt()}]]</span>

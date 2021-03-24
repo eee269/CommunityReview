@@ -1,5 +1,6 @@
 package com.review.yj.community.service.board;
 
+import com.review.yj.community.controller.dto.BoardDto;
 import com.review.yj.community.domain.board.Board;
 import com.review.yj.community.domain.board.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +33,11 @@ public class BoardService {
     }
 
     @Transactional
-    public int update(Board board) {
-        return boardRepository.update(board.getBrd_id(), board.getBrd_title(), board.getBrd_content());
+    public Long update(Long brd_id, BoardDto dto) {
+        Board board = boardRepository.findById(brd_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+        board.update(dto.getBrd_title(), dto.getBrd_content());
+        return brd_id;
     }
 
     @Transactional
