@@ -2,8 +2,9 @@
 - Spring Boot를 활용한 게시판 개인 프로젝트입니다.
 - 2021.01 ~ 2021.02 약 두달의 기간동안 스터디를 운영하며 pull requests를 활용한 코드리뷰를 진행했습니다.
 - RESTful Project
+- 2021.03 한 달동안 템플릿 언어를 mustache에서 thymeleaf로 전환하고, 템플릿을 변경하여 적용했습니다.
 
-image
+![main 1](https://user-images.githubusercontent.com/39761461/112292423-6aeffc00-8cd4-11eb-8c3a-f781cfff49b1.gif)
 
 - 만들어져 있는 무료 배포 템플릿을 다운 받아 적용시켰습니다.
 
@@ -16,7 +17,7 @@ http://52.78.112.93:8080/
 # 개발 환경
 - IntelliJ
 - JDK 11
-- Spring Boot, Gradle, JPA, Lombok, Spring-web, mustache
+- Spring Boot, Gradle, JPA, Lombok, Spring-web, thymeleaf
 - MariaDB
 - AWS EC2, AWS RDS
 
