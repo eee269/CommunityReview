@@ -185,7 +185,7 @@
                     </div>
                     <div class="sidebar-box">
                         <p>
-                            <strong>[[${#temporals.format(board.getCreatedDate(), 'MM dd, yyyyy  h:mm a')}]]</strong><br>
+                            <strong>[[${#temporals.format(board.getCreatedDate(), 'MM dd, yyyy  h:mm a')}]]</strong><br>
                             <strong th:if="${board.modifiedDate != board.createdDate}"><th:block th:if="${board.modifiedDate != null}">
                                 &nbsp;&nbsp;->&nbsp;&nbsp; [[${#temporals.format(board.getModifiedDate(), 'MM dd, yyyy  h:mm a')}]]</th:block></strong></p>
                         <p>Posted By <strong>[[${board.getMem_nickname()}]]</strong></p>
