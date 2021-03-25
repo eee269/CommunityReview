@@ -39,19 +39,20 @@ public class BoardController {
         return "board/list";
     }
 
+    @RequestMapping("board/member")
+    public String board(@Param("mem_id") Long mem_id, Model model) {
+        model.addAttribute("boardList", boardService.findAllByMem_id(mem_id));
+
+        return "board/list";
+    }
+
     @RequestMapping("board/save")
-    public String save_form(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String save_form(Model model, HttpServletRequest request) {
         String url = "board/save";
 
         HttpSession session = request.getSession();
         Long ses_id = (Long) session.getAttribute("ses_id");
         if(ses_id == null) {
-            response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>");
-            out.println("alert('로그인이 필요합니다.')");
-            out.println("</script>");
-
             url = "redirect:/member/sign_in";
         } else {
             model.addAttribute("member", memberService.findById(ses_id));
@@ -61,18 +62,12 @@ public class BoardController {
     }
 
     @RequestMapping("board/update")
-    public String update_form(@Param("brd_id") Long brd_id, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String update_form(@Param("brd_id") Long brd_id, Model model, HttpServletRequest request) {
         String url = "board/update";
 
         HttpSession session = request.getSession();
         Long ses_id = (Long) session.getAttribute("ses_id");
         if(ses_id == null) {
-            response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>");
-            out.println("alert('로그인이 필요합니다.')");
-            out.println("</script>");
-
             url = "redirect:/member/sign_in";
         } else {
             model.addAttribute("board", boardService.findById(brd_id));

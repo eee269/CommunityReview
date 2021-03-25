@@ -22,4 +22,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     @Query("SELECT b FROM Board b WHERE b.brd_category=?1 ORDER BY b.brd_id desc")
     List<Board> findByCtg(int brd_category);
+
+    @Query("SELECT b FROM Board b WHERE b.mem_id=?1 ORDER BY b.brd_id desc ")
+    List<Board> findAllByMem_id(Long ses_id);
 }

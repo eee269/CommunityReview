@@ -1,5 +1,6 @@
 package com.review.yj.community.service.board;
 
+import com.review.yj.community.controller.dto.ReplyDto;
 import com.review.yj.community.domain.board.Reply;
 import com.review.yj.community.domain.board.ReplyRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,23 @@ public class ReplyService {
     }
 
     public Long save(Reply reply) {
-        return replyRepository.save(reply).getRep_id();
+        int seq = 0;
+        if(reply.getRep_seq() == 0) {
+            seq = replyRepository.findMaxSeq() + 1;
+            reply = Reply.builder()
+                    .rep_seq(seq)
+                    .mem_nickname(reply.getMem_nickname())
+                    .mem_id(reply.getMem_id())
+                    .brd_id(reply.getBrd_id())
+                    .rep_content(reply.getRep_content())
+                    .rep_depth(reply.getRep_depth())
+                    .rep_parent(reply.getRep_parent())
+                    .build();
+        }
+        Long rep_id = replyRepository.save(reply).getRep_id();
+        replyRepository.updateSeq(rep_id, reply.getRep_seq());
+
+        return rep_id;
     }
 
     public int update(Reply reply) {

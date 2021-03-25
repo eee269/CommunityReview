@@ -20,16 +20,6 @@ public class BoardDto {
     private LocalDateTime modifiedDate;
     private int brd_category;
 
-//    public Board toEntity() {
-//        return Board.builder()
-//                .brd_title(brd_title)
-//                .brd_content(brd_content)
-//                .brd_cnt(brd_cnt)
-//                .mem_id(mem_id)
-//                .mem_nickname(mem_nickname)
-//                .build();
-//    }
-
     @Builder
     public BoardDto(Long brd_id, String brd_title, String brd_content, Long mem_id, String mem_nickname, int brd_cnt, LocalDateTime createdDate, LocalDateTime modifiedDate, int brd_category) {
         this.brd_id = brd_id;

@@ -27,4 +27,9 @@ public class Member {
         this.mem_password = mem_password;
         this.mem_nickname = mem_nickname;
     }
+
+    public void update(String mem_nickname, String mem_password) {
+        this.mem_nickname = mem_nickname;
+        this.mem_password = mem_password;
+    }
 }

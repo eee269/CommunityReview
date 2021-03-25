@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -57,5 +58,9 @@ public class BoardService {
 
     public List<Board> findByCtg(int brd_category) {
         return boardRepository.findByCtg(brd_category);
+    }
+
+    public List<Board> findAllByMem_id(Long ses_id) {
+        return boardRepository.findAllByMem_id(ses_id);
     }
 }

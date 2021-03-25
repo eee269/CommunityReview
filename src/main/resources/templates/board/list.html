@@ -60,20 +60,20 @@
                 <li><a href="/board/0">Notice</a></li>
                 <li><a href="/board/1">Develop</a></li>
                 <li><a href="/board/2">Everything</a></li>
-                <li><a href="/board/3">Anonymous Board</a></li>
+<!--                <li><a href="/board/3">Anonymous Board</a></li>-->
               </div>
             </div>
 
           </div>
 
-          <div class="col-md-9 order-2 order-md-1" th:if="${boardList == null}">
+          <div class="col-md-9 order-2 order-md-1" th:if="${boardList.size() == 0}">
             <div class="property horizontal d-flex">
               <div class="prop-details p-3">
                 <h2>아직 작성된 게시글이 없습니다.</h2>
               </div>
             </div>
           </div>
-          <div class="col-md-9 order-2 order-md-1" th:unless="${boardList == null}">
+          <div class="col-md-9 order-2 order-md-1" th:unless="${boardList.size() == 0}">
             <div class="property horizontal d-flex" th:each="board: ${boardList}">
               <div class="prop-details p-3">
                 <a th:href="@{/api/board/detail(brd_id=${board.getBrd_id})}">

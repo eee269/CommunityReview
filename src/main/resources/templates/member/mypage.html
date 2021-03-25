@@ -1,96 +1,122 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Review Sign In</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <div th:replace="fragment/common :: css"></div>
+  <title>My Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <div th:replace="fragment/common :: css"></div>
+
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
 <div class="site-wrap">
 
-    <div class="site-mobile-menu site-navbar-target">
-        <div class="site-mobile-menu-header">
-            <div class="site-mobile-menu-close mt-3">
-                <span class="icon-close2 js-menu-toggle"></span>
-            </div>
-        </div>
-        <div class="site-mobile-menu-body"></div>
+  <div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+      <div class="site-mobile-menu-close mt-3">
+        <span class="icon-close2 js-menu-toggle"></span>
+      </div>
     </div>
+    <div class="site-mobile-menu-body"></div>
+  </div>
 
-    <div th:replace="fragment/common :: header"></div>
+  <div th:replace="fragment/common :: header"></div>
 
-    <section id="main" class="wrapper style1">
-        <header class="major">
-            <h2>MY PAGE</h2>
-            <p><strong>REVIEW</strong>에 등록된 정보를 확인하세요!</p>
-        </header>
-        <div class="container">
-            <div class="row">
-                <div class="4u">
-                    <section>
-                        <h3>Profile</h3>
-                        <img src="" alt=""
-                             onerror="this.src='images/profile.png'">
 
-                        <!--                    <ul class="actions">-->
-                        <!--                        <li><a href="#" class="button alt">Learn More</a></li>-->
-                        <!--                    </ul>-->
-                    </section>
-                    <hr />
-                    <section>
-                        <!--                    <h3>Ante sed commodo</h3>-->
-                        <ul class="alt">
-                            <li><a href="/member/update/{{ses_id}}">회원 정보 수정</a></li>
-                            <li><a href="/member/{{ses_id}}/list">친구 목록</a></li>
-                            <li><a href="/board/{{ses_id}}/list">작성 게시글</a></li>
-                            <li><a href="/board/reply/{{ses_id}}/list">작성 댓글</a></li>
-                            <li><a href="/member/delete/{{ses_id}}">회원 탈퇴</a></li>
-                        </ul>
-                    </section>
-                </div>
-                <div class="8u skel-cell-important">
-                    <section>
-                        <h2>Mollis ut adipiscing</h2>
-                        <a href="#" class="image fit"><img src="images/pic03.jpg" alt="" /></a>
-                        <p>Vis accumsan feugiat adipiscing nisl amet adipiscing accumsan blandit accumsan sapien blandit ac amet faucibus aliquet placerat commodo. Interdum ante aliquet commodo accumsan vis phasellus adipiscing. Ornare a in lacinia. Vestibulum accumsan ac metus massa tempor. Accumsan in lacinia ornare massa amet. Ac interdum ac non praesent. Cubilia lacinia interdum massa faucibus blandit nullam. Accumsan phasellus nunc integer. Accumsan euismod nunc adipiscing lacinia erat ut sit. Arcu amet. Id massa aliquet arcu accumsan lorem amet accumsan commodo odio cubilia ac eu interdum placerat placerat arcu commodo lobortis adipiscing semper ornare pellentesque.</p>
-                        <p>Amet nibh adipiscing adipiscing. Commodo ante vis placerat interdum massa massa primis. Tempus condimentum tempus non ac varius cubilia adipiscing placerat lorem turpis at. Aliquet lorem porttitor interdum. Amet lacus. Aliquam lobortis faucibus blandit ac phasellus. In amet magna non interdum volutpat porttitor metus a ante ac neque. Nisi turpis. Commodo col. Interdum adipiscing mollis ut aliquam id ante adipiscing commodo integer arcu amet blandit adipiscing arcu ante.</p>
-                    </section>
-                </div>
-            </div>
-            <hr class="major" />
-            <div class="row">
-                <div class="6u">
-                    <section class="special">
-                        <a href="#" class="image fit"><img src="images/pic01.jpg" alt="" /></a>
-                        <h3>Mollis adipiscing nisl</h3>
-                        <p>Eget mi ac magna cep lobortis faucibus accumsan enim lacinia adipiscing metus urna adipiscing cep commodo id. Ac quis arcu amet. Arcu nascetur lorem adipiscing non faucibus odio nullam arcu lobortis. Aliquet ante feugiat. Turpis aliquet ac posuere volutpat lorem arcu aliquam lorem.</p>
-                        <ul class="actions">
-                            <li><a href="#" class="button alt">Learn More</a></li>
-                        </ul>
-                    </section>
-                </div>
-                <div class="6u">
-                    <section class="special">
-                        <a href="#" class="image fit"><img src="images/pic02.jpg" alt="" /></a>
-                        <h3>Neque ornare adipiscing</h3>
-                        <p>Eget mi ac magna cep lobortis faucibus accumsan enim lacinia adipiscing metus urna adipiscing cep commodo id. Ac quis arcu amet. Arcu nascetur lorem adipiscing non faucibus odio nullam arcu lobortis. Aliquet ante feugiat. Turpis aliquet ac posuere volutpat lorem arcu aliquam lorem.</p>
-                        <ul class="actions">
-                            <li><a href="#" class="button alt">Learn More</a></li>
-                        </ul>
-                    </section>
-                </div>
+  <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(images/hero_1.jpg);" data-aos="fade">
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-6 mt-lg-5 text-center">
+            <h1>My Page</h1><br><br>
+            <p class="mb-5"><strong>[[${member.mem_nickname}]]</strong>&nbsp;&nbsp;님, 오늘도 행복한 하루 되세요  (*•̀ᴗ•́*)و ̑̑ </p>
+          </div>
+        </div>
+      </div>
+
+      <a href="#property-details" class="smoothscroll arrow-down"><span class="icon-arrow_downward"></span></a>
+    </div>
+    
+    <div class="site-section" id="property-details">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-left">
+            <h2 class="section-title mb-3">My Boards &nbsp;&nbsp;Total: <strong>[[${boardList.size()}]]</strong></h2>
+          </div>
+        </div>
+
+          <div class="row justify-content-center" th:if="${boardList.size() == 0}">
+            <blockquote class="mb-5"><br><br>
+              <p>등록한 게시글이 없습니다. 게시글을 등록해주세요!</p>
+              <input type="button" value="Write" class="btn btn-primary btn-block" onclick="location.href='/board/save'">
+            </blockquote>
+          </div>
+
+          <div class="owl-carousel nonloop-block-13 mb-5" th:unless="${boardList.size() == 0}">
+            <!-- board의 최근글 리스트 불러와서 10개 나열 -->
+
+            <div class="property" th:each="board, i: ${boardList}" style="min-height: 250px">
+              <th:block th:if="${i.count < 10}">
+                <a th:href="@{/api/board/detail(brd_id=${board.getBrd_id})}">
+                  <div class="prop-details p-3">
+                    <div><strong class="price">[[${board.getBrd_title()}]]</strong></div>
+                    <br><br>
+                    <span class="w">[[${#temporals.format(board.getCreatedDate(), 'MM dd, yyyy  h:mm a')}]]</span><br>
+                    <th:block th:if="${board.modifiedDate != board.createdDate}"><th:block th:if="${board.modifiedDate != null}">
+                      <span class="w">->[[${#temporals.format(board.getModifiedDate(), 'MM dd, yyyy  h:mm a')}]]</span>
+                    </th:block></th:block>
+                    <br><br>
+                    <div>[[${board.getMem_nickname()}]]</div>
+                    <span class="w"> view : [[${board.getBrd_cnt()}]]</span>
+
+                  </div>
+                </a>
+              </th:block>
             </div>
         </div>
-    </section>
 
-    <div th:replace="fragment/common :: footer"></div>
+
+        <div class="row justify-content-center" th:unless="${boardList.size() == 0}">
+          <div class="col-md-4">
+            <a th:href="@{/board/member(mem_id=${member.mem_id})}" class="btn btn-primary btn-block">View All My Boards</a>
+          </div>
+        </div>
+      </div>
+      </div>
+    <section class="site-section testimonial-wrap" id="testimonials-section">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-12 text-center">
+          <h2 class="section-title mb-3">Who Am I?</h2>
+        </div>
+      </div>
+    </div>
+    <div class="slide-one-item home-slider owl-carousel">
+      <div>
+        <div class="testimonial">
+
+          <blockquote class="mb-5">
+            <p>&ldquo;Hi, My name is <strong>[[${member.mem_nickname}]]</strong>
+              And my email is <strong>[[${member.mem_userid}]]</strong>
+              <br> ꒰◍ॢ•ᴗ•◍ॢ꒱ &rdquo;</p>
+          </blockquote>
+
+          <figure class="mb-4 d-flex align-items-center justify-content-center">
+            <p><a th:href="@{/member/update(mem_id=${member.mem_id})}" class="btn btn-primary">Info Update</a></p>
+          </figure>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+  <div th:replace="fragment/common :: footer"></div>
 
 </div> <!-- .site-wrap -->
 
 <div th:replace="fragment/common :: script"></div>
-<script type="text/javascript" src="../js/app/member.js"></script>
 
 </body>
 </html>

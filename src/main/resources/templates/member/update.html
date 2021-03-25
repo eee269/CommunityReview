@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Review</title>
+    <title>Info Update</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <div th:replace="fragment/common :: css"></div>
@@ -24,33 +24,33 @@
     <section class="site-section">
         <div class="container">
             <div class="comment-form-wrap pt-5">
-                <h3 class="mb-5">Sign In</h3>
+                <h3 class="mb-5">Info Update</h3>
                 <form class="p-5 bg-light">
+                    <input type="hidden" id="mem_id" th:value="${member.mem_id}">
+
                     <div class="form-group">
-                        <label for="userid">E-Mail *</label>
-                        <input type="email" class="form-control" id="userid">
-                        <div id="mail_ch"></div>
-                        <input type="hidden" id="mail_bool" value="false">
+                        <label for="userid">E-Mail</label>
+                        <input type="email" class="form-control" id="userid" th:value="${member.mem_userid}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="password">Password *</label>
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" id="password" required>
                         <div id="pw_ch"></div>
                     </div>
                     <div class="form-group">
                         <label for="passwordCheck">Password Check *</label>
-                        <input type="password" class="form-control" id="passwordCheck">
+                        <input type="password" class="form-control" id="passwordCheck" required>
                         <div id="pw_ch2"></div>
-                        <input type="hidden" id="pw_bool" value="false">
+                        <input type="hidden" id="mem-upd-pw_bool" value="false">
                     </div>
                     <div class="form-group">
-                        <label for="nickname">Nickname *</label>
-                        <input type="text" class="form-control" id="nickname">
+                        <label for="nickname">Nickname</label>
+                        <input type="text" class="form-control" id="nickname" th:value="${member.mem_nickname}">
                     </div>
                     <div class="form-group">
-                        <input type="button" value="Sign Up" class="btn btn-primary" id="btn-signup">
-                        <input type="button" value="Sign In" class="btn" onclick="location.href='/member/sign_in'">
-                        <input type="button" value="Main" class="btn" onclick="location.href='/'">
+                        <input type="button" value="Update Account" class="btn" id="btn-mem-upd">
+                        <input type="button" value="Delete Account" class="btn" id="btn-mem-del">
+                        <input type="button" value="Cancel" class="btn" onclick="history.back()">
                     </div>
 
                 </form>
@@ -66,23 +66,7 @@
 <script type="text/javascript" src="/js/app/member.js"></script>
 
 <script>
-    var emailForm = /^[a-zA-Z][a-zA-Z0-9_-]+@[a-z0-9_-]+.[a-z._-]+$/;
     var passForm = /^[a-zA-Z0-9!@#$%]{6,12}$/;
-
-
-    $('#userid').blur(function () {
-        if(emailForm.test($('#userid').val())) {
-            console.log('true');
-            $('#mail_ch').text('');
-            $('#mail_bool').val(true);
-        } else {
-            console.log('false');
-            $('#mail_ch').text('이메일의 형식을 지켜주세요!');
-            $('#mail_ch').css('color', 'red');
-            $('#mail_bool').val(false);
-        }
-    });
-
 
     $('#password').blur(function () {
         if(passForm.test($('#password').val())){
@@ -100,12 +84,12 @@
             console.log('true');
             $('#pw_ch2').text('비밀번호 일치 확인되었습니다.');
             $('#pw_ch2').css('color', 'black');
-            $('#pw_bool').val(true);
+            $('#mem-upd-pw_bool').val(true);
         } else {
             console.log('false');
             $('#pw_ch2').text('비밀번호가 일치하지 않습니다.');
             $('#pw_ch2').css('color', 'red');
-            $('#pw_bool').val(false);
+            $('#mem-upd-pw_bool').val(false);
         }
     });
 </script>

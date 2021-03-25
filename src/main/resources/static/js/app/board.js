@@ -6,7 +6,7 @@ var main = {
             if($('#title').val() == "") {
                 alert('제목을 입력하세요!');
                 return ;
-            } else if(!$('#pw_bool').val()) {
+            } else if($('#pw_bool').val() == false) {
                 alert('비밀번호를 확인하세요!');
                 return ;
             } else {
@@ -19,7 +19,7 @@ var main = {
             if($('#title').val() == "") {
                 alert('제목을 입력하세요!');
                 return ;
-            } else if(!$('#pw_bool').val()) {
+            } else if($('#pw_bool').val() == false) {
                 alert('비밀번호를 확인하세요!');
                 return ;
             } else {
@@ -86,7 +86,7 @@ var main = {
                 contentType: 'application/json; charset=utf-8',
                 url: '/api/board/delete/' + brd_id
             }).done(function () {
-                alert('삭제가 완료되었습니다.');
+                alert('삭제되었습니다.. (｡•́︿•̀｡) ');
                 window.location.href='/board/';
             }).fail(function (error) {
                 alert(JSON.stringify(error));

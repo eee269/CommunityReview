@@ -34,7 +34,7 @@
                             <th:block th:case="0">Notice</th:block>
                             <th:block th:case="1">Develop</th:block>
                             <th:block th:case="2">Everything</th:block>
-                            <th:block th:case="3">Anonymous Board</th:block>
+<!--                            <th:block th:case="3">Anonymous Board</th:block>-->
                         </th:block>
                     </h3>
                     <br><br>
@@ -62,10 +62,12 @@
                     <div id="content" class="lead" style="min-height: 500px"></div>
 
                     <div class="pt-5">
-                        <input type="button" onclick="location.href='/board/'" class="btn btn-sm" value="Board List" >&nbsp;&nbsp;
-                        <p th:if="${session['ses_id'] == board.getMem_id()}">
-                            <input type="button" id="btn-update-form" class="btn btn-primary btn-sm" value="Board Update">&nbsp;&nbsp;
-                            <input type="button" id="btn-delete" class="btn btn-sm" value="Board Delete">
+                        <p>
+                            <input type="button" onclick="history.back()" class="btn btn-sm" value="Board List" >&nbsp;&nbsp;
+                            <th:block  th:if="${session['ses_id'] == board.getMem_id()}">
+                                <input type="button" id="btn-update-form" class="btn btn-primary btn-sm" value="Board Update">&nbsp;&nbsp;
+                                <input type="button" id="btn-delete" class="btn btn-sm" value="Board Delete">
+                            </th:block>
                         </p>
                     </div>
 
@@ -75,29 +77,34 @@
                         <ul class="comment-list" th:if="${replyList.size() == 0}">
                             <h2>댓글이 없습니다.</h2>
                         </ul>
-                        <ul class="comment-list" th:unless="${replyList.size() == 0}">
-                            <li class="comment" th:each="reply: ${replyList}">
-<!--                                <div class="vcard bio">-->
-<!--                                    <img src="images/person_1.jpg" alt="Image placeholder">-->
-<!--                                </div>-->
+                        <ul class="comment-list" th:unless="${replyList.size() == 0}" th:each="reply, index: ${replyList}">
+<!--                        <ul class="comment-list" th:unless="${replyList.size() == 0}" onload="javascript:rep_load()">-->
+                            <!-- depth: 1, parent: null, seq:1 -->
+                            <li class="comment">
                                 <div class="comment-body">
-                                    <h3>[[${reply.getRep_nickname()}]]</h3>
+                                    <input type="hidden" class="rep_id" th:value="${reply.rep_id}">
+                                    <input type="hidden" class="rep_depth" th:value="${reply.rep_depth}">
+                                    <input type="hidden" class="rep_seq" th:value="${reply.rep_seq}">
+                                    <h3>[[${reply.mem_nickname}]]</h3>
                                     <div class="meta">[[${#temporals.format(reply.getCreatedDate(), 'MM dd, yyyy  h:mm a')}]]</div><br>
                                     <div class="meta" th:if="${reply.modifiedDate != reply.createdDate}"><th:block th:if="${reply.modifiedDate != null}">
                                         -> [[${#temporals.format(reply.getModifiedDate(), 'MM dd, yyyy  h:mm a')}]]</th:block></div>
-                                    <p>[[${reply.getRep_content()}]]</p>
-                                    <p><a href="#" class="reply">Reply</a></p>
-                                    <p th:if="${session['ses_id'] == reply.getRep_id()}">
-                                        <a href="javascript:rep_update()" class="reply">Reply Update</a> &nbsp;&nbsp;
-                                        <a href="javascript:rep_delete()" class="reply">Reply Delete</a>
+                                    <p class="rep_content">[[${reply.getRep_content()}]]</p>
+                                    <p class="rep_btn">
+                                        <a href="javascript:move_form()" class="reply">Reply</a>
+                                        <th:block th:if="${reply.mem_id == session['ses_id']}">
+                                            <a href="javascript:update_form()" class="reply">Update</a>
+                                            <a id="rep-del" class="reply">Delete</a>
+                                        </th:block>
+<!--                                        <a href="javascript:rep_update()" class="reply">Reply Update</a> &nbsp;&nbsp;-->
+<!--                                        <a href="javascript:rep_delete()" class="reply">Reply Delete</a>-->
                                     </p>
                                 </div>
                             </li>
 
+                            <!-- depth: 1, parent: null, seq:2 -->
+
 <!--                            <li class="comment">-->
-<!--                                <div class="vcard bio">-->
-<!--                                    <img src="images/person_1.jpg" alt="Image placeholder">-->
-<!--                                </div>-->
 <!--                                <div class="comment-body">-->
 <!--                                    <h3>Jean Doe</h3>-->
 <!--                                    <div class="meta">January 9, 2018 at 2:21pm</div>-->
@@ -105,11 +112,9 @@
 <!--                                    <p><a href="#" class="reply">Reply</a></p>-->
 <!--                                </div>-->
 
+                            <!-- depth: 2, parent: (seq:2), seq:3 -->
 <!--                                <ul class="children">-->
 <!--                                    <li class="comment">-->
-<!--                                        <div class="vcard bio">-->
-<!--                                            <img src="images/person_1.jpg" alt="Image placeholder">-->
-<!--                                        </div>-->
 <!--                                        <div class="comment-body">-->
 <!--                                            <h3>Jean Doe</h3>-->
 <!--                                            <div class="meta">January 9, 2018 at 2:21pm</div>-->
@@ -117,7 +122,7 @@
 <!--                                            <p><a href="#" class="reply">Reply</a></p>-->
 <!--                                        </div>-->
 
-
+                            <!-- depth: 3, parent: (seq:3), seq:4 -->
 <!--                                        <ul class="children">-->
 <!--                                            <li class="comment">-->
 <!--                                                <div class="vcard bio">-->
@@ -130,6 +135,7 @@
 <!--                                                    <p><a href="#" class="reply">Reply</a></p>-->
 <!--                                                </div>-->
 
+                            <!-- depth: 4, parent: (seq:4), seq: 5 -->
 <!--                                                <ul class="children">-->
 <!--                                                    <li class="comment">-->
 <!--                                                        <div class="vcard bio">-->
@@ -149,6 +155,7 @@
 <!--                                </ul>-->
 <!--                            </li>-->
 
+                            <!-- depth: 1, parent: null, seq:6 -->
 <!--                            <li class="comment">-->
 <!--                                <div class="vcard bio">-->
 <!--                                    <img src="images/person_1.jpg" alt="Image placeholder">-->
@@ -163,8 +170,8 @@
                         </ul>
                         <!-- END comment-list -->
 
-                        <div class="comment-form-wrap pt-5">
-                            <h3 class="mb-5">Reply Write</h3>
+                        <div class="comment-form-wrap pt-5" id="rep_form">
+                            <hr />
                             <form class="p-5 bg-light" th:if="${member == null}">
                                 <blockquote class="mb-5">
                                     <p>로그인 후 댓글을 작성해주세요!</p>
@@ -172,6 +179,7 @@
                                 </blockquote>
                             </form>
                             <form class="p-5 bg-light" th:unless="${member == null}">
+                                <input type="hidden" id="mem_id" th:value="${member.mem_id}">
                                 <div class="form-group">
                                     <label for="nickname">Nickname *</label>
                                     <input type="text" class="form-control" id="nickname" th:value="${member.getMem_nickname()}" readonly>
@@ -188,8 +196,9 @@
                                     <label for="rep_content">Content *</label>
                                     <textarea id="rep_content" cols="30" rows="10" class="form-control" required></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <input type="button" value="save" class="btn btn-primary" id="btn_rep_save">
+                                <div class="form-group rep_btn">
+                                    <input type="button" value="save" class="btn btn-primary" id="btn_rep_save">&nbsp;&nbsp;
+                                    <input type="button" value="cancel" class="btn" id="rep_cancel">
                                 </div>
 
                             </form>
@@ -208,24 +217,29 @@
 <div th:replace="fragment/common :: script"></div>
 
 <script type="text/javascript" src="/js/app/board.js"></script>
-<script type="text/javascript" src="/js/app/reply.js"></script>
+<!-- js날짜 처리 -->
+<script src="js/moment-with-locales.js"></script>
 
-<script>
+
+<script type="text/javascript">
     var content = $('#tag_content').val();
     $(function () {
         $('#content').append(content);
     })
 
     var pwCh = $('#mem_pw').val();
+    var check = false;
     $('#password').blur(function () {
         if($('#password').val() == pwCh) {
             console.log('true');
             $('#pw_ch').text('비밀번호 일치 확인되었습니다.');
             $('#pw_ch').css('color', 'black');
+            check = true;
         } else {
             console.log('false');
             $('#pw_ch').text('비밀번호가 일치하지 않습니다.');
             $('#pw_ch').css('color', 'red');
+            check = false;
         }
         $('#pw_bool').attr('value', check);
     });
@@ -233,6 +247,162 @@
     $('#btn-update-form').on('click', function () {
         window.location.href='/board/update?brd_id=' + $('#brd_id').val();
     })
+
+    // reply script
+    // reply list load
+    /*
+    공통 form : <li> <div> ~ </div>
+    이전 depth < 현재 depth : <ul> + 공통
+    이전 depth = 현재 depth : </li> + 공통
+    이전 depth < 현재 depth : </li> </ul>(이전 depth - 현재 depth 만큼 반복) + </li> + 공통
+    list.size() = index+1 : </li> </ul>(현재 depth 만큼 반복)
+     */
+    // function rep_load() {
+    //     var replyList = "${replyList}";
+    //
+    //     moment.locale('ko');
+    //     $.each(replyList, function (index, item) {
+    //         var form = '<li class="comment">' +
+    //             '<div class="comment-body">' +
+    //             '<input type="hidden" class="rep_id" value="' + item.rep_id + '"> ' +
+    //             '<input type="hidden" class="rep_depth" value="' + item.rep_depth + '"> ' +
+    //             '<input type="hidden" class="rep_seq" value="' + item.rep_seq + '"> ' +
+    //             '<h3>' + item.mem_nickname + '</h3>' +
+    //             '<div class="meta">' + item.createdDate.format('MM dd, yyyy h:mm a') + '</div>';
+    //         if (item.modifiedDate != item.createdDate && item.modifiedDate != null) {
+    //             form += '<div class="meta"> -> ' + item.modifiedDate.format('MM dd, yyyy h:mm a') + '</div>';
+    //         }
+    //         form += '<p class="rep_content">' + item.rep_content + '</p>' +
+    //             '<p className="rep_btn">' +
+    //             '<a href="javascript:move_form()" className="reply">Reply</a>';
+    //         if (item.mem_id == $('#session').val()) {
+    //             form += '<a href="javascript:update_form()" className="reply">Update</a>' +
+    //                 '<a id="rep-del" className="reply">Delete</a>';
+    //         }
+    //         form += '</p> </div>';
+    //
+    //         var add_form = '</li>';
+    //         if(replyList.size() == index+1) {
+    //
+    //         }
+    //     })
+    // }
+
+
+    // reply write cancel
+    $('#rep_cancel').on('click', function () {
+        $('#rep_content').val("");
+        $('#password').val("");
+        $('#pw_ch').val("");
+        $('#pw_bool').val(false);
+
+        // 대댓글 취소 시 다시 원래 자리로 입력창 돌려놓기
+        var place = $('div.pt-5').find('ul.comment-list').next();
+        if(place.find('div.rep_form') == undefined) {
+            var form = $('a.reply').parent('p.rep_btn').next().find('div.rep_form');
+            place.html(form);
+            form.attr('display', 'none');
+        }
+    });
+    $('#re_rep_cancel').on('click', function () {
+
+    });
+
+    // reply form move
+    // 대댓글 입력 시 입력창 이동
+    function move_form() {
+        alert(this);
+        // var place = $('a.reply').parent('p.rep_btn').next();
+        // place.html($('div.rep_form').attr('display', 'inline'));
+        // $('div.pt-5').find('div.rep_form').attr('display', 'none');
+
+        // var form = place.find('div.rep_form');
+        // var html = '<input type="button" value="save" class="btn btn-primary" id="btn_rep_save">&nbsp;&nbsp;\n' +
+        //     '<input type="button" value="cancel" class="btn" id="re_rep_cancel">';
+        // form.find('div.rep_btn').html(html);
+    }
+
+    // reply update form
+    function update_form() {
+
+    }
+
+    // reply save
+    $('#btn_rep_save').on('click', function() {
+        if(!check) {
+            alert("비밀번호를 확인하세요!");
+            return ;
+        } else if($('#rep_content').val() == "") {
+            alert("내용을 입력하세요!");
+            return ;
+        } else {
+            var rep_parent_li = $('div.rep_form').parent('li.comment');
+            var rep_parent = null, rep_depth = 1, rep_seq = 0;
+            if (rep_parent_li != undefined) {
+                rep_parent = rep_parent_li.find('input.rep_id').val();
+                rep_depth = rep_parent_li.find('input.rep_depth').val() + 1;
+                rep_seq = rep_parent_li.find('input.rep_seq').val() + 1;
+            }
+
+            var data = {
+                rep_content: $('#rep_content').val(),
+                mem_id: $('#mem_id').val(),
+                mem_nickname: $('#nickname').val(),
+                brd_id: $('#brd_id').val(),
+                rep_parent: rep_parent,
+                rep_depth: rep_depth,
+                rep_seq: rep_seq,
+            };
+            $.ajax({
+                url: '/api/reply/save',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                type: 'POST'
+            }).done(function () {
+                alert('등록되었습니다!');
+                window.location.reload();
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        }
+    });
+
+    // reply update
+    $('#rep_update').on('click', function() {
+        var btntag = $('#rep-update').parent('li.comment');
+        var data = {
+            rep_id: btntag.find('input.rep_id').val(),
+            rep_content: btntag.find('input.rep_content').val(),
+        };
+        $.ajax({
+            url: '/api/reply/update/' + $('#rep-update').find('input.rep_id').val(),
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            type: 'PUT'
+        }).done(function () {
+            alert('수정되었습니다!');
+            window.location.reload();
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+    })
+
+    // reply delete
+    $('#rep-del').on('click', function () {
+        if(confirm("정말 삭제하시겠습니까?")) {
+            $.ajax({
+                url: '/api/reply/delete/' + $('#rep-del').find('input.rep_id').val(),
+                type: 'DELETE'
+            }).done(function () {
+                alert('삭제되었습니다!');
+                window.location.reload();
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        } else return false;
+    });
 </script>
 
 </body>

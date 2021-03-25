@@ -27,7 +27,7 @@
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-6 mt-lg-5 text-center">
-            <h1>WELCOME!</h1>
+            <h1>WELCOME!</h1><br><br>
             <p class="mb-5">제가 만든 홈페이지에 방문해주셔서 감사합니다  ༼๑⁰⊖⁰๑༽❤ </p>
             
           </div>
@@ -45,14 +45,14 @@
           </div>
         </div>
 
-          <div class="row justify-content-center" th:if="${boardList == null}">
+          <div class="row justify-content-center" th:if="${boardList.size() == 0}">
             <blockquote class="mb-5">
-              <p>등록된 게시글이 없습니다. <br> 게시글을 등록해주세요!</p>
-              <input type="button" value="Write" class="btn btn-primary" onclick="location.href='/board/save'">
+              <p>등록된 게시글이 없습니다. 게시글을 등록해주세요!</p>
+              <input type="button" value="Write" class="btn btn-primary btn-block" onclick="location.href='/board/save'">
             </blockquote>
           </div>
 
-        <div class="owl-carousel nonloop-block-13 mb-5" th:unless="${boardList == null}">
+        <div class="owl-carousel nonloop-block-13 mb-5" th:unless="${boardList.size() == 0}">
           <!-- board의 최근글 리스트 불러와서 10개 나열 -->
 
           <div class="property" th:each="board, i: ${boardList}" style="min-height: 250px">
@@ -75,7 +75,7 @@
           </div>
 
         </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" th:unless="${boardList.size() == 0}">
           <div class="col-md-4">
             <a href="/board" class="btn btn-primary btn-block">View All Boards</a>
           </div>

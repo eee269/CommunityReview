@@ -1,5 +1,6 @@
 package com.review.yj.community.controller.member;
 
+import com.review.yj.community.controller.dto.MemberDto;
 import com.review.yj.community.domain.member.Member;
 import com.review.yj.community.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,15 @@ public class MemberApiController {
         session.setAttribute("ses_id", result.getMem_id());
 
         return result;
+    }
+
+    @PutMapping("/api/member/update/{mem_id}")
+    public Long update(@PathVariable Long mem_id, @RequestBody MemberDto dto) {
+        return memberService.update(mem_id, dto);
+    }
+
+    @DeleteMapping("/api/member/delete/{mem_id}")
+    public void delete(@PathVariable Long mem_id) {
+        memberService.delete(mem_id);
     }
 }

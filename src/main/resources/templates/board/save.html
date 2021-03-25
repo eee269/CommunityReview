@@ -36,9 +36,14 @@
                         <div class="select-wrap">
                             <span class="icon icon-keyboard_arrow_down"></span>
                             <select class="form-control px-3" id="brd_ctg">
-                                <option value="1">Develop</option>
-                                <option value="2">Everything</option>
-                                <option value="3">Anonymous Board</option>
+                                <th:block th:if="${session['ses_id'] == 5}">
+                                    <option value="0">Notice</option>
+                                </th:block>
+                                <th:block th:unless="${session['ses_id'] == 5}">
+                                    <option value="1">Develop</option>
+                                    <option value="2">Everything</option>
+<!--                                    <option value="3">Anonymous Board</option>-->
+                                </th:block>
                             </select>
                         </div>
                     </div>
@@ -55,7 +60,6 @@
                         <label for="password">Password *</label>
                         <input type="password" class="form-control" id="password">
                         <div id="pw_ch"></div>
-                        <input type="hidden" id="pw_bool" value="false">
                     </div>
                     <div class="form-group">
                         <textarea name="content" style="display: none;"></textarea>
@@ -79,8 +83,6 @@
 <div th:replace="fragment/common :: script"></div>
 
 
-<script type="text/javascript" src="/js/app/board.js"></script>
-
 <!-- summernote API -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="/js/summernote/lang/summernote-ko-KR.js"></script>
@@ -102,7 +104,39 @@
             $('#pw_ch').css('color', 'red');
             check = false;
         }
-        $('#pw_bool').attr('value', check);
+    });
+
+    $('#btn-save').on('click', function () {
+        if($('#title').val() == "") {
+            alert('제목을 입력하세요!');
+            return ;
+        } else if(!check) {
+            alert('비밀번호를 확인하세요!');
+            return ;
+        } else {
+            $('textarea[name="content"]').html($('#summernote').summernote('code'));
+            var data = {
+                brd_title: $('#title').val(),
+                brd_content: $('textarea[name="content"]').val(),
+                mem_nickname: $('#nickname').val(),
+                mem_id: $('#session').val(),
+                brd_cnt: 0,
+                brd_category: $('#brd_ctg').val(),
+            };
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                url: '/api/board/save/'
+            }).done(function (brd_id) {
+                alert('게시글이 저장되었습니다.');
+                window.location.href = '/api/board/detail?brd_id=' + brd_id;
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        }
     });
 
 </script>

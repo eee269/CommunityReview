@@ -39,8 +39,8 @@
                             <li><a href="/board/" class="nav-link">Board</a></li>
                             <li th:if="${session['ses_id'] == null}"><a href="/member/sign_in" class="nav-link">Sign In</a></li>
                             <li th:unless="${session['ses_id'] == null}">
-                                <a href="/member/mypage" class="nav-link">My Page</a>
-                                <a href="/member/sign_out" class="nav-link">Sign Out</a>
+                                <a th:href="@{/member/mypage(ses_id=${session['ses_id']})}" class="nav-link">My Page</a>
+                                <a th:href="@{/member/sign_out(ses_id=${session['ses_id']})}" class="nav-link">Sign Out</a>
                             </li>
                         </ul>
                     </nav>
@@ -62,8 +62,9 @@
                 <div class="col-md-8">
                     <div class="row">
                         <div class="col-md-5">
-                            <h2 class="footer-heading mb-4">About Yejin</h2>
-                            <p>맛집 탐방을 좋아합니다  (๑˃؂˂๑)  <br> 여행가고 싶어요  ˃̣̣̣̣̣̣︿˂̣̣̣̣̣̣  </p>
+                            <h2 class="footer-heading mb-5">About Yejin</h2>
+                            <p>맛집 탐방을 좋아하고<br> 아직 짱구를 좋아하는 동심을 가지고 있어요!<br>  ٩(*•̀ᴗ•́*)و </p>
+                            <p>제가 더 궁금하시다면 <br>오른쪽의 링크들을 이용해주세요<br>  (づ｡◕‿‿◕｡)づ </p>
                         </div>
                         <div class="col-md-3 ml-auto">
                             <h2 class="footer-heading mb-4">Quick Links</h2>
@@ -86,17 +87,6 @@
                         <li><a href="#">Email Address</a></li>
                     </ul>
                 </div>
-<!--                <div class="col-md-4">-->
-<!--                    <div class="">-->
-<!--                        <h2 class="footer-heading mb-4">Follow Me</h2>-->
-<!--                        <a href="https://github.com/eee269" class="pl-0 pr-3"><img src="https://img.icons8.com/material-sharp/48/000000/github.png"/></a>-->
-<!--                        <a href="https://jinny-1st.tistory.com" class="pl-3 pr-3"><img src="images/tistory.png" alt="tistory"></a>-->
-<!--                        <a href="https://open.kakao.com/o/sFvlU1Rc" class="pl-3 pr-3"><img src="https://img.icons8.com/wired/64/000000/kakaotalk.png"/></a>-->
-<!--                        <a href="#" class="pl-3 pr-3"><img src="https://img.icons8.com/ios/48/000000/important-mail.png"/></a>-->
-<!--                    </div>-->
-
-
-<!--                </div>-->
             </div>
             <div class="row pt-5 mt-5 text-center">
                 <div class="col-md-12">
