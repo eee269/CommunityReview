@@ -26,6 +26,12 @@ dependencies {
     implementation 'junit:junit:4.12'
     compileOnly 'org.projectlombok:lombok'
 
+//Thanks for using https://jar-download.com
+	compile group: 'com.hynnet', name: 'json-lib', version: '2.4'
+
+
+
+
 	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
 

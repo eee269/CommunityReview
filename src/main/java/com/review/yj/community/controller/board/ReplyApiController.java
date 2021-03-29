@@ -1,5 +1,6 @@
 package com.review.yj.community.controller.board;
 
+import com.review.yj.community.controller.dto.ReplyDto;
 import com.review.yj.community.domain.board.Reply;
 import com.review.yj.community.service.board.ReplyService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,8 @@ public class ReplyApiController {
     }
 
     @PutMapping("api/reply/update")
-    public Long update(@RequestBody Reply reply) {
-        return replyService.update(reply) <= 0? 0L : reply.getRep_id();
+    public Long update(@RequestBody ReplyDto dto) {
+        return replyService.update(dto);
     }
 
     @DeleteMapping("api/reply/delete/{rep_id}")

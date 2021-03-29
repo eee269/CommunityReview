@@ -35,4 +35,8 @@ public class Reply extends BaseTimeEntity {
         this.rep_depth = rep_depth;
         this.rep_seq = rep_seq;
     }
+
+    public void update(String rep_content) {
+        this.rep_content = rep_content;
+    }
 }

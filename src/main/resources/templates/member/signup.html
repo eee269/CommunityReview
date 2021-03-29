@@ -30,7 +30,6 @@
                         <label for="userid">E-Mail *</label>
                         <input type="email" class="form-control" id="userid">
                         <div id="mail_ch"></div>
-                        <input type="hidden" id="mail_bool" value="false">
                     </div>
                     <div class="form-group">
                         <label for="password">Password *</label>
@@ -41,7 +40,6 @@
                         <label for="passwordCheck">Password Check *</label>
                         <input type="password" class="form-control" id="passwordCheck">
                         <div id="pw_ch2"></div>
-                        <input type="hidden" id="pw_bool" value="false">
                     </div>
                     <div class="form-group">
                         <label for="nickname">Nickname *</label>
@@ -70,20 +68,21 @@
     var passForm = /^[a-zA-Z0-9!@#$%]{6,12}$/;
 
 
+    var checkId = false;
     $('#userid').blur(function () {
         if(emailForm.test($('#userid').val())) {
             console.log('true');
             $('#mail_ch').text('');
-            $('#mail_bool').val(true);
+            checkId = true;
         } else {
             console.log('false');
             $('#mail_ch').text('이메일의 형식을 지켜주세요!');
             $('#mail_ch').css('color', 'red');
-            $('#mail_bool').val(false);
+            checkId = false;
         }
     });
 
-
+    var checkPw = false;
     $('#password').blur(function () {
         if(passForm.test($('#password').val())){
             console.log('true');
@@ -100,12 +99,27 @@
             console.log('true');
             $('#pw_ch2').text('비밀번호 일치 확인되었습니다.');
             $('#pw_ch2').css('color', 'black');
-            $('#pw_bool').val(true);
+            checkPw = true;
         } else {
             console.log('false');
             $('#pw_ch2').text('비밀번호가 일치하지 않습니다.');
             $('#pw_ch2').css('color', 'red');
-            $('#pw_bool').val(false);
+            checkPw = false;
+        }
+    });
+
+    $('#btn-signup').on('click', function () {
+        if($('#nickname').val() == "") {
+            alert("닉네임을 입력하세요!");
+            return false;
+        } else if(!checkId) {
+            alert("이메일을 확인하세요!");
+            return false;
+        } else if(!checkPw) {
+            alert("비밀번호를 확인하세요!");
+            return false;
+        } else {
+
         }
     });
 </script>

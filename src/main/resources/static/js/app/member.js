@@ -19,19 +19,7 @@ var main = {
             _this.signin();
         });
 
-        $('#btn-mem-upd').on('click', function () {
-            if($('#nickname').val() == "") {
-                alert("닉네임을 입력하세요!");
-                return false;
-            } else if($('#mem-upd-pw_bool').val() == false) {
-                alert("비밀번호를 확인하세요!");
-                return false;
-            } else   _this.update();
-        });
 
-        $('#btn-mem-del').on('click', function () {
-            _this.delete();
-        });
     },
     signup: function () {
         var data = {

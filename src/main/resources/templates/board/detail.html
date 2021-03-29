@@ -73,100 +73,15 @@
 
 
                     <div class="pt-5">
-                        <h3 class="mb-5">Reply [ <strong th:text="${replyList.size()}"></strong> ]</h3>
+                        <h3 class="mb-5">Reply [ <strong>[[${replyList.size()}]]</strong> ]</h3>
                         <ul class="comment-list" th:if="${replyList.size() == 0}">
                             <h2>댓글이 없습니다.</h2>
                         </ul>
-                        <ul class="comment-list" th:unless="${replyList.size() == 0}" th:each="reply, index: ${replyList}">
-<!--                        <ul class="comment-list" th:unless="${replyList.size() == 0}" onload="javascript:rep_load()">-->
-                            <!-- depth: 1, parent: null, seq:1 -->
-                            <li class="comment">
-                                <div class="comment-body">
-                                    <input type="hidden" class="rep_id" th:value="${reply.rep_id}">
-                                    <input type="hidden" class="rep_depth" th:value="${reply.rep_depth}">
-                                    <input type="hidden" class="rep_seq" th:value="${reply.rep_seq}">
-                                    <h3>[[${reply.mem_nickname}]]</h3>
-                                    <div class="meta">[[${#temporals.format(reply.getCreatedDate(), 'MM dd, yyyy  h:mm a')}]]</div><br>
-                                    <div class="meta" th:if="${reply.modifiedDate != reply.createdDate}"><th:block th:if="${reply.modifiedDate != null}">
-                                        -> [[${#temporals.format(reply.getModifiedDate(), 'MM dd, yyyy  h:mm a')}]]</th:block></div>
-                                    <p class="rep_content">[[${reply.getRep_content()}]]</p>
-                                    <p class="rep_btn">
-                                        <a href="javascript:move_form()" class="reply">Reply</a>
-                                        <th:block th:if="${reply.mem_id == session['ses_id']}">
-                                            <a href="javascript:update_form()" class="reply">Update</a>
-                                            <a id="rep-del" class="reply">Delete</a>
-                                        </th:block>
-<!--                                        <a href="javascript:rep_update()" class="reply">Reply Update</a> &nbsp;&nbsp;-->
-<!--                                        <a href="javascript:rep_delete()" class="reply">Reply Delete</a>-->
-                                    </p>
-                                </div>
-                            </li>
 
-                            <!-- depth: 1, parent: null, seq:2 -->
+                        <input type="hidden" th:value="${replyList.size()}" id="replyList_size">
+                        <ul class="comment-list" id="first_ul" th:unless="${replyList.size() == 0}">
+                            <th:block th:each="reply, count: ${replyList}" th:attr="onload='javascript:load(' + ${reply} + ', ' +  ${count} + ');'"></th:block>
 
-<!--                            <li class="comment">-->
-<!--                                <div class="comment-body">-->
-<!--                                    <h3>Jean Doe</h3>-->
-<!--                                    <div class="meta">January 9, 2018 at 2:21pm</div>-->
-<!--                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>-->
-<!--                                    <p><a href="#" class="reply">Reply</a></p>-->
-<!--                                </div>-->
-
-                            <!-- depth: 2, parent: (seq:2), seq:3 -->
-<!--                                <ul class="children">-->
-<!--                                    <li class="comment">-->
-<!--                                        <div class="comment-body">-->
-<!--                                            <h3>Jean Doe</h3>-->
-<!--                                            <div class="meta">January 9, 2018 at 2:21pm</div>-->
-<!--                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>-->
-<!--                                            <p><a href="#" class="reply">Reply</a></p>-->
-<!--                                        </div>-->
-
-                            <!-- depth: 3, parent: (seq:3), seq:4 -->
-<!--                                        <ul class="children">-->
-<!--                                            <li class="comment">-->
-<!--                                                <div class="vcard bio">-->
-<!--                                                    <img src="images/person_1.jpg" alt="Image placeholder">-->
-<!--                                                </div>-->
-<!--                                                <div class="comment-body">-->
-<!--                                                    <h3>Jean Doe</h3>-->
-<!--                                                    <div class="meta">January 9, 2018 at 2:21pm</div>-->
-<!--                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>-->
-<!--                                                    <p><a href="#" class="reply">Reply</a></p>-->
-<!--                                                </div>-->
-
-                            <!-- depth: 4, parent: (seq:4), seq: 5 -->
-<!--                                                <ul class="children">-->
-<!--                                                    <li class="comment">-->
-<!--                                                        <div class="vcard bio">-->
-<!--                                                            <img src="images/person_1.jpg" alt="Image placeholder">-->
-<!--                                                        </div>-->
-<!--                                                        <div class="comment-body">-->
-<!--                                                            <h3>Jean Doe</h3>-->
-<!--                                                            <div class="meta">January 9, 2018 at 2:21pm</div>-->
-<!--                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>-->
-<!--                                                            <p><a href="#" class="reply">Reply</a></p>-->
-<!--                                                        </div>-->
-<!--                                                    </li>-->
-<!--                                                </ul>-->
-<!--                                            </li>-->
-<!--                                        </ul>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </li>-->
-
-                            <!-- depth: 1, parent: null, seq:6 -->
-<!--                            <li class="comment">-->
-<!--                                <div class="vcard bio">-->
-<!--                                    <img src="images/person_1.jpg" alt="Image placeholder">-->
-<!--                                </div>-->
-<!--                                <div class="comment-body">-->
-<!--                                    <h3>Jean Doe</h3>-->
-<!--                                    <div class="meta">January 9, 2018 at 2:21pm</div>-->
-<!--                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>-->
-<!--                                    <p><a href="#" class="reply">Reply</a></p>-->
-<!--                                </div>-->
-<!--                            </li>-->
                         </ul>
                         <!-- END comment-list -->
 
@@ -218,10 +133,10 @@
 
 <script type="text/javascript" src="/js/app/board.js"></script>
 <!-- js날짜 처리 -->
-<script src="js/moment-with-locales.js"></script>
+<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     var content = $('#tag_content').val();
     $(function () {
         $('#content').append(content);
@@ -254,39 +169,85 @@
     공통 form : <li> <div> ~ </div>
     이전 depth < 현재 depth : <ul> + 공통
     이전 depth = 현재 depth : </li> + 공통
-    이전 depth < 현재 depth : </li> </ul>(이전 depth - 현재 depth 만큼 반복) + </li> + 공통
+    이전 depth > 현재 depth : </li> </ul>(이전 depth - 현재 depth 만큼 반복) + </li> + 공통
     list.size() = index+1 : </li> </ul>(현재 depth 만큼 반복)
      */
-    // function rep_load() {
-    //     var replyList = "${replyList}";
-    //
-    //     moment.locale('ko');
-    //     $.each(replyList, function (index, item) {
-    //         var form = '<li class="comment">' +
-    //             '<div class="comment-body">' +
-    //             '<input type="hidden" class="rep_id" value="' + item.rep_id + '"> ' +
-    //             '<input type="hidden" class="rep_depth" value="' + item.rep_depth + '"> ' +
-    //             '<input type="hidden" class="rep_seq" value="' + item.rep_seq + '"> ' +
-    //             '<h3>' + item.mem_nickname + '</h3>' +
-    //             '<div class="meta">' + item.createdDate.format('MM dd, yyyy h:mm a') + '</div>';
-    //         if (item.modifiedDate != item.createdDate && item.modifiedDate != null) {
-    //             form += '<div class="meta"> -> ' + item.modifiedDate.format('MM dd, yyyy h:mm a') + '</div>';
-    //         }
-    //         form += '<p class="rep_content">' + item.rep_content + '</p>' +
-    //             '<p className="rep_btn">' +
-    //             '<a href="javascript:move_form()" className="reply">Reply</a>';
-    //         if (item.mem_id == $('#session').val()) {
-    //             form += '<a href="javascript:update_form()" className="reply">Update</a>' +
-    //                 '<a id="rep-del" className="reply">Delete</a>';
-    //         }
-    //         form += '</p> </div>';
-    //
-    //         var add_form = '</li>';
-    //         if(replyList.size() == index+1) {
-    //
-    //         }
-    //     })
-    // }
+    // $(function() {
+        var b_depth = 0;         // 이전 item의 rep_depth 저장
+        moment.locale('ko');
+
+        // replyList를 반복문으로 돌려서 공통 form 설정
+        var form = '';
+
+        // 이전 depth와 같을때, 이전 depth보다 현재가 더 높을때, 이전 depth보다 현재가 더 낮을때
+        var s_depth_form = '', h_depth_form = '', l_depth_form = '';
+        var last_form = '';     // 제일 마지막 form
+
+        function load(reply, count){
+            form = '<li class="comment">' +
+                '<div class="comment-body" id="rep_' + count + '">' +       // div의 id에 count 넣어서 차례 만들기  ex) rep_1, rep_2
+                '<input type="hidden" class="rep_id" value="' + reply.rep_id + '"> ' +
+                '<input type="hidden" class="rep_depth" value="' + reply.rep_depth + '"> ' +
+                '<input type="hidden" class="rep_seq" value="' + reply.rep_seq + '"> ' +
+                '<h3>' + reply.mem_nickname + '</h3>' +
+                '<div class="meta">' + reply.createdDate.format('MM dd, yyyy h:mm a') + '</div>';
+            // 수정 날짜 있으면 넣고 없으면 안넣기
+            if (reply.modifiedDate != reply.createdDate && reply.modifiedDate != null) {
+                form += '<div class="meta"> -> ' + reply.modifiedDate.format('MM dd, yyyy h:mm a') + '</div>';
+            }
+
+            form += '<p class="rep_content">' + reply.rep_content + '</p>' +
+                '<p className="rep_btn">' +
+                '<a th:onclick="javascript:move_form(rep_' + count + ')" className="reply">Reply</a>';
+
+            // 세션과 작성자가 같으면 수정, 삭제 넣기
+            if (reply.mem_id == $('#session').val()) {
+                form += '<a th:onclick="javascript:update_form(rep_' + count + ')" className="reply">Update</a>' +
+                    '<a th:onclick="javascript:delete(rep_' + count + ')" className="reply">Delete</a>';
+            }
+            form += '</p> </div>';
+
+            if(count > 1) {
+                var sub = b_depth - reply.rep_depth;
+                if(sub == 0) {
+                    // s_depth_form : 이전 index의 depth와 같을때
+                    s_depth_form = '</li>' + form;
+
+                    $('#first_ul').append(s_depth_form);
+                } else if(sub < 0) {
+                    // h_depth_form : 이전 index의 depth보다 클때
+                    h_depth_form = '<ul>' + form;
+
+                    $('#first_ul').append(h_depth_form);
+                } else {
+                    // l_depth_form : 이전 index의 depth보다 작을때
+                    var i=0;
+                    // depth 차이만큼 li, ul 닫기
+                    while(i < sub) {
+                        l_depth_form += '</li> </ul>';
+                        i++;
+                    }
+                    l_depth_form += '</li>' + form;
+
+                    $('#first_ul').append(l_depth_form);
+                }
+            } else {        // index = 0
+                $('#first_ul').append(form);
+            }
+
+            // 마지막 요소일때
+            if($('#replyList_size').val() == count) {
+                // 현재 depth 만큼 li, ul 닫기
+                var i=0;
+                while(i < reply.rep_depth) {
+                    last_form += '</li> </ul>';
+                    i++;
+                }
+                $('#first_ul').append(last_form);
+            }
+            b_depth = reply.rep_depth;
+        }
+    // })
 
 
     // reply write cancel
@@ -372,7 +333,6 @@
     $('#rep_update').on('click', function() {
         var btntag = $('#rep-update').parent('li.comment');
         var data = {
-            rep_id: btntag.find('input.rep_id').val(),
             rep_content: btntag.find('input.rep_content').val(),
         };
         $.ajax({

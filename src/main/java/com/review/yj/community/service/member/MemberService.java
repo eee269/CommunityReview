@@ -42,7 +42,7 @@ public class MemberService {
         Member member = memberRepository.findById(mem_id)
                 .orElseThrow(() -> new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
         member.update(dto.getMem_nickname(), dto.getMem_password());
-        return mem_id;
+        return member.getMem_id();
     }
 
     public void delete(Long mem_id) {

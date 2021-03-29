@@ -28,11 +28,11 @@
                 <form class="p-5 bg-light">
                     <div class="form-group">
                         <label for="userid">E-Mail *</label>
-                        <input type="email" class="form-control" id="userid" required>
+                        <input type="email" class="form-control" id="userid">
                     </div>
                     <div class="form-group">
                         <label for="password">Password *</label>
-                        <input type="password" class="form-control" id="password" required>
+                        <input type="password" class="form-control" id="password">
                     </div>
                     <div class="form-group">
                         <input type="button" value="Sign In" class="btn btn-primary" id="btn-signin">
@@ -50,7 +50,14 @@
 </div> <!-- .site-wrap -->
 
 <div th:replace="fragment/common :: script"></div>
-<script type="text/javascript" src="../js/app/member.js"></script>
+
+<script type="text/javascript">
+    $('#btn-signin').on('click', function () {
+        if($('#userid').val() == "") {
+            alert("아이디를 확인하세요")
+        }
+    });
+</script>
 
 </body>
 </html>

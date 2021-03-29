@@ -30,18 +30,23 @@ public class ReplyService {
                     .rep_depth(reply.getRep_depth())
                     .rep_parent(reply.getRep_parent())
                     .build();
+        } else {
+            replyRepository.addSeq(reply.getRep_seq());
         }
         Long rep_id = replyRepository.save(reply).getRep_id();
-        replyRepository.updateSeq(rep_id, reply.getRep_seq());
 
         return rep_id;
     }
 
-    public int update(Reply reply) {
-        return replyRepository.update(reply.getRep_id(), reply.getRep_content());
+    public Long update(ReplyDto dto) {
+        Reply reply = replyRepository.findById(dto.getRep_id())
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
+        reply.update(dto.getRep_content());
+        return reply.getRep_id();
     }
 
     public void delete(Long rep_id) {
+        replyRepository.subSeq(rep_id);
         replyRepository.deleteById(rep_id);
     }
 }

@@ -7,14 +7,13 @@ import com.review.yj.community.service.board.BoardService;
 import com.review.yj.community.service.board.ReplyService;
 import com.review.yj.community.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
+import net.sf.json.JSONArray;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RequiredArgsConstructor

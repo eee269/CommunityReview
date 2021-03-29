@@ -41,15 +41,14 @@
                         <label for="passwordCheck">Password Check *</label>
                         <input type="password" class="form-control" id="passwordCheck" required>
                         <div id="pw_ch2"></div>
-                        <input type="hidden" id="mem-upd-pw_bool" value="false">
                     </div>
                     <div class="form-group">
                         <label for="nickname">Nickname</label>
                         <input type="text" class="form-control" id="nickname" th:value="${member.mem_nickname}">
                     </div>
                     <div class="form-group">
-                        <input type="button" value="Update Account" class="btn" id="btn-mem-upd">
-                        <input type="button" value="Delete Account" class="btn" id="btn-mem-del">
+                        <input type="button" value="Update" class="btn" id="btn-mem-upd">
+                        <input type="button" value="Delete" class="btn" id="btn-mem-del">
                         <input type="button" value="Cancel" class="btn" onclick="history.back()">
                     </div>
 
@@ -63,7 +62,6 @@
 </div> <!-- .site-wrap -->
 
 <div th:replace="fragment/common :: script"></div>
-<script type="text/javascript" src="/js/app/member.js"></script>
 
 <script>
     var passForm = /^[a-zA-Z0-9!@#$%]{6,12}$/;
@@ -79,17 +77,66 @@
         }
     });
 
+    var check = false;
     $('#passwordCheck').blur(function () {
         if($('#password').val() == ($('#passwordCheck').val())) {
             console.log('true');
             $('#pw_ch2').text('비밀번호 일치 확인되었습니다.');
             $('#pw_ch2').css('color', 'black');
-            $('#mem-upd-pw_bool').val(true);
+            check = true;
         } else {
             console.log('false');
             $('#pw_ch2').text('비밀번호가 일치하지 않습니다.');
             $('#pw_ch2').css('color', 'red');
-            $('#mem-upd-pw_bool').val(false);
+            check = false;
+        }
+    });
+
+    $('#btn-mem-upd').on('click', function () {
+        if($('#nickname').val() == "") {
+            alert("닉네임을 입력하세요!");
+            return false;
+        } else if(!check) {
+            alert("비밀번호를 확인하세요!");
+            return false;
+        } else {
+            var mem_id = $('#mem_id').val();
+
+            var data = {
+                mem_id: mem_id,
+                mem_password: $('#password').val(),
+                mem_nickname: $('#nickname').val()
+            };
+
+            $.ajax({
+                data: JSON.stringify(data),
+                url: '/api/member/update/' + mem_id,
+                type: 'PUT',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+            }).done(function (data) {
+                alert('수정되었습니다!');
+                window.location.href = '/member/mypage?ses_id=' + data;
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        }
+    });
+
+    $('#btn-mem-del').on('click', function () {
+        var mem_id = $('#mem_id').val();
+        if(confirm("정말 탈퇴를 원하시나요?")) {
+            $.ajax({
+                url: '/api/member/delete/' + mem_id,
+                type: 'DELETE'
+            }).done(function () {
+                alert('다음에 또 봐요.. (´•̥ω•̥`) ');
+                window.location.href='/';
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        } else {
+            return false;
         }
     });
 </script>
