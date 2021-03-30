@@ -1,6 +1,7 @@
 package com.review.yj.community.controller.board;
 
 import com.review.yj.community.controller.dto.BoardDto;
+import com.review.yj.community.controller.dto.ReplyDto;
 import com.review.yj.community.domain.board.Board;
 import com.review.yj.community.domain.board.Reply;
 import com.review.yj.community.service.board.BoardService;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -43,7 +45,41 @@ public class BoardApiController {
         Board board = boardService.findById(brd_id);
         List<Reply> replyList = replyService.findByBrd_id(brd_id);
 
-        mav.addObject("board", board);
+        if(board.getBrd_category() == 3) {
+            BoardDto dto = BoardDto.builder()
+                    .brd_id(board.getBrd_id())
+                    .mem_nickname("익명")
+                    .mem_id(board.getMem_id())
+                    .brd_category(3)
+                    .brd_content(board.getBrd_content())
+                    .brd_title(board.getBrd_title())
+                    .brd_cnt(board.getBrd_cnt())
+                    .createdDate(board.getCreatedDate())
+                    .modifiedDate(board.getModifiedDate())
+                    .build();
+            mav.addObject("board", dto);
+
+            List<ReplyDto> dtoList = new ArrayList<>();
+            for (Reply r :
+                    replyList) {
+                ReplyDto replyDto = ReplyDto.builder()
+                        .rep_id(r.getRep_id())
+                        .rep_content(r.getRep_content())
+                        .brd_id(r.getBrd_id())
+                        .createdDate(r.getCreatedDate())
+                        .mem_id(r.getMem_id())
+                        .mem_nickname("익명")
+                        .rep_depth(r.getRep_depth())
+                        .rep_parent(r.getRep_parent())
+                        .rep_seq(r.getRep_seq())
+                        .build();
+                dtoList.add(replyDto);
+            }
+            mav.addObject("replyList", dtoList);
+        } else {
+            mav.addObject("board", board);
+            mav.addObject("replyList", replyList);
+        }
 
         // reply 작성하기 위해 session에 해당하는 회원 정보 넘겨주기
         HttpSession session = request.getSession();
@@ -53,9 +89,6 @@ public class BoardApiController {
         } else {
             mav.addObject("member", null);
         }
-
-        mav.addObject("replyList", replyList);
-
 
         mav.setViewName("board/detail");
 

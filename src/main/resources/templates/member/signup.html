@@ -119,7 +119,24 @@
             alert("비밀번호를 확인하세요!");
             return false;
         } else {
+            var data = {
+                mem_userid : $('#userid').val(),
+                mem_password: $('#password').val(),
+                mem_nickname: $('#nickname').val()
+            };
 
+            $.ajax({
+                url: "/api/member/sign_up",
+                dataType: 'json',
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+            }).done(function () {
+                alert("회원가입이 완료되었습니다.");
+                window.location.href='/member/sign_in';
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
         }
     });
 </script>

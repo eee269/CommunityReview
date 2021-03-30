@@ -21,7 +21,7 @@
 
     <div th:replace="fragment/common :: header"></div>
 
-    <section class="site-section">
+    <section class="site-section" style="min-height: 700px">
         <div class="container">
             <div class="comment-form-wrap pt-5">
                 <h3 class="mb-5">Sign In</h3>
@@ -45,7 +45,7 @@
         </div>
     </section>
 
-    <div th:replace="fragment/common :: footer"></div>
+<!--    <div th:replace="fragment/common :: footer"></div>-->
 
 </div> <!-- .site-wrap -->
 
@@ -56,6 +56,26 @@
         if($('#userid').val() == "") {
             alert("아이디를 확인하세요")
         }
+    });
+
+    $('#btn-signin').on('click', function () {
+        var data = {
+            mem_userid: $('#userid').val(),
+            mem_password: $('#password').val()
+        };
+
+        $.ajax({
+            url: '/api/member/sign_in',
+            dataType: 'json',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function () {
+            alert("로그인 되었습니다.");
+            window.location.href='/';
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
     });
 </script>
 

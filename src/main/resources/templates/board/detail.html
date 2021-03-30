@@ -34,7 +34,7 @@
                             <th:block th:case="0">Notice</th:block>
                             <th:block th:case="1">Develop</th:block>
                             <th:block th:case="2">Everything</th:block>
-<!--                            <th:block th:case="3">Anonymous Board</th:block>-->
+                            <th:block th:case="3">Anonymous Board</th:block>
                         </th:block>
                     </h3>
                     <br><br>
@@ -63,7 +63,7 @@
 
                     <div class="pt-5">
                         <p>
-                            <input type="button" onclick="history.back()" class="btn btn-sm" value="Board List" >&nbsp;&nbsp;
+                            <input type="button" onclick="history.back()" class="btn btn-sm" value="Back" >&nbsp;&nbsp;
                             <th:block  th:if="${session['ses_id'] == board.getMem_id()}">
                                 <input type="button" id="btn-update-form" class="btn btn-primary btn-sm" value="Board Update">&nbsp;&nbsp;
                                 <input type="button" id="btn-delete" class="btn btn-sm" value="Board Delete">
@@ -78,13 +78,36 @@
                             <h2>댓글이 없습니다.</h2>
                         </ul>
 
-                        <input type="hidden" th:value="${replyList.size()}" id="replyList_size">
+                        <input type="hidden" id="list_size" th:value="${replyList.size()}">
                         <ul class="comment-list" id="first_ul" th:unless="${replyList.size() == 0}">
-                            <th:block th:each="reply, count: ${replyList}" th:attr="onload='javascript:load(' + ${reply} + ', ' +  ${count} + ');'"></th:block>
-
+                            <th:block th:each="reply: ${replyList}">
+                                <!-- 공통 form -->
+                                <li class="comment" th:id="${replyStat.count}">
+                                    <th:block class="comment-body">
+                                        <input type="hidden" class="rep_id" th:value="${reply.rep_id}">
+                                        <input type="hidden" class="rep_depth" th:value="${reply.rep_depth}">
+                                        <input type="hidden" class="rep_seq" th:value="${reply.rep_seq}">
+                                        <h3>[[${reply.mem_nickname}]]</h3>
+                                        <div class="meta">[[${#temporals.format(reply.getCreatedDate(), 'MM dd, yyyy  h:mm a')}]]
+                                        <th:block th:if="${reply.modifiedDate != reply.createdDate}"><th:block th:if="${reply.modifiedDate != null}">
+                                            -> [[${#temporals.format(reply.getModifiedDate(), 'MM dd, yyyy  h:mm a')}]]</th:block></th:block>
+                                        </div>
+                                        <div class="rep_content">[[${reply.getRep_content()}]]</div>
+                                        <div class="rep_btn" th:if="${session['ses_id'] != null}">
+                                            <a th:onclick="|javascript:move_form(${replyStat.count})|" class="reply">Reply</a>
+                                            <th:block th:if="${reply.mem_id == session['ses_id']}">
+                                                <a th:onclick="|javascript:update_form(${replyStat.count})|" class="reply">Update</a>
+                                                <a th:onclick="|javascript:rep_del(${reply.rep_id})|" class="reply">Delete</a>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <!-- 대댓글 입력창 자리이동 공간 -->
+                                </li>
+                            </th:block>
                         </ul>
                         <!-- END comment-list -->
 
+                        <div id="rep_form_place"></div>
                         <div class="comment-form-wrap pt-5" id="rep_form">
                             <hr />
                             <form class="p-5 bg-light" th:if="${member == null}">
@@ -104,7 +127,6 @@
                                     <label for="password">Password *</label>
                                     <input type="password" class="form-control" id="password" required>
                                     <div id="pw_ch"></div>
-                                    <input type="hidden" id="pw_bool" value="false">
                                 </div>
 
                                 <div class="form-group">
@@ -132,16 +154,22 @@
 <div th:replace="fragment/common :: script"></div>
 
 <script type="text/javascript" src="/js/app/board.js"></script>
-<!-- js날짜 처리 -->
-<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
-
 
 <script type="text/javascript" th:inline="javascript">
+    // summernote로 저장한 내용 불러오기 (brd_content)
     var content = $('#tag_content').val();
     $(function () {
         $('#content').append(content);
     })
 
+    // 게시글 수정form으로 이동
+    $('#btn-update-form').on('click', function () {
+        window.location.href='/board/update?brd_id=' + $('#brd_id').val();
+    })
+
+    // ------ reply -------
+
+    // reply write 제약조건
     var pwCh = $('#mem_pw').val();
     var check = false;
     $('#password').blur(function () {
@@ -159,97 +187,6 @@
         $('#pw_bool').attr('value', check);
     });
 
-    $('#btn-update-form').on('click', function () {
-        window.location.href='/board/update?brd_id=' + $('#brd_id').val();
-    })
-
-    // reply script
-    // reply list load
-    /*
-    공통 form : <li> <div> ~ </div>
-    이전 depth < 현재 depth : <ul> + 공통
-    이전 depth = 현재 depth : </li> + 공통
-    이전 depth > 현재 depth : </li> </ul>(이전 depth - 현재 depth 만큼 반복) + </li> + 공통
-    list.size() = index+1 : </li> </ul>(현재 depth 만큼 반복)
-     */
-    // $(function() {
-        var b_depth = 0;         // 이전 item의 rep_depth 저장
-        moment.locale('ko');
-
-        // replyList를 반복문으로 돌려서 공통 form 설정
-        var form = '';
-
-        // 이전 depth와 같을때, 이전 depth보다 현재가 더 높을때, 이전 depth보다 현재가 더 낮을때
-        var s_depth_form = '', h_depth_form = '', l_depth_form = '';
-        var last_form = '';     // 제일 마지막 form
-
-        function load(reply, count){
-            form = '<li class="comment">' +
-                '<div class="comment-body" id="rep_' + count + '">' +       // div의 id에 count 넣어서 차례 만들기  ex) rep_1, rep_2
-                '<input type="hidden" class="rep_id" value="' + reply.rep_id + '"> ' +
-                '<input type="hidden" class="rep_depth" value="' + reply.rep_depth + '"> ' +
-                '<input type="hidden" class="rep_seq" value="' + reply.rep_seq + '"> ' +
-                '<h3>' + reply.mem_nickname + '</h3>' +
-                '<div class="meta">' + reply.createdDate.format('MM dd, yyyy h:mm a') + '</div>';
-            // 수정 날짜 있으면 넣고 없으면 안넣기
-            if (reply.modifiedDate != reply.createdDate && reply.modifiedDate != null) {
-                form += '<div class="meta"> -> ' + reply.modifiedDate.format('MM dd, yyyy h:mm a') + '</div>';
-            }
-
-            form += '<p class="rep_content">' + reply.rep_content + '</p>' +
-                '<p className="rep_btn">' +
-                '<a th:onclick="javascript:move_form(rep_' + count + ')" className="reply">Reply</a>';
-
-            // 세션과 작성자가 같으면 수정, 삭제 넣기
-            if (reply.mem_id == $('#session').val()) {
-                form += '<a th:onclick="javascript:update_form(rep_' + count + ')" className="reply">Update</a>' +
-                    '<a th:onclick="javascript:delete(rep_' + count + ')" className="reply">Delete</a>';
-            }
-            form += '</p> </div>';
-
-            if(count > 1) {
-                var sub = b_depth - reply.rep_depth;
-                if(sub == 0) {
-                    // s_depth_form : 이전 index의 depth와 같을때
-                    s_depth_form = '</li>' + form;
-
-                    $('#first_ul').append(s_depth_form);
-                } else if(sub < 0) {
-                    // h_depth_form : 이전 index의 depth보다 클때
-                    h_depth_form = '<ul>' + form;
-
-                    $('#first_ul').append(h_depth_form);
-                } else {
-                    // l_depth_form : 이전 index의 depth보다 작을때
-                    var i=0;
-                    // depth 차이만큼 li, ul 닫기
-                    while(i < sub) {
-                        l_depth_form += '</li> </ul>';
-                        i++;
-                    }
-                    l_depth_form += '</li>' + form;
-
-                    $('#first_ul').append(l_depth_form);
-                }
-            } else {        // index = 0
-                $('#first_ul').append(form);
-            }
-
-            // 마지막 요소일때
-            if($('#replyList_size').val() == count) {
-                // 현재 depth 만큼 li, ul 닫기
-                var i=0;
-                while(i < reply.rep_depth) {
-                    last_form += '</li> </ul>';
-                    i++;
-                }
-                $('#first_ul').append(last_form);
-            }
-            b_depth = reply.rep_depth;
-        }
-    // })
-
-
     // reply write cancel
     $('#rep_cancel').on('click', function () {
         $('#rep_content').val("");
@@ -258,35 +195,96 @@
         $('#pw_bool').val(false);
 
         // 대댓글 취소 시 다시 원래 자리로 입력창 돌려놓기
-        var place = $('div.pt-5').find('ul.comment-list').next();
-        if(place.find('div.rep_form') == undefined) {
-            var form = $('a.reply').parent('p.rep_btn').next().find('div.rep_form');
-            place.html(form);
-            form.attr('display', 'none');
-        }
-    });
-    $('#re_rep_cancel').on('click', function () {
-
+        $('#rep_form_place').html(document.getElementById('rep_form'));
     });
 
     // reply form move
     // 대댓글 입력 시 입력창 이동
-    function move_form() {
-        alert(this);
-        // var place = $('a.reply').parent('p.rep_btn').next();
-        // place.html($('div.rep_form').attr('display', 'inline'));
-        // $('div.pt-5').find('div.rep_form').attr('display', 'none');
+    function move_form(li_id) {
+        var place = document.getElementById(li_id);
+        var form = document.getElementById('rep_form');
 
-        // var form = place.find('div.rep_form');
-        // var html = '<input type="button" value="save" class="btn btn-primary" id="btn_rep_save">&nbsp;&nbsp;\n' +
-        //     '<input type="button" value="cancel" class="btn" id="re_rep_cancel">';
-        // form.find('div.rep_btn').html(html);
+        place.append(form);
     }
 
     // reply update form
-    function update_form() {
+    // 원래 댓글내용, 버튼태그 저장
+    var b_content, b_btn;
+    function update_form(li_id) {
+        var li = $('#' + li_id);
+        var div = li.children().first();
 
+        // 원래 댓글 내용
+        b_content = div.find('div.rep_content').html();
+
+        // 원래 버튼 태그
+        b_btn = div.find('div.rep_btn').children();
+
+        // 새로 넣을 태그
+        var new_content = '<textarea id="rep_upd_content" cols="30" rows="10" class="form-control">' + b_content + '</textarea>';
+        var new_btn = '<a onclick="javascript:rep_update(' + li.find('input.rep_id').val() + ')" class="reply">Save</a>&nbsp;&nbsp;' +
+            '<a onclick="javascript:rep_upd_cancel(' + li_id + ')" class="reply">Cancel</a>';
+
+        div.find('div.rep_content').html(new_content);
+        div.find('div.rep_btn').html(new_btn);
     }
+
+    // 댓글 수정 취소
+    function rep_upd_cancel(li_id) {
+        var div = $('#' + li_id).children().first();
+
+        alert(b_content + ", " + b_btn);
+
+        // 원래 저장했던 내용으로 바꾸기
+        div.find('div.rep_content').html(b_content);
+        div.find('div.rep_btn').html(b_btn);
+
+        // 변수 초기화
+        b_btn = ''; b_content = '';
+    }
+
+    // reply list sort
+    $(document).ready(function () {
+        // li_id : li의 id
+        // prev : 이전 index의 depth
+        // cur : 현재 index의 depth
+        var size = $('#list_size').val();
+
+        for(let i=2; i<=size; i++) {
+            var _this = $('#' + i);
+            var _prev = $('#' + (i-1));
+
+            var prev = _prev.find('input.rep_depth').val();
+            var cur = _this.find('input.rep_depth').val();
+
+            if(prev > cur) {
+                <!-- 이전 depth > 현재 depth : 같은 depth의 이전 li 뒤에 붙이기-->
+                var new_prev_li = _prev.parent('ul.children').parent('li');
+                var new_prev = new_prev_li.find('input.rep_depth').val();
+
+                while(new_prev == cur){
+                    new_prev_li = new_prev_li.parent('ul.children').parent('li');
+                    new_prev = new_prev_li.find('input.rep_depth').val();
+                }
+
+                new_prev_li.parent('li').after(_this);
+            } else if(prev < cur) {
+                <!-- 이전 depth < 현재 depth : 이전 div 뒤에 ul태그 추가해서 붙이기 -->
+                var new_form = '<ul class="children"></ul>';
+
+                _prev.append(new_form);
+                _prev.find('ul.children').append(_this);
+            } else {
+                <!-- 이전 depth = 현재 depth : 이전 li 뒤에 붙이기 -->
+                _prev.after(_this);
+            }
+
+        }
+    })
+
+
+    // -------ajax----------
+
 
     // reply save
     $('#btn_rep_save').on('click', function() {
@@ -297,12 +295,15 @@
             alert("내용을 입력하세요!");
             return ;
         } else {
-            var rep_parent_li = $('div.rep_form').parent('li.comment');
-            var rep_parent = null, rep_depth = 1, rep_seq = 0;
-            if (rep_parent_li != undefined) {
+            var rep_place = $('#rep_form_place');        // 원래 form은 div가 부모
+            var rep_parent_li = $('#rep_form').parent(); // 대댓글은 li가 부모
+            var rep_parent = null;
+            var rep_depth = 0, rep_seq = 0;
+            alert(rep_seq);
+            if (rep_place != rep_parent_li) {
                 rep_parent = rep_parent_li.find('input.rep_id').val();
-                rep_depth = rep_parent_li.find('input.rep_depth').val() + 1;
-                rep_seq = rep_parent_li.find('input.rep_seq').val() + 1;
+                rep_depth = rep_parent_li.find('input.rep_depth').val();
+                rep_seq = rep_parent_li.find('input.rep_seq').val();
             }
 
             var data = {
@@ -314,6 +315,7 @@
                 rep_depth: rep_depth,
                 rep_seq: rep_seq,
             };
+            alert(rep_seq);
             $.ajax({
                 url: '/api/reply/save',
                 data: JSON.stringify(data),
@@ -330,13 +332,13 @@
     });
 
     // reply update
-    $('#rep_update').on('click', function() {
-        var btntag = $('#rep-update').parent('li.comment');
+    function rep_update(rep_id) {
         var data = {
-            rep_content: btntag.find('input.rep_content').val(),
+            rep_id: rep_id,
+            rep_content: $('#rep_upd_content').val(),
         };
         $.ajax({
-            url: '/api/reply/update/' + $('#rep-update').find('input.rep_id').val(),
+            url: '/api/reply/update/' + rep_id,
             data: JSON.stringify(data),
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
@@ -347,13 +349,16 @@
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
-    })
+
+        // 변수 초기화
+        b_btn = ''; b_content = '';
+    };
 
     // reply delete
-    $('#rep-del').on('click', function () {
+    function rep_del(rep_id) {
         if(confirm("정말 삭제하시겠습니까?")) {
             $.ajax({
-                url: '/api/reply/delete/' + $('#rep-del').find('input.rep_id').val(),
+                url: '/api/reply/delete/' + rep_id,
                 type: 'DELETE'
             }).done(function () {
                 alert('삭제되었습니다!');
@@ -362,7 +367,7 @@
                 alert(JSON.stringify(error));
             });
         } else return false;
-    });
+    };
 </script>
 
 </body>
