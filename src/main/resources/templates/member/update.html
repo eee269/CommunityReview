@@ -94,11 +94,21 @@
 
     $('#btn-mem-upd').on('click', function () {
         if($('#nickname').val() == "") {
-            alert("닉네임을 입력하세요!");
-            return false;
+            Swal.fire({
+                icon: 'warning',
+                title: '닉네임을 입력하세요',
+                text: '〣( ºΔº )〣',
+                timer: 1800,
+            });
+            return;
         } else if(!check) {
-            alert("비밀번호를 확인하세요!");
-            return false;
+            Swal.fire({
+                icon: 'warning',
+                title: '비밀번호를 확인하세요',
+                text: '〣( ºΔº )〣',
+                timer: 1800,
+            });
+            return;
         } else {
             var mem_id = $('#mem_id').val();
 
@@ -115,29 +125,46 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             }).done(function (data) {
-                alert('수정되었습니다!');
-                window.location.href = '/member/mypage?ses_id=' + data;
+                Swal.fire({
+                    icon: 'success',
+                    title: '회원정보 수정 성공',
+                    text: '๑･̑◡･̑๑',
+                    timer: 1800,
+                }), window.location.href = '/member/mypage?ses_id=' + data;
             }).fail(function (error) {
-                alert(JSON.stringify(error));
+                Swal.fire({
+                    icon: 'error',
+                    title: '회원정보 수정 실패',
+                    text: '๑•́ㅿ•̀๑) ᔆᵒʳʳᵞ',
+                });
             });
         }
     });
 
     $('#btn-mem-del').on('click', function () {
         var mem_id = $('#mem_id').val();
-        if(confirm("정말 탈퇴를 원하시나요?")) {
-            $.ajax({
-                url: '/api/member/delete/' + mem_id,
-                type: 'DELETE'
-            }).done(function () {
-                alert('다음에 또 봐요.. (´•̥ω•̥`) ');
-                window.location.href='/';
-            }).fail(function (error) {
-                alert(JSON.stringify(error));
-            });
-        } else {
-            return false;
-        }
+        Swal.fire({
+            title: '정말 삭제 하시겠습니까?',
+            text: "다시 되돌릴 수 없어요..",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#F8E0E0',
+            confirmButtonText: '승인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/api/member/delete/' + mem_id,
+                    type: 'DELETE'
+                }).done(function () {
+                    Swal.fire('삭제 완료', '୧(•̀ө•́)୨', 'success', 1800),
+                        window.location.href='/';
+                }).fail(function (error) {
+                    Swal.fire('삭제 실패', '•᷄ʚ •᷅', 'success');
+                });
+            } else return false;
+        });
     });
 </script>
 

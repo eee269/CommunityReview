@@ -108,11 +108,21 @@
 
     $('#btn-save').on('click', function () {
         if($('#title').val() == "") {
-            alert('제목을 입력하세요!');
-            return ;
+            Swal.fire({
+                icon: 'warning',
+                title: '제목을 입력하세요',
+                text: '〣( ºΔº )〣',
+                timer: 1800,
+            });
+            return;
         } else if(!check) {
-            alert('비밀번호를 확인하세요!');
-            return ;
+            Swal.fire({
+                icon: 'warning',
+                title: '비밀번호를 확인하세요',
+                text: '〣( ºΔº )〣',
+                timer: 1800,
+            });
+            return;
         } else {
             $('textarea[name="content"]').html($('#summernote').summernote('code'));
             var data = {
@@ -131,10 +141,18 @@
                 data: JSON.stringify(data),
                 url: '/api/board/save/'
             }).done(function (brd_id) {
-                alert('게시글이 저장되었습니다.');
-                window.location.href = '/api/board/detail?brd_id=' + brd_id;
+                Swal.fire({
+                    icon: 'success',
+                    title: '게시글 등록 성공',
+                    text: '๑･̑◡･̑๑',
+                    timer: 1800,
+                }), window.location.href = '/api/board/detail?brd_id=' + brd_id;
             }).fail(function (error) {
-                alert(JSON.stringify(error));
+                Swal.fire({
+                    icon: 'error',
+                    title: '게시글 등록 실패',
+                    text: '๑•́ㅿ•̀๑) ᔆᵒʳʳᵞ',
+                });
             });
         }
     });

@@ -7,16 +7,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
 
     public Long save(Member member) {
-        memberRepository.findByUserid(member.getMem_userid())
-            .ifPresent(m -> {
-                throw new IllegalStateException("이미 존재하는 회원입니다.");
-            });
         return memberRepository.save(member).getMem_id();
     }
 
@@ -47,5 +45,9 @@ public class MemberService {
 
     public void delete(Long mem_id) {
         memberRepository.deleteById(mem_id);
+    }
+
+    public int email_check(String userid) {
+        return memberRepository.countById(userid);
     }
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Review</title>
+    <title>Review Sign Up</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <div th:replace="fragment/common :: css"></div>
@@ -24,7 +24,7 @@
     <section class="site-section">
         <div class="container">
             <div class="comment-form-wrap pt-5">
-                <h3 class="mb-5">Sign In</h3>
+                <h3 class="mb-5">Sign Up</h3>
                 <form class="p-5 bg-light">
                     <div class="form-group">
                         <label for="userid">E-Mail *</label>
@@ -56,88 +56,131 @@
         </div>
     </section>
 
-    <div th:replace="fragment/common :: footer"></div>
 
 </div> <!-- .site-wrap -->
 
 <div th:replace="fragment/common :: script"></div>
-<script type="text/javascript" src="/js/app/member.js"></script>
 
-<script>
-    var emailForm = /^[a-zA-Z][a-zA-Z0-9_-]+@[a-z0-9_-]+.[a-z._-]+$/;
-    var passForm = /^[a-zA-Z0-9!@#$%]{6,12}$/;
+<script type="text/javascript">
+    $(function() {
+        var emailForm = /^[a-zA-Z][a-zA-Z0-9_-]+@[a-z0-9_-]+.[a-z._-]+$/;
+        var passForm = /^[a-zA-Z0-9!@#$%]{6,12}$/;
 
 
-    var checkId = false;
-    $('#userid').blur(function () {
-        if(emailForm.test($('#userid').val())) {
-            console.log('true');
-            $('#mail_ch').text('');
-            checkId = true;
-        } else {
-            console.log('false');
-            $('#mail_ch').text('이메일의 형식을 지켜주세요!');
-            $('#mail_ch').css('color', 'red');
-            checkId = false;
-        }
-    });
+        var checkId = false;
+        $('#userid').blur(function () {
+            if(emailForm.test($('#userid').val())) {
+                console.log('true');
+                $('#mail_ch').text('');
+                checkId = true;
+                if(checkId) {
+                    $.ajax({
+                        url: '/api/member/email_check/' + $('#userid').val(),
+                        type: 'POST',
+                        dataType: 'text',
+                        contentType: 'text/plain; charset=utf-8',
+                    }).done(function (data) {
+                        if(data == 0) {
+                            $('#mail_ch').text('사용할 수 있는 아이디 입니다.');
+                            $('#mail_ch').css('color', 'black');
+                            checkId = true;
+                        } else {
+                            $('#mail_ch').text('사용중인 이메일입니다. 다른 이메일을 사용해주세요!');
+                            $('#mail_ch').css('color', 'red');
+                            checkId = false;
+                        }
+                    }).fail(function (error) {
+                        alert(JSON.stringify(error));
+                    });
+                }
+            } else {
+                console.log('false');
+                $('#mail_ch').text('이메일의 형식을 지켜주세요!');
+                $('#mail_ch').css('color', 'red');
+                checkId = false;
+            }
+        });
 
-    var checkPw = false;
-    $('#password').blur(function () {
-        if(passForm.test($('#password').val())){
-            console.log('true');
-            $('#pw_ch').text('');
-        } else {
-            console.log('false');
-            $('#pw_ch').text('숫자, 영문 대소문자, !@#$% 를 혼합하여 6~12 자리 입력하세요');
-            $('#pw_ch').css('color', 'red');
-        }
-    });
+        var checkPw = false;
+        $('#password').blur(function () {
+            if(passForm.test($('#password').val())){
+                console.log('true');
+                $('#pw_ch').text('');
+            } else {
+                console.log('false');
+                $('#pw_ch').text('숫자, 영문 대소문자, !@#$% 를 혼합하여 6~12 자리 입력하세요');
+                $('#pw_ch').css('color', 'red');
+            }
+        });
 
-    $('#passwordCheck').blur(function () {
-        if($('#password').val() == ($('#passwordCheck').val())) {
-            console.log('true');
-            $('#pw_ch2').text('비밀번호 일치 확인되었습니다.');
-            $('#pw_ch2').css('color', 'black');
-            checkPw = true;
-        } else {
-            console.log('false');
-            $('#pw_ch2').text('비밀번호가 일치하지 않습니다.');
-            $('#pw_ch2').css('color', 'red');
-            checkPw = false;
-        }
-    });
+        $('#passwordCheck').blur(function () {
+            if($('#password').val() == ($('#passwordCheck').val())) {
+                console.log('true');
+                $('#pw_ch2').text('비밀번호 일치 확인되었습니다.');
+                $('#pw_ch2').css('color', 'black');
+                checkPw = true;
+            } else {
+                console.log('false');
+                $('#pw_ch2').text('비밀번호가 일치하지 않습니다.');
+                $('#pw_ch2').css('color', 'red');
+                checkPw = false;
+            }
+        });
 
-    $('#btn-signup').on('click', function () {
-        if($('#nickname').val() == "") {
-            alert("닉네임을 입력하세요!");
-            return false;
-        } else if(!checkId) {
-            alert("이메일을 확인하세요!");
-            return false;
-        } else if(!checkPw) {
-            alert("비밀번호를 확인하세요!");
-            return false;
-        } else {
-            var data = {
-                mem_userid : $('#userid').val(),
-                mem_password: $('#password').val(),
-                mem_nickname: $('#nickname').val()
-            };
+        $('#btn-signup').on('click', function () {
+            if($('#nickname').val() == "") {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '닉네임을 입력하세요',
+                    text: '〣( ºΔº )〣',
+                    timer: 1800,
+                });
+                return;
+            } else if(!checkId) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '이메일을 확인하세요',
+                    text: '〣( ºΔº )〣',
+                    timer: 1800,
+                });
+                return;
+            } else if(!checkPw) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '비밀번호를 확인하세요',
+                    text: '〣( ºΔº )〣',
+                    timer: 1800,
+                });
+                return;
+            } else {
+                var data = {
+                    mem_userid : $('#userid').val(),
+                    mem_password: $('#password').val(),
+                    mem_nickname: $('#nickname').val()
+                };
 
-            $.ajax({
-                url: "/api/member/sign_up",
-                dataType: 'json',
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(data),
-            }).done(function () {
-                alert("회원가입이 완료되었습니다.");
-                window.location.href='/member/sign_in';
-            }).fail(function (error) {
-                alert(JSON.stringify(error));
-            });
-        }
+                $.ajax({
+                    url: "/api/member/sign_up",
+                    dataType: 'json',
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data),
+                }).done(function () {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '회원가입 성공',
+                        text: '๑･̑◡･̑๑',
+                        timer: 1800,
+                    }), window.location.href='/member/sign_in';
+                }).fail(function (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '회원가입 실패',
+                        text: '๑•́ㅿ•̀๑) ᔆᵒʳʳᵞ',
+                    });
+                });
+            }
+        });
     });
 </script>
 

@@ -19,6 +19,11 @@ public class MemberApiController {
         return memberService.save(member);
     }
 
+    @PostMapping("/api/member/email_check/{userid}")
+    public int email_check(@PathVariable String userid) {
+        return memberService.email_check(userid);
+    }
+
     @PostMapping("/api/member/sign_in")
     public Member sign_in(HttpServletRequest request, @RequestBody Member member) {
         Member result = memberService.findForLogin(member);

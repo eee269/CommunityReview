@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Review Board Update</title>
+    <title>[[${board.brd_title}]] - Update</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <div th:replace="fragment/common :: css"></div>
@@ -117,11 +117,21 @@
 
     $('#btn-update').on('click', function () {
         if($('#title').val() == "") {
-            alert('제목을 입력하세요!');
-            return ;
+            Swal.fire({
+                icon: 'warning',
+                title: '제목을 입력하세요',
+                text: '〣( ºΔº )〣',
+                timer: 1800,
+            });
+            return;
         } else if(!check) {
-            alert('비밀번호를 확인하세요!');
-            return ;
+            Swal.fire({
+                icon: 'warning',
+                title: '비밀번호를 확인하세요',
+                text: '〣( ºΔº )〣',
+                timer: 1800,
+            });
+            return;
         } else {
             $('textarea[name="content"]').html($('#summernote').summernote('code'));
             var brd_id = $('#brd_id').val();
@@ -139,10 +149,18 @@
                 data: JSON.stringify(data),
                 url: '/api/board/update/' + brd_id
             }).done(function (brd_id) {
-                alert('수정완료 되었습니다.');
-                window.location.href = '/api/board/detail?brd_id=' + brd_id;
+                Swal.fire({
+                    icon: 'success',
+                    title: '게시글 수정 성공',
+                    text: '๑･̑◡･̑๑',
+                    timer: 1800,
+                }), window.location.href = '/api/board/detail?brd_id=' + brd_id;
             }).fail(function (error) {
-                alert(JSON.stringify(error));
+                Swal.fire({
+                    icon: 'error',
+                    title: '게시글 수정 실패',
+                    text: '๑•́ㅿ•̀๑) ᔆᵒʳʳᵞ',
+                });
             });
         }
     });
@@ -150,18 +168,29 @@
     $('#btn-delete').on('click', function () {
         var brd_id = $('#brd_id').val();
 
-        if(confirm('정말 삭제하시겠습니까?')) {
-            $.ajax({
-                type: 'DELETE',
-                contentType: 'application/json; charset=utf-8',
-                url: '/api/board/delete/' + brd_id
-            }).done(function () {
-                alert('삭제되었습니다.. (｡•́︿•̀｡) ');
-                window.location.href='/board/';
-            }).fail(function (error) {
-                alert(JSON.stringify(error));
-            })
-        } else return false;
+        Swal.fire({
+            title: '정말 삭제 하시겠습니까?',
+            text: "다시 되돌릴 수 없어요..",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#F8E0E0',
+            confirmButtonText: '승인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'DELETE',
+                    contentType: 'application/json; charset=utf-8',
+                    url: '/api/board/delete/' + brd_id
+                }).done(function () {
+                    Swal.fire('삭제 완료', '୧(•̀ө•́)୨', 'success', 1800),
+                        window.location.href='/board/';
+                }).fail(function (error) {
+                    Swal.fire('삭제 실패', '•᷄ʚ •᷅', 'success');
+                });
+            } else return false;
+        });
     });
 </script>
 
