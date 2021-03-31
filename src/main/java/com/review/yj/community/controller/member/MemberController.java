@@ -43,10 +43,10 @@ public class MemberController {
     }
 
     @GetMapping("/member/sign_out")
-    public String sign_out(@Param("ses_id") Long ses_id, HttpServletRequest request) {
+    public String sign_out(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(ses_id == (Long) session.getAttribute("ses_id"))     session.invalidate();
-        return "index";
+        session.invalidate();
+        return "redirect:/";
     }
 
     @RequestMapping("/member/mypage")

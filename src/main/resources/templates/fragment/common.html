@@ -37,10 +37,10 @@
                         <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                             <li><a href="/" class="nav-link">Home</a></li>
                             <li><a href="/board/" class="nav-link">Board</a></li>
-                            <li th:if="${session['ses_id'] == null}"><a href="/member/sign_in" class="nav-link">Sign In</a></li>
+                            <li th:if="${session['ses_id'] == null}"><a href="/member/sign_in" class="nav-link">Sign In & Sign Up</a></li>
                             <li th:unless="${session['ses_id'] == null}">
                                 <a th:href="@{/member/mypage(ses_id=${session['ses_id']})}" class="nav-link">My Page</a>
-                                <a th:href="@{/member/sign_out(ses_id=${session['ses_id']})}" class="nav-link">Sign Out</a>
+                                <a th:href="@{/member/sign_out}" class="nav-link">Sign Out</a>
                             </li>
                         </ul>
                     </nav>
