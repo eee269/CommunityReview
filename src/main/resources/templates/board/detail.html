@@ -87,7 +87,7 @@
                             <th:block th:each="reply: ${replyList}">
                                 <!-- 공통 form -->
                                 <li class="comment" th:id="${replyStat.count}">
-                                    <th:block class="comment-body">
+                                    <div class="comment-body">
                                         <input type="hidden" class="rep_id" th:value="${reply.rep_id}">
                                         <input type="hidden" class="rep_depth" th:value="${reply.rep_depth}">
                                         <input type="hidden" class="rep_seq" th:value="${reply.rep_seq}">
@@ -110,11 +110,11 @@
                                                 <a th:onclick="|javascript:rep_del(${reply.rep_id})|" class="reply">Delete</a>
                                             </th:block>
                                         </div>
-                    </div>
-                    <!-- 대댓글 입력창 자리이동 공간 -->
-                    </li>
-                    </th:block>
-                    </ul>
+                                    </div>
+                        <!-- 대댓글 입력창 자리이동 공간 -->
+                                </li>
+                            </th:block>
+                        </ul>
                     <!-- END comment-list -->
 
                     <div id="rep_form_place"></div>
