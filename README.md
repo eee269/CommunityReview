@@ -1,5 +1,5 @@
 # CommunityReview
-- Spring Boot를 활용한 게시판 개인 프로젝트입니다.
+- Spring Boot를 기반으로 한 RESTful 웹서비스 프로젝트입니다.
 - 2021.01 ~ 2021.02 약 두달의 기간동안 스터디를 운영하며 pull requests를 활용한 코드리뷰를 진행했습니다.
 - RESTful Project
 - 2021.03 한 달동안 템플릿 언어를 mustache에서 thymeleaf로 전환하고, 템플릿을 변경하여 적용했습니다.
@@ -38,9 +38,8 @@ http://52.78.112.93:8080/
 ![board 1](https://user-images.githubusercontent.com/39761461/112444126-0e064b80-8d91-11eb-87e2-7a11614bd787.gif)
 
 - summernote API를 활용하였습니다.
-- 댓글을 입력할 수 있도록 했습니다.
+- 무한 댓글을 입력할 수 있도록 했습니다.
 
-- 대댓글 (진행)
 
 ---
 # Mypage
@@ -54,9 +53,9 @@ http://52.78.112.93:8080/
 ## 보완할 부분
 - 게시판 스크롤 페이징
 - summernote API Image 크기 조정
-- 익명 게시판 카테고리 생성
+- 익명 게시판 카테고리 생성  (완료)
 - 게시글 좋아요, 댓글 추천
-- 에러페이지 커스텀
+- 에러페이지 커스텀  (완료 - sweetalert2 적용)
 - 게시글 sns 공유
 
 
